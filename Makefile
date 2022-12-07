@@ -6,12 +6,16 @@
 #    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/01 17:27:29 by apommier          #+#    #+#              #
-#    Updated: 2022/12/06 17:39:38 by apommier         ###   ########.fr        #
+#    Updated: 2022/12/06 22:07:24 by apommier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ircserv
-SRCS := main.cpp
+SRCS := main.cpp\
+		epoll.cpp\
+		start_server.cpp\
+		utils.cpp\
+		server_loop.cpp
 
 CC 			= c++
 #FLAGS 		= -g -Wall -Wextra -Werror

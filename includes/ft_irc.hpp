@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:27:37 by apommier          #+#    #+#             */
-/*   Updated: 2022/12/06 19:13:04 by apommier         ###   ########.fr       */
+/*   Updated: 2022/12/06 22:06:07 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,28 @@
 #include <cstdlib> 
 #include <cstring> //std::string
 #include <cerrno> //errno
-#include <iostream> //std::cout
+#include <iostream> //std::cout | cerr
 #include <netinet/in.h> //struct socket
-#include <sys/epoll.h> //epoll
+#include <sys/epoll.h> //epoll ensemble
+#include <unistd.h> //close()
+
+/* ************************************************************************** */
+/* *********************************UTILS************************************ */
+/* ************************************************************************** */
+
+void ft_error(std::string str);
+void close_fd(int fd);
+
+/* ************************************************************************** */
+/* ******************************START SERVER******************************** */
+/* ************************************************************************** */
+
+void initialize(char **av);									//1st
+void start_loop(int epollFd, int oldSock, int newSock);		//3rd
+
+/* ************************************************************************** */
+/* *****************************EPOLL UTILITY******************************** */
+/* ************************************************************************** */
+
+void epoll_add(int epollFd, int fd);
+int epoll_start();											//2nd
