@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:27:37 by apommier          #+#    #+#             */
-/*   Updated: 2022/12/06 22:06:07 by apommier         ###   ########.fr       */
+/*   Updated: 2022/12/09 23:18:30 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,17 @@
 #include <sys/epoll.h> //epoll ensemble
 #include <unistd.h> //close()
 
+#define MAX_EVENTS 5
+#define READ_SIZE 10
+
+struct fdList
+{
+		int epollFd;
+		int serverFd;
+		int userList[MAX_EVENTS];
+		int nbrUser;
+};
+
 /* ************************************************************************** */
 /* *********************************UTILS************************************ */
 /* ************************************************************************** */
@@ -33,7 +44,7 @@ void close_fd(int fd);
 /* ************************************************************************** */
 
 void initialize(char **av);									//1st
-void start_loop(int epollFd, int oldSock, int newSock);		//3rd
+void start_loop(fdList allFds);								//3rd
 
 /* ************************************************************************** */
 /* *****************************EPOLL UTILITY******************************** */
@@ -41,3 +52,10 @@ void start_loop(int epollFd, int oldSock, int newSock);		//3rd
 
 void epoll_add(int epollFd, int fd);
 int epoll_start();											//2nd
+
+/* ************************************************************************** */
+/* *****************************EPOLL UTILITY******************************** */
+/* ************************************************************************** */
+
+void new_connection(struct epoll_event newClient);
+bool clientRequest(fdList allFds, int newFd);
