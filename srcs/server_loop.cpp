@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:58:13 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/06 12:33:21 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/07 11:23:01 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@ void start_loop(fdList allFds)
 {
 	bool alive = true;
 	char buffer[1024] = { 0 };
-	struct epoll_event events[MAX_EVENTS];
+	//struct epoll_event events[MAX_EVENTS];
 	int readChar;
 	int eventNbr;
 
 	std::cout << "serverFd: " << allFds.serverFd << std::endl;
+	//allFds.events //= allFds.events;
 	while (alive)
 	{
 		// std::cout << "hehe\n";
@@ -30,14 +31,14 @@ void start_loop(fdList allFds)
 		
 		// send(clientFd, "message received", 18, 0);
 
-		eventNbr = epoll_wait(allFds.epollFd, events, MAX_EVENTS, 5000);
+		eventNbr = epoll_wait(allFds.epollFd, allFds.events, MAX_EVENTS, 5000);
 		std::cout << "eventNbr: " << eventNbr << std::endl;	
 		for (int i = 0; i < eventNbr ; i++)
 		{
-			std::cout << "event[i]'s fd: " << events[i].data.fd << std::endl;
-			if (events[i].data.fd == allFds.serverFd)
-				new_connection(allFds, events[i]);
-			else if (!clientRequest(allFds, events[i].data.fd))
+			std::cout << "event[i]'s fd: " << allFds.events[i].data.fd << std::endl;
+			if (allFds.events[i].data.fd == allFds.serverFd)
+				new_connection(allFds, allFds.events[i]);
+			else if (!clientRequest(allFds, i))//allFds.events[i].data.fd))
 			{
 				alive = false;
 				//else
@@ -48,7 +49,6 @@ void start_loop(fdList allFds)
 		}
 		if (!strncmp("/quit", buffer, 5))
 			std::cout << "quit message received\n";
-
 	}
 	std::cout << "dead server\n";
 

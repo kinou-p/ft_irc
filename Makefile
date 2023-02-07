@@ -6,7 +6,7 @@
 #    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/01 17:27:29 by apommier          #+#    #+#              #
-#    Updated: 2022/12/20 23:31:36 by apommier         ###   ########.fr        #
+#    Updated: 2023/02/07 14:47:20 by apommier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,11 @@ SRCS := main.cpp\
 		client_request.cpp\
 		new_connection.cpp\
 		server_loop.cpp\
-		commands/parse_commands.cpp
+		commands/parse_commands.cpp\
+		commands/auth/nick.cpp\
+		commands/auth/pass.cpp\
+		commands/auth/user.cpp\
+		commands/auth/utils.cpp
 
 CC 			= c++
 FLAGS 		= -g 
