@@ -6,11 +6,17 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:44:20 by apommier          #+#    #+#             */
-/*   Updated: 2022/12/09 23:57:24 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/06 12:32:07 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_irc.hpp"
+
+// void initialize_function_ptr(fdList	allFds)
+// {
+// 	// int i = 0;
+// 	// for (i = 0; i < allFds.parsingTab.cmdNbr, i++)	
+// }
 
 void initialize(char **av)
 {
@@ -22,6 +28,7 @@ void initialize(char **av)
 	int addrLen = sizeof(addr);
 	fdList	allFds;
 
+	allFds.nbrUser = 0;
 	allFds.serverFd = socket(AF_INET, SOCK_STREAM, 0);
 	if (allFds.serverFd == -1)
 		ft_error("socket() error");
