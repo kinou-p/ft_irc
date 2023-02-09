@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:27:37 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/07 20:25:26 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/09 14:41:14 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <sys/epoll.h> //epoll ensemble
 #include <unistd.h> //close()
 #include <vector>
+#include <algorithm>
 
 #define MAX_EVENTS 5
 #define READ_SIZE 10
@@ -35,46 +36,46 @@ struct fdList;
 /* *********************************COMMANDS********************************* */
 /* ************************************************************************** */
 
-		void	PASS(std::string buffer, fdList allFds, int user);
-		void	NICK(std::string buffer, fdList allFds, int user);
-		void	USER(std::string buffer, fdList allFds, int user);
-		void	SERVER(std::string buffer, fdList allFds, int user);
-		void	OPER(std::string buffer, fdList allFds, int user);
-		void	QUIT(std::string buffer, fdList allFds, int user);
-		void	SQUIT(std::string buffer, fdList allFds, int user);
-		void	JOIN(std::string buffer, fdList allFds, int user);
-		void	PART(std::string buffer, fdList allFds, int user);
-		void	MODE(std::string buffer, fdList allFds, int user);
-		void	TOPIC(std::string buffer, fdList allFds, int user);
-		void	NAMES(std::string buffer, fdList allFds, int user);
-		void	LIST(std::string buffer, fdList allFds, int user);
-		void	INVITE(std::string buffer, fdList allFds, int user);
-		void	KICK(std::string buffer, fdList allFds, int user);
-		void	VERSION(std::string buffer, fdList allFds, int user);
-		void	STATS(std::string buffer, fdList allFds, int user);
-		void	LINKS(std::string buffer, fdList allFds, int user);
-		void	TIME(std::string buffer, fdList allFds, int user);
-		void	CONNECT(std::string buffer, fdList allFds, int user);
-		void	TRACE(std::string buffer, fdList allFds, int user);
-		void	ADMIN(std::string buffer, fdList allFds, int user);
-		void	INFO(std::string buffer, fdList allFds, int user);
-		void	PRIVMSG(std::string buffer, fdList allFds, int user);
-		void	NOTICE(std::string buffer, fdList allFds, int user);
-		void	WHO(std::string buffer, fdList allFds, int user);
-		void	WHOIS(std::string buffer, fdList allFds, int user);
-		void	WHOWAS(std::string buffer, fdList allFds, int user);
-		void	KILL(std::string buffer, fdList allFds, int user);
-		void	PING(std::string buffer, fdList allFds, int user);
-		void	PONG(std::string buffer, fdList allFds, int user);
-		void	ERROR(std::string buffer, fdList allFds, int user);
-		void	AWAY(std::string buffer, fdList allFds, int user);
-		void	REHASH(std::string buffer, fdList allFds, int user);
-		void	RESTART(std::string buffer, fdList allFds, int user);
-		void	SUMMON(std::string buffer, fdList allFds, int user);
-		void	USER(std::string buffer, fdList allFds, int user);
-		void	OPERWALL(std::string buffer, fdList allFds, int user);
-		void	USERHOST(std::string buffer, fdList allFds, int user);
-		void	ISON(std::string buffer, fdList allFds, int user);
+		void	PASS(std::string buffer, fdList &allFds, int userNbr);
+		void	NICK(std::string buffer, fdList &allFds, int userNbr);
+		void	USER(std::string buffer, fdList &allFds, int userNbr);
+		void	SERVER(std::string buffer, fdList &allFds, int userNbr);
+		void	OPER(std::string buffer, fdList &allFds, int userNbr);
+		void	QUIT(std::string buffer, fdList &allFds, int userNbr);
+		void	SQUIT(std::string buffer, fdList &allFds, int userNbr);
+		void	JOIN(std::string buffer, fdList &allFds, int userNbr);
+		void	PART(std::string buffer, fdList &allFds, int userNbr);
+		void	MODE(std::string buffer, fdList &allFds, int userNbr);
+		void	TOPIC(std::string buffer, fdList &allFds, int userNbr);
+		void	NAMES(std::string buffer, fdList &allFds, int userNbr);
+		void	LIST(std::string buffer, fdList &allFds, int userNbr);
+		void	INVITE(std::string buffer, fdList &allFds, int userNbr);
+		void	KICK(std::string buffer, fdList &allFds, int userNbr);
+		void	VERSION(std::string buffer, fdList &allFds, int userNbr);
+		void	STATS(std::string buffer, fdList &allFds, int userNbr);
+		void	LINKS(std::string buffer, fdList &allFds, int userNbr);
+		void	TIME(std::string buffer, fdList &allFds, int userNbr);
+		void	CONNECT(std::string buffer, fdList &allFds, int userNbr);
+		void	TRACE(std::string buffer, fdList &allFds, int userNbr);
+		void	ADMIN(std::string buffer, fdList &allFds, int userNbr);
+		void	INFO(std::string buffer, fdList &allFds, int userNbr);
+		void	PRIVMSG(std::string buffer, fdList &allFds, int userNbr);
+		void	NOTICE(std::string buffer, fdList &allFds, int userNbr);
+		void	WHO(std::string buffer, fdList &allFds, int userNbr);
+		void	WHOIS(std::string buffer, fdList &allFds, int userNbr);
+		void	WHOWAS(std::string buffer, fdList &allFds, int userNbr);
+		void	KILL(std::string buffer, fdList &allFds, int userNbr);
+		void	PING(std::string buffer, fdList &allFds, int userNbr);
+		void	PONG(std::string buffer, fdList &allFds, int userNbr);
+		void	ERROR(std::string buffer, fdList &allFds, int userNbr);
+		void	AWAY(std::string buffer, fdList &allFds, int userNbr);
+		void	REHASH(std::string buffer, fdList &allFds, int userNbr);
+		void	RESTART(std::string buffer, fdList &allFds, int userNbr);
+		void	SUMMON(std::string buffer, fdList &allFds, int userNbr);
+		void	USER(std::string buffer, fdList &allFds, int userNbr);
+		void	OPERWALL(std::string buffer, fdList &allFds, int userNbr);
+		void	USERHOST(std::string buffer, fdList &allFds, int userNbr);
+		void	ISON(std::string buffer, fdList &allFds, int userNbr);
 
 
 /* ************************************************************************** */
@@ -146,16 +147,16 @@ struct functionTab
 
 
 	//std::string (*cmdPtr[cmdNbr])(void) = 
-	void (*cmdPtr[cmdNbr])(std::string buffer, fdList allFds, int user) = 
+	void (*cmdPtr[cmdNbr])(std::string buffer, fdList &allFds, int userNbr) = 
 	{
 		//ft_test
 
 		//4. Détails des messages
 
 		// 	//4.1 Etablissement de connexion
-		// PASS,
-		NICK
-		// USER,
+		PASS,
+		NICK,
+		USER
 		// SERVER,
 		// OPER,
 		// QUIT,
@@ -244,13 +245,16 @@ struct channelData
 
 
 
-struct fdList //allFds in code
+struct fdList //&allFds in code
 {
 		struct epoll_event events[MAX_EVENTS];
 		int epollFd;
 		int serverFd;
-		int userList[MAX_EVENTS]; //list of user's fd
-		clientData userData[MAX_EVENTS]; 
+		//int userList[MAX_EVENTS]; //list of userNbr's fd
+		std::vector<int> userList;
+		//clientData userData[MAX_EVENTS];
+		std::vector<clientData> userData;
+		
 		int nbrUser;
 		functionTab parsingTab;
 };
@@ -265,15 +269,16 @@ struct fdList //allFds in code
 
 void ft_error(std::string str);
 void close_fd(int fd);
+void cmd_error(fdList &allFds, int userNbr, std::string error);
+void split(std::string const &str, const char delim, std::vector<std::string> &out);
+void print_registered_msg(fdList &allFds, int userNbr);
 
 /* ************************************************************************** */
 /* ******************************START SERVER******************************** */
 /* ************************************************************************** */
 
-void cmd_error(fdList allFds, int user, std::string error);
-void split(std::string const &str, const char delim, std::vector<std::string> &out);
 void initialize(char **av);									//1st
-void start_loop(fdList allFds);								//3rd
+void start_loop(fdList &allFds);								//3rd
 
 /* ************************************************************************** */
 /* *****************************EPOLL UTILITY******************************** */
@@ -286,12 +291,12 @@ int epoll_start();											//2nd
 /* *************************CONNECTION AND REQUEST*************************** */
 /* ************************************************************************** */
 
-void new_connection(fdList allFds, struct epoll_event newClient);
-bool clientRequest(fdList allFds, int user);
+void new_connection(fdList &allFds, struct epoll_event newClient);
+bool clientRequest(fdList &allFds, int userNbr);
 
 /* ************************************************************************** */
 /* ***************************COMMANDS PARSING******************************* */
 /* ************************************************************************** */
 
-void parse_commands(std::string buffer, fdList allFds, int user);
+void parse_commands(std::string buffer, fdList &allFds, int userNbr);
 

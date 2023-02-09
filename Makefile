@@ -6,7 +6,7 @@
 #    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/01 17:27:29 by apommier          #+#    #+#              #
-#    Updated: 2023/02/07 14:47:20 by apommier         ###   ########.fr        #
+#    Updated: 2023/02/09 14:35:20 by apommier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,8 @@ SRCS := main.cpp\
 		commands/auth/utils.cpp
 
 CC 			= c++
-FLAGS 		= -g 
-#-Wall -Wextra -Werror
+FLAGS 		= -g  
+#FLAGS2 		= -Wall -Wextra -Werror -std=c++98
 DIR_OBJ     := obj
 DIR_INC		= -I ./includes/
 DIR_SRCS    := ./srcs
@@ -40,10 +40,10 @@ all: ${NAME}
 
 ${DIR_OBJ}/%.o:	${DIR_SRCS}/%.cpp
 	mkdir -p ${dir $@}
-	${CC} ${FLAGS} ${DIR_INC} -o $@ -c $< -MMD
+	${CC} ${FLAGS} ${FLAGS2} ${DIR_INC} -o $@ -c $< -MMD
 
 ${NAME}: ${OBJS}
-		${CC} ${FLAGS} ${OBJS} -o ${NAME}
+		${CC} ${FLAGS} ${FLAGS2} ${OBJS} -o ${NAME}
 
 clean:
 	${RM} ${DIR_OBJ}

@@ -6,25 +6,43 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 22:34:36 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/07 11:24:51 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/09 15:07:06 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_irc.hpp"
 
-bool clientRequest(fdList allFds, int user)//, 
+bool clientRequest(fdList &allFds, int userNbr)//, 
 {
-	int clientFd = allFds.events[user].data.fd;
+	//int userFd = allFds.events[user].data.fd;
 	char buf[1024] = {0};
+	std::string buffer;
 	size_t len = 1024;
 	
+	//buf.reserve(1024);
 	//se demerder pour join quand pas \n
-	std::cout << "client request!" << std::endl;
-	if (recv(clientFd, buf, len, 0) == -1)
+	// std::cout << "fd in client request " << allFds.userData[userNbr].fd << std::endl;
+	// std::cout << "fd of list in client request " << allFds.userList[userNbr] << std::endl;
+	// std::cout << "user nbr " << userNbr << std::endl;
+	
+	//std::cout << "client request!" << std::endl;
+	//if (recv(allFds.userData[userNbr].fd, buf, len, 0) == -1)
+	if (recv(allFds.userData[userNbr].fd, buf, len, 0) == -1)
 		ft_error("recv() error");
+	buffer = buf;
+	if (buffer.empty())
+	{
+		//delete client
+		close(allFds.userData[userNbr].fd);
+		allFds.userData.erase(allFds.userData.begin() + userNbr);
+		allFds.userList.erase(allFds.userList.begin() + userNbr);
+		allFds.nbrUser--;
+		std::cout << "buffer empty\n";
+		return (1);
+	}
 	std::cout << "BUFFER: ---" << buf << "---" << std::endl;
 	
 	//split with \n and while (tab de split) -> parsing
-	parse_commands(buf, allFds, user);
+	parse_commands((std::string)buf, allFds, userNbr);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:28:38 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/07 15:13:27 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/09 13:19:51 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,25 @@
 //           ERR_NONICKNAMEGIVEN             ERR_ERRONEUSNICKNAME
 //           ERR_NICKNAMEINUSE               ERR_NICKCOLLISION
 
-void	NICK(std::string buffer, fdList allFds, int user)
+void	NICK(std::string buffer, fdList &allFds, int userNbr)
 {
 	std::vector<std::string> splitBuff;
 	
 	split(buffer, ' ', splitBuff);
+	if (splitBuff.size() < 2)
+	{
+		cmd_error(allFds, allFds.userData[userNbr].fd, "431 * NICK :No nickname given\n");
+		//write(allFds.userData[user].fd, "ERR_NEEDMOREPARAMS", 18);
+		return ;
+	}
 	//if nickname ok then (another user has it? )
-	allFds.userData[user].nickname = splitBuff[1];
+	//ERR_NONICKNAMEGIVEN
+	allFds.userData[userNbr].nickname = splitBuff[1];
+	if (!allFds.userData[userNbr].registered && !allFds.userData[userNbr].userName.empty())
+	{
+		allFds.userData[userNbr].registered = 1;
+		print_registered_msg(allFds, userNbr);
+	}
+	
 	return ;
 }

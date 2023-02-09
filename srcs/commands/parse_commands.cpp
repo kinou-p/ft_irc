@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 22:01:25 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/07 15:18:41 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/09 13:20:39 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ std::string ft_test()
 	return ("prout");
 }
 
-void parse_commands(std::string buffer, fdList allFds, int user)
+void parse_commands(std::string buffer, fdList &allFds, int userNbr)
 {
 	std::string cmd = buffer;
 	std::vector<std::string> splitBuff;
@@ -32,7 +32,7 @@ void parse_commands(std::string buffer, fdList allFds, int user)
 	while (splitBuff[0] != allFds.parsingTab.cmdName[a] && a < allFds.parsingTab.cmdNbr)
 		a++;
 	if (a == allFds.parsingTab.cmdNbr)
-		std::cout << "Command not found\n";
+		std::cout << "Command not found\n"; 
 	else
-		allFds.parsingTab.cmdPtr[a](buffer, allFds, user);
+		allFds.parsingTab.cmdPtr[a](buffer, allFds, userNbr);
 }
