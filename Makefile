@@ -6,7 +6,7 @@
 #    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/01 17:27:29 by apommier          #+#    #+#              #
-#    Updated: 2023/02/09 14:35:20 by apommier         ###   ########.fr        #
+#    Updated: 2023/02/10 08:18:36 by apommier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,11 +22,14 @@ SRCS := main.cpp\
 		commands/auth/nick.cpp\
 		commands/auth/pass.cpp\
 		commands/auth/user.cpp\
-		commands/auth/utils.cpp
+		commands/auth/cmd_utils.cpp\
+		commands/channel/channel_utils.cpp\
+		commands/channel/join.cpp\
+		commands/not_done_cmd.cpp #special (temporary)
 
 CC 			= c++
 FLAGS 		= -g  
-#FLAGS2 		= -Wall -Wextra -Werror -std=c++98
+FLAGS2 		= -Wall -Wextra -Werror -std=c++98
 DIR_OBJ     := obj
 DIR_INC		= -I ./includes/
 DIR_SRCS    := ./srcs

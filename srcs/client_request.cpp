@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 22:34:36 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/09 15:07:06 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/09 21:39:38 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ bool clientRequest(fdList &allFds, int userNbr)//,
 	std::cout << "BUFFER: ---" << buf << "---" << std::endl;
 	
 	//split with \n and while (tab de split) -> parsing
-	parse_commands((std::string)buf, allFds, userNbr);
+	parse_commands(buf, allFds, userNbr);
 	return (1);
 }

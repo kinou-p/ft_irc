@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.cpp                                          :+:      :+:    :+:   */
+/*   cmd_utils.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 14:45:45 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/09 14:01:23 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/10 09:27:27 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void ft_putstr_fd(int fd, std::string str)
 
 void cmd_error(fdList &allFds, int fd, std::string error)
 {
+	(void)allFds; //to delete
 	write(fd, ":irc.local ", 11);
 	write(fd, error.c_str(), error.size());
 }

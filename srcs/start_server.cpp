@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:44:20 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/09 13:50:16 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/10 09:18:45 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void initialize(char **av)
 	//int newSockFd = 0;
 	int opt = 1;
 	struct sockaddr_in addr;
-	int addrLen = sizeof(addr);
+	//int addrLen = sizeof(addr);
 	fdList	allFds;
 
 	allFds.nbrUser = 0;

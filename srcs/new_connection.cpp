@@ -6,13 +6,13 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 22:26:27 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/09 14:06:13 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/10 09:19:45 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_irc.hpp"
 
-void new_connection(fdList &allFds, struct epoll_event newClient)
+void new_connection(fdList &allFds)
 {
 	struct sockaddr_in addr;
 	int addrLen = sizeof(addr);
