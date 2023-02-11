@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:27:37 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/10 09:59:10 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/11 14:48:19 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@
 #include <netinet/in.h> //struct socket
 #include <sys/epoll.h> //epoll ensemble
 #include <unistd.h> //close()
+#include <fcntl.h> //fcntl
 #include <vector>
 #include <algorithm>
 
 #include "function_tab.hpp"
 
 #define MAX_EVENTS 5
+#define MAX_CHAN 10
 #define READ_SIZE 10
 #define CMD_NBR 10
 
@@ -35,7 +37,7 @@
 
 struct channelData;
 
-struct clientData
+struct clientData //each client have one
 {
 	bool registered;
 
@@ -49,38 +51,30 @@ struct clientData
 	std::string serverName;
 
 	std::string cmdBuffer;
-	//std::string joinedChan[20];
-	//channelData *joinedChan; //is there a limit?
-	
-	// std::vector<std::string> joinedChan;
 	std::vector<channelData *> joinedChan;
 	int fd;
 };
 
-struct channelData
+struct channelData //each chan have one
 {
-	//std::string	userList[MAX_EVENTS];
-	
-	//clientData userList[MAX_EVENTS];
 	std::string name;
-	std::vector<clientData> userList;
-	std::vector<clientData> banList;
+	std::vector<clientData *> userList;
+	std::vector<clientData *> banList;
 	int op;
 	int nbrUser;
 };
 
-
-
-struct fdList //&allFds in code
+struct fdList //&allFds in code | /!\ only one on the server | REFERENCE ONLY
 {
 		struct epoll_event events[MAX_EVENTS];
 		int epollFd;
 		int serverFd;
-		//int userList[MAX_EVENTS]; //list of userNbr's fd
 		std::vector<int> userList;
 		std::vector<channelData> channelList;
-		//clientData userData[MAX_EVENTS];
 		std::vector<clientData> userData;
+
+		// std::map<int, channelData> channelList;
+		// std::map<int, clientData> userData;
 		
 		int nbrUser;
 		functionTab parsingTab;
@@ -88,30 +82,45 @@ struct fdList //&allFds in code
 
 
 
+/* ************************************************************************** */
+/* *********************************UTILS************************************ */
+/* ************************************************************************** */
 
+void ft_putstr_fd(int fd, std::string str);
+void cmd_error(fdList &allFds, int userNbr, std::string error);
+void ft_error(std::string str);
+void close_fd(int fd);
+void del_user_in_chan(clientData *user, channelData *chan);
+void delete_user(fdList &allFds, int userNbr);
+
+/* ************************************************************************** */
+/* *******************************AUTH UTILS********************************* */
+/* ************************************************************************** */
+
+void print_registered_msg(fdList &allFds, int userNbr);
 
 /* ************************************************************************** */
 /* *******************************CMD UTILS********************************** */
 /* ************************************************************************** */
 
-void ft_error(std::string str);
-void close_fd(int fd);
-void cmd_error(fdList &allFds, int userNbr, std::string error);
 void split(std::string const &str, const char delim, std::vector<std::string> &out);
-void print_registered_msg(fdList &allFds, int userNbr);
+void split_but_keep(std::string const &str, const char delim, std::vector<std::string> &out); //same as split but keep one delimeter
+
 
 /* ************************************************************************** */
 /* *******************************CHAN UTILS********************************* */
 /* ************************************************************************** */
 
 int find_channel(fdList &allFds, std::string chanName);
+int find_user(fdList &allFds, std::string userName);
+void send_msg(fdList &allFds, std::string msg, std::string dest, int userNbr); //in privmsg.cpp
 
 /* ************************************************************************** */
 /* ******************************START SERVER******************************** */
 /* ************************************************************************** */
 
-void initialize(char **av);									//1st
-void start_loop(fdList &allFds);								//3rd
+void initialize(char **av); //start_server.cpp
+void start_loop(fdList &allFds); //server_loop.cpp
 
 /* ************************************************************************** */
 /* *****************************EPOLL UTILITY******************************** */

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 22:34:36 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/09 21:39:38 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/11 13:20:49 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,24 @@ bool clientRequest(fdList &allFds, int userNbr)//,
 	if (buffer.empty())
 	{
 		//delete client
-		close(allFds.userData[userNbr].fd);
-		allFds.userData.erase(allFds.userData.begin() + userNbr);
-		allFds.userList.erase(allFds.userList.begin() + userNbr);
-		allFds.nbrUser--;
-		std::cout << "buffer empty\n";
+		delete_user(allFds, userNbr);
+		// close(allFds.userData[userNbr].fd);
+		// allFds.userData.erase(allFds.userData.begin() + userNbr);
+		// allFds.userList.erase(allFds.userList.begin() + userNbr);
+		// allFds.nbrUser--;
+		// std::cout << "buffer empty\n";
 		return (1);
 	}
-	std::cout << "BUFFER: ---" << buf << "---" << std::endl;
+	//std::cout << "BUFFER: ---" << buf << "---" << std::endl;
 	
 	//split with \n and while (tab de split) -> parsing
-	parse_commands(buf, allFds, userNbr);
+
+	std::vector<std::string> splitBuff;
+	split_but_keep(buffer, '\n', splitBuff);
+	for (size_t i = 0; i < splitBuff.size(); i++)
+	{
+		parse_commands(splitBuff[i], allFds, userNbr);	
+	}
+
 	return (1);
 }

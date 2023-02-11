@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 22:04:11 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/10 09:30:45 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/11 08:53:59 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,13 +164,13 @@ void	INFO(std::string buffer, fdList &allFds, int userNbr)
 	return ;
 }
 
-void	PRIVMSG(std::string buffer, fdList &allFds, int userNbr)
-{
-	(void)buffer; 
-	(void)allFds;
-	(void)userNbr;
-	return ;
-}
+// void	PRIVMSG(std::string buffer, fdList &allFds, int userNbr)
+// {
+// 	(void)buffer; 
+// 	(void)allFds;
+// 	(void)userNbr;
+// 	return ;
+// }
 
 void	NOTICE(std::string buffer, fdList &allFds, int userNbr)
 {

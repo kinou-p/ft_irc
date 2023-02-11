@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:44:20 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/10 09:18:45 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/11 14:49:36 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ void initialize(char **av)
 	//int addrLen = sizeof(addr);
 	fdList	allFds;
 
+	allFds.userData.reserve(MAX_EVENTS);
+	allFds.channelList.reserve(MAX_CHAN);
+	
 	allFds.nbrUser = 0;
 	allFds.serverFd = socket(AF_INET, SOCK_STREAM, 0);
 	if (allFds.serverFd == -1)
