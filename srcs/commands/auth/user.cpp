@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:40:39 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/12 13:36:30 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/12 16:26:48 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,33 @@
 //Commande: USER
 //Paramètres: <nom d'utilisateur> <hôte> <nom de serveur> :<nom réel>
 //ERR_NEEDMOREPARAMS	ERR_ALREADYREGISTRED
+
+
+
+struct modeChan
+{
+	bool o;
+	bool p;
+	bool s; 
+	bool i; 
+	bool t; 
+	bool n; 
+	bool m;
+	bool l; 
+	bool b; 
+	bool v; 
+	bool k; 
+};
+
+struct modeUser
+{
+	bool i;
+	bool s;
+	bool w; 
+	bool o; 
+};
+
+
 
 void USER(std::string buffer, fdList &allFds, int userNbr)
 {

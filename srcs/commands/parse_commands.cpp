@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 22:01:25 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/12 14:21:56 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/12 16:19:20 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ void parse_commands(std::string buffer, fdList &allFds, int userNbr)
 		//allFds.parsingTab.cmdPtr[a]
 		//JOIN(allFds.userData[userNbr].cmdBuffer, allFds, userNbr);
 	}
-	allFds.userData[userNbr].cmdBuffer.clear();
+	if (splitBuff[0] != "QUIT")
+		allFds.userData[userNbr].cmdBuffer.clear();
 }

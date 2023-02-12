@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:27:37 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/12 15:48:37 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/12 17:31:11 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <iostream> //std::cout | cerr
 #include <netinet/in.h> //struct socket
 #include <sys/epoll.h> //epoll ensemble
-#include <unistd.h> //close()
+#include <unistd.h> //close(0)
 #include <fcntl.h> //fcntl
 #include <vector>
 #include <algorithm>
@@ -39,6 +39,48 @@
 
 struct channelData;
 
+struct chanMode
+{
+	bool o; //- donne/retire les privilèges d'opérateur de canal
+	bool p; //- drapeau de canal privé
+	bool s; //- drapeau de canal secret
+	bool i; //- drapeau de canal accessible uniquement sur invitation
+	bool t; //- drapeau de sujet de canal modifiable uniquement par les opérateurs
+	bool n; //- pas de messages dans un canal provenant de clients à l'extérieur du canal
+	bool m; //- canal modéré
+	bool l; //- définit le nombre maximal de personnes dans un canal
+	bool b; //- définit un masque de bannissement pour interdire l'accès à des utilisateurs
+	bool v; //- donne/retire la possibilité de parler dans un canal modéré
+	bool k; //- définit la clé du canal (mot de passe)
+	chanMode() 
+	: o(0),
+	p(0),
+	s(0),
+	i(0),
+	t(0),
+	n(0),
+	m(0),
+	l(0),
+	b(0),
+	v(0),
+	k(0)	{}
+								
+};
+
+struct userMode
+{
+	bool i; //- marque un utilisateur comme invisible ;
+	bool s; //- marque un utilisateur comme recevant les notifications du serveur ;
+	bool w; //- l'utilisateur reçoit les WALLOPs ;
+	bool o; //- drapeau d'opérateur.
+	
+	userMode() 
+	: i(0),
+	s(0),
+	w(0),
+	o(0)	{}
+};
+
 struct clientData //each client have one
 {
 	bool registered;
@@ -54,6 +96,9 @@ struct clientData //each client have one
 
 	std::string cmdBuffer;
 	std::vector<channelData *> joinedChan;
+
+	userMode mode;
+	
 	int fd;
 	int op;
 };
@@ -61,9 +106,16 @@ struct clientData //each client have one
 struct channelData //each chan have one
 {
 	std::string name;
+	
 	std::vector<clientData *> userList;
 	std::vector<clientData *> banList;
-	int op;
+	std::vector<clientData *> opList;
+
+	chanMode mode;
+	std::string password;
+	int	maxUser;
+	//int banMask ???
+	
 	int nbrUser;
 };
 
@@ -73,15 +125,11 @@ struct fdList //&allFds in code | /!\ only one on the server | REFERENCE ONLY
 		int epollFd;
 		int serverFd;
 		std::vector<int> userList;
-		// std::vector<channelData> channelList;
-		// std::vector<clientData> userData;
 		
 		accessList<channelData> channelList;
 		accessList<clientData> userData;
-		
+
 		int alive;
-		// std::map<int, channelData> channelList;
-		// std::map<int, clientData> userData;
 		
 		int nbrUser;
 		functionTab parsingTab;
