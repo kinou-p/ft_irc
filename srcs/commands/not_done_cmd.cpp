@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 22:04:11 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/11 08:53:59 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/11 20:06:45 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,13 @@ void	SERVER(std::string buffer, fdList &allFds, int userNbr)
 	return ;
 }
 
-void	OPER(std::string buffer, fdList &allFds, int userNbr)
-{
-	(void)buffer; 
-	(void)allFds;
-	(void)userNbr;
-	return ;
-}
-
-void	QUIT(std::string buffer, fdList &allFds, int userNbr)
-{
-	(void)buffer; 
-	(void)allFds;
-	(void)userNbr;
-	return ;
-}
-
-void	SQUIT(std::string buffer, fdList &allFds, int userNbr)
-{
-	(void)buffer; 
-	(void)allFds;
-	(void)userNbr;
-	return ;
-}
+// void	OPER(std::string buffer, fdList &allFds, int userNbr)
+// {
+// 	(void)buffer; 
+// 	(void)allFds;
+// 	(void)userNbr;
+// 	return ;
+// }
 
 void	PART(std::string buffer, fdList &allFds, int userNbr)
 {
@@ -52,21 +36,8 @@ void	PART(std::string buffer, fdList &allFds, int userNbr)
 	return ;
 }
 
-void	MODE(std::string buffer, fdList &allFds, int userNbr)
-{
-	(void)buffer; 
-	(void)allFds;
-	(void)userNbr;
-	return ;
-}
 
-void	TOPIC(std::string buffer, fdList &allFds, int userNbr)
-{
-	(void)buffer; 
-	(void)allFds;
-	(void)userNbr;
-	return ;
-}
+
 
 void	NAMES(std::string buffer, fdList &allFds, int userNbr)
 {
@@ -84,21 +55,9 @@ void	LIST(std::string buffer, fdList &allFds, int userNbr)
 	return ;
 }
 
-void	INVITE(std::string buffer, fdList &allFds, int userNbr)
-{
-	(void)buffer; 
-	(void)allFds;
-	(void)userNbr;
-	return ;
-}
 
-void	KICK(std::string buffer, fdList &allFds, int userNbr)
-{
-	(void)buffer; 
-	(void)allFds;
-	(void)userNbr;
-	return ;
-}
+
+
 
 void	VERSION(std::string buffer, fdList &allFds, int userNbr)
 {
