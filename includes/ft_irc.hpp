@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:27:37 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/12 17:31:11 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/12 21:10:18 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ struct clientData //each client have one
 struct channelData //each chan have one
 {
 	std::string name;
+	std::string topic;
 	
 	std::vector<clientData *> userList;
 	std::vector<clientData *> banList;
@@ -126,7 +127,7 @@ struct fdList //&allFds in code | /!\ only one on the server | REFERENCE ONLY
 		int serverFd;
 		std::vector<int> userList;
 		
-		accessList<channelData> channelList;
+		accessList<channelData>	channelList;
 		accessList<clientData> userData;
 
 		int alive;
@@ -140,64 +141,69 @@ struct fdList //&allFds in code | /!\ only one on the server | REFERENCE ONLY
 
 
 
+/* ************************************************************************** */
+/* *******************************DEL USER*********************************** */
+/* ************************************************************************** */
+
+void	del_user_in_chan(clientData *user, channelData *chan);
+void	delete_user(fdList &allFds, int userNbr);
 
 /* ************************************************************************** */
 /* *********************************UTILS************************************ */
 /* ************************************************************************** */
 
-void ft_putstr_fd(int fd, std::string str);
-void cmd_error(fdList &allFds, int userNbr, std::string error);
-void ft_error(std::string str);
-void close_fd(int fd);
-void del_user_in_chan(clientData *user, channelData *chan);
-void delete_user(fdList &allFds, int userNbr);
+void	ft_putstr_fd(int fd, std::string str);
+void	cmd_error(fdList &allFds, int userNbr, std::string error);
+void	ft_error(std::string str);
+void	close_fd(int fd);
+int		contain_any(std::string str, std::string toFind);
 
 /* ************************************************************************** */
 /* *******************************AUTH UTILS********************************* */
 /* ************************************************************************** */
 
-void print_registered_msg(fdList &allFds, int userNbr);
+void	print_registered_msg(fdList &allFds, int userNbr);
 
 /* ************************************************************************** */
 /* *******************************CMD UTILS********************************** */
 /* ************************************************************************** */
 
-void split(std::string const &str, const char delim, std::vector<std::string> &out);
-void split_but_keep(std::string const &str, const char delim, std::vector<std::string> &out); //same as split but keep one delimeter
+void	split(std::string const &str, const char delim, std::vector<std::string> &out);
+void	split_but_keep(std::string const &str, const char delim, std::vector<std::string> &out); //same as split but keep one delimeter
 
 
 /* ************************************************************************** */
 /* *******************************CHAN UTILS********************************* */
 /* ************************************************************************** */
 
-int find_channel(fdList &allFds, std::string chanName);
-int find_user(fdList &allFds, std::string userName);
-void send_msg(fdList &allFds, std::string msg, std::string dest, int userNbr); //in privmsg.cpp
+int		find_channel(fdList &allFds, std::string chanName);
+int		find_user(fdList &allFds, std::string userName);
+void	send_msg(fdList &allFds, std::string msg, std::string dest, int userNbr); //in privmsg.cpp
 
 /* ************************************************************************** */
 /* ******************************START SERVER******************************** */
 /* ************************************************************************** */
 
-void initialize(char **av); //start_server.cpp
-void start_loop(fdList &allFds); //server_loop.cpp
+void	initialize(char **av); //start_server.cpp
+void	start_loop(fdList &allFds); //server_loop.cpp
 
 /* ************************************************************************** */
 /* *****************************EPOLL UTILITY******************************** */
 /* ************************************************************************** */
 
-void epoll_add(int epollFd, int fd);
-int epoll_start();											//2nd
+void	epoll_add(int epollFd, int fd);
+int		epoll_start();											//2nd
 
 /* ************************************************************************** */
 /* *************************CONNECTION AND REQUEST*************************** */
 /* ************************************************************************** */
 
-void new_connection(fdList &allFds);
-bool clientRequest(fdList &allFds, int userNbr);
+void	new_connection(fdList &allFds);
+bool	clientRequest(fdList &allFds, int userNbr);
 
 /* ************************************************************************** */
 /* ***************************COMMANDS PARSING******************************* */
 /* ************************************************************************** */
 
-void parse_commands(std::string buffer, fdList &allFds, int userNbr);
+void	parse_commands(std::string buffer, fdList &allFds, int userNbr);
 

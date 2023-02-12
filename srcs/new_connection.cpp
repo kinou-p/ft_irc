@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 22:26:27 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/12 14:17:36 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/12 21:42:07 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void new_connection(fdList &allFds)
 	//std::cout << "in new adress  " << &allFds << std::endl;
 	//std::cout << "new connection !" << std::endl;
 
-	if (MAX_EVENTS == allFds.nbrUser)
-	{
-		std::cout << "new connection refused, already full" << std::endl;
-		return ;
-	}
+	// if (MAX_EVENTS == allFds.nbrUser)
+	// {
+	// 	std::cout << "new connection refused, already full" << std::endl;
+	// 	return ;
+	// }
 
 	//int newUserFd;
 	//allFds.userList.push_back(newUserFd);

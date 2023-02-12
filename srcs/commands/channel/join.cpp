@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:40:33 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/12 17:33:31 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/12 22:03:21 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,23 @@ void JOIN(std::string buffer, fdList &allFds, int userNbr)
 	std::cout << "==========join start========\n";
 
 	std::cout << "userNbr= " << userNbr << std::endl;
+	if (!allFds.userData[userNbr].registered) 
+	{
+		/*change error*/
+		cmd_error(allFds, allFds.userData[userNbr].fd, "451 * JOIN :You have not regestered\n"); //ERR_NEEDMOREPARAMS
+		return ;
+	}
 	split(buffer, ' ', splitBuff);
 	if (splitBuff.size() < 2) 
 	{
 		/*change error*/
 		cmd_error(allFds, allFds.userData[userNbr].fd, "461 * JOIN :Not enough parameters\n"); //ERR_NEEDMOREPARAMS
+		return ;
+	}
+	//if (splitBuff[1].find(' ') != std::string::npos || splitBuff[1].find(7) != std::string::npos) 
+	if (splitBuff[1][0] != '#' && splitBuff[1][0] != '&')
+	{
+		//leave_all(allFds, userNbr);
 		return ;
 	}
 	if (splitBuff[1] == "0") 

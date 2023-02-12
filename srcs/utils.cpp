@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:46:41 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/12 14:31:10 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/12 20:52:45 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,32 +42,18 @@ void cmd_error(fdList &allFds, int fd, std::string error)
 	write(fd, error.c_str(), error.size());
 }
 
+int contain_any(std::string str, std::string toFind)
+{
+	for (int i = 0; toFind[i] != -1; i++)
+	{
+		if (str.find(toFind[i]) != std::string::npos)
+			return (1);
+	}
+	return (0);
+}
+
 // void find_user_in_chan(fdList &allFds, channelData *chan)
 // {
 	
 // }
 
-void del_user_in_chan(clientData *user, channelData *chan)
-{
-	size_t i;
-	for (i = 0; user != chan->userList[i]; i++)
-		;
-	chan->userList.erase(chan->userList.begin() + i);
-}
-
-void delete_user(fdList &allFds, int userNbr)
-{
-	std::cout << "Delete user nbr " << userNbr << std::endl;
-	
-	for (size_t i = 0; i < allFds.userData[userNbr].joinedChan.size(); i++)//all joined chan
-	{
-		del_user_in_chan(&allFds.userData[userNbr], allFds.userData[userNbr].joinedChan[i]);
-		//allFds.userData[userNbr].joinedChan[i].erase(find_user_in_chan(allFds.userData[userNbr].joinedChan[i])/*find user in chan*/)
-	}
-	close(allFds.userData[userNbr].fd);
-	
-	allFds.userData.erase(allFds.userData.begin() + userNbr);
-	allFds.userList.erase(allFds.userList.begin() + userNbr);
-	
-	allFds.nbrUser--;
-}

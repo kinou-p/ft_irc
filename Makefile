@@ -6,7 +6,7 @@
 #    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/01 17:27:29 by apommier          #+#    #+#              #
-#    Updated: 2023/02/12 15:44:05 by apommier         ###   ########.fr        #
+#    Updated: 2023/02/12 20:53:25 by apommier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRCS := main.cpp\
 		client_request.cpp\
 		new_connection.cpp\
 		server_loop.cpp\
+		delete_user.cpp\
 \
 		commands/cmd_utils.cpp\
 		commands/parse_commands.cpp\
