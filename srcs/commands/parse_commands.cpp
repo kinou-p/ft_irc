@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 22:01:25 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/11 22:51:59 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/12 14:21:56 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void parse_commands(std::string buffer, fdList &allFds, int userNbr)
 		return ;
 	allFds.userData[userNbr].cmdBuffer.erase(allFds.userData[userNbr].cmdBuffer.size() - 1);
 	split(allFds.userData[userNbr].cmdBuffer, ' ', splitBuff);
-	
+
 	//std::cout << "BUFFER In PARSING: ---" << allFds.userData[userNbr].cmdBuffer << "---" << std::endl;
 	while (a < allFds.parsingTab.cmdNbr - 1 && splitBuff[0] != allFds.parsingTab.cmdName[a]) 
 		a++;

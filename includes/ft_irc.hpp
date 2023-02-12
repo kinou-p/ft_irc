@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:27:37 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/11 22:49:29 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/12 15:48:37 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@
 #include <fcntl.h> //fcntl
 #include <vector>
 #include <algorithm>
+#include <list>
 
 #include "function_tab.hpp"
+#include "accessList.hpp"
 
 #define MAX_EVENTS 5
 #define MAX_CHAN 10
@@ -53,6 +55,7 @@ struct clientData //each client have one
 	std::string cmdBuffer;
 	std::vector<channelData *> joinedChan;
 	int fd;
+	int op;
 };
 
 struct channelData //each chan have one
@@ -70,15 +73,23 @@ struct fdList //&allFds in code | /!\ only one on the server | REFERENCE ONLY
 		int epollFd;
 		int serverFd;
 		std::vector<int> userList;
-		std::vector<channelData> channelList;
-		std::vector<clientData> userData;
-
+		// std::vector<channelData> channelList;
+		// std::vector<clientData> userData;
+		
+		accessList<channelData> channelList;
+		accessList<clientData> userData;
+		
+		int alive;
 		// std::map<int, channelData> channelList;
 		// std::map<int, clientData> userData;
 		
 		int nbrUser;
 		functionTab parsingTab;
 };
+
+
+
+
 
 
 

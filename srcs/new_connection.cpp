@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 22:26:27 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/11 14:47:52 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/12 14:17:36 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void new_connection(fdList &allFds)
 	
 	clientData newElement;
 	newElement.fd = newFd;
+	newElement.op = 0; 
 	allFds.userData.push_back(newElement);
 	//allFds.userData[allFds.nbrUser].fd = allFds.userList[allFds.nbrUser];
 	//std::cout << "newConnection | user in data fd = " << allFds.userData[allFds.nbrUser].fd << std::endl;

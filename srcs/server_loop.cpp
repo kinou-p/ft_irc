@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:58:13 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/11 23:51:32 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/12 14:21:04 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,19 @@
 
 void start_loop(fdList &allFds)
 {
-	bool alive = true;
+	//bool alive = true;
 	//int readChar;
 	int eventNbr;
 	int i;
 	//int userId;
 	int nbr;
 	
+	
+	allFds.alive = 1;
 	std::cout << "serverFd: " << allFds.serverFd << std::endl;
-	while (alive)
+	while (allFds.alive)
 	{
-		std::cout << "loop" << std::endl;
+		//std::cout << "loop" << std::endl;
 		//std::cout << "\n\n\nwhile alive event loop" << std::endl;
 		//std::cout << "in loop nbr user = " << allFds.nbrUser << std::endl;
 		eventNbr = epoll_wait(allFds.epollFd, allFds.events, MAX_EVENTS, 5000);
@@ -44,8 +46,9 @@ void start_loop(fdList &allFds)
 			{
 				nbr = find(allFds.userList.begin(), allFds.userList.end(), allFds.events[i].data.fd) - allFds.userList.begin();
 				//if (!clientRequest(allFds, i))
-				if (!clientRequest(allFds, nbr))
-					alive = false;
+				// if (!clientRequest(allFds, nbr))
+				// 	alive = false;
+				clientRequest(allFds, nbr);
 
 			}
 		}

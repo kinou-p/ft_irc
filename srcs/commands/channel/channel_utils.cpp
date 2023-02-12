@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:21:57 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/11 12:25:58 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/12 15:23:10 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int find_channel(fdList &allFds, std::string chanName)//return channel nbr
 {
-	std::vector<channelData>::iterator start = allFds.channelList.begin();
-	std::vector<channelData>::iterator pastEnd = allFds.channelList.end();
+	std::_List_iterator<channelData> start = allFds.channelList.begin();
+	std::_List_iterator<channelData> pastEnd = allFds.channelList.end();
 	std::cout << "name1= ---" << chanName << "---\n";
 	while (start != pastEnd)
 	{
@@ -31,8 +31,8 @@ int find_channel(fdList &allFds, std::string chanName)//return channel nbr
 
 int find_user(fdList &allFds, std::string userName)//return direct user fd
 {
-	std::vector<clientData>::iterator start = allFds.userData.begin();
-	std::vector<clientData>::iterator pastEnd = allFds.userData.end();
+	std::_List_iterator<clientData> start = allFds.userData.begin();
+	std::_List_iterator<clientData> pastEnd = allFds.userData.end();
 	std::cout << "name1= ---" << userName << "---\n";
 	while (start != pastEnd)
 	{

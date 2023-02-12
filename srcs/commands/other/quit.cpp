@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:10:26 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/11 19:10:44 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/12 14:09:33 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 void	QUIT(std::string buffer, fdList &allFds, int userNbr)
 {
-	(void)buffer; 
-	(void)allFds;
-	(void)userNbr;
+	std::vector<std::string> splitBuff;
+	split(buffer, ' ', splitBuff);
+	if (splitBuff.size() == 2)
+	{
+		//print message?
+	}
+	delete_user(allFds, userNbr);
 	return ;
 }

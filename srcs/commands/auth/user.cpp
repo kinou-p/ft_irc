@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:40:39 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/11 22:44:06 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/12 13:36:30 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@
 
 void USER(std::string buffer, fdList &allFds, int userNbr)
 {
-
-	(void)buffer; 
-	(void)allFds;
-	(void)userNbr;
 	if (allFds.userData[userNbr].registered == 1)
 	{
 		cmd_error(allFds, allFds.userData[userNbr].fd, "462 * USER :You may not reregister\n");
