@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:27:33 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/09 14:39:07 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/12 22:35:11 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 int main(int ac, char **av)
 {
 	if (!(ac == 3 || ac == 2))
-		ft_error("wrong number of arguments\nFORMAT: ./ircserv <port> <password>");
+	{
+		//ft_error("wrong number of arguments\nFORMAT: ./ircserv <port> <password>");
+		std::cout << "wrong number of arguments\nFORMAT: ./ircserv <port> <password>\n";
+		exit(1);
+	}
 	std::cout << "============Homemade IRC Server start============" << std::endl;
 	// try
 	// {

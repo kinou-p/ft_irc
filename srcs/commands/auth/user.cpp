@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:40:39 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/12 16:26:48 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/13 20:05:39 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,6 @@
 //Commande: USER
 //Paramètres: <nom d'utilisateur> <hôte> <nom de serveur> :<nom réel>
 //ERR_NEEDMOREPARAMS	ERR_ALREADYREGISTRED
-
-
-
-struct modeChan
-{
-	bool o;
-	bool p;
-	bool s; 
-	bool i; 
-	bool t; 
-	bool n; 
-	bool m;
-	bool l; 
-	bool b; 
-	bool v; 
-	bool k; 
-};
-
-struct modeUser
-{
-	bool i;
-	bool s;
-	bool w; 
-	bool o; 
-};
-
 
 
 void USER(std::string buffer, fdList &allFds, int userNbr)
@@ -72,7 +46,8 @@ void USER(std::string buffer, fdList &allFds, int userNbr)
 	allFds.userData[userNbr].realName = realName;
 	if (!allFds.userData[userNbr].nickname.empty())
 	{
-		allFds.userData[userNbr].registered = 1;
-		print_registered_msg(allFds, userNbr);
+		connect_client(allFds, userNbr);
+		// allFds.userData[userNbr].registered = 1;
+		// print_registered_msg(allFds, userNbr);
 	}
 }
