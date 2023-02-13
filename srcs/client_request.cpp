@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 22:34:36 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/12 21:40:10 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:21:07 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ bool clientRequest(fdList &allFds, int userNbr)//,
 	char buf[1024] = {0};
 	std::string buffer;
 	size_t len = 1024;
+	int ret = 0;
 	
 	//buf.reserve(1024);
 	//se demerder pour join quand pas \n
@@ -27,9 +28,10 @@ bool clientRequest(fdList &allFds, int userNbr)//,
 	
 	//std::cout << "client request!" << std::endl;
 	//if (recv(allFds.userData[userNbr].fd, buf, len, 0) == -1)
-	if (recv(allFds.userData[userNbr].fd, buf, len, 0) == -1)
+	if ((ret = recv(allFds.userData[userNbr].fd, buf, len, 0)) == -1)
 		ft_error("recv() error");
 	buffer = buf;
+	buffer[ret] = 0;
 	if (buffer.empty())
 	{
 		//delete client
@@ -42,6 +44,10 @@ bool clientRequest(fdList &allFds, int userNbr)//,
 		return (1);
 	}
 	std::cout << "BUFFER: ---" << buf << "---" << std::endl;
+	// for (int i = 0; buffer[i]; i++)
+	// {
+	// 	std::cout << i << " = " << (int)buffer[i] << std::endl;	
+	// }
 	
 	//split with \n and while (tab de split) -> parsing
 
@@ -49,7 +55,7 @@ bool clientRequest(fdList &allFds, int userNbr)//,
 	split_but_keep(buffer, '\n', splitBuff);
 	for (size_t i = 0; i < splitBuff.size(); i++)
 	{
-		parse_commands(splitBuff[i], allFds, userNbr);	
+		parse_commands(splitBuff[i], allFds, userNbr);
 	}
 
 	return (1);

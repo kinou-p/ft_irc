@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:40:33 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/12 22:03:21 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/13 20:21:28 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,33 @@ int chan_check(fdList &allFds, int userNbr, int chanNbr, std::vector<std::string
 	return (1);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void JOIN(std::string buffer, fdList &allFds, int userNbr)
 {
 	std::vector<std::string> splitBuff;
 	int chanNbr;
+	channelData joined_chan;
 	std::cout << "==========join start========\n";
 
 	std::cout << "userNbr= " << userNbr << std::endl;
 	if (!allFds.userData[userNbr].registered) 
 	{
 		/*change error*/
-		cmd_error(allFds, allFds.userData[userNbr].fd, "451 * JOIN :You have not regestered\n"); //ERR_NEEDMOREPARAMS
+		cmd_error(allFds, allFds.userData[userNbr].fd, "451 * JOIN :You have not registered\n"); //ERR_NEEDMOREPARAMS
 		return ;
 	}
 	split(buffer, ' ', splitBuff);
@@ -108,9 +124,7 @@ void JOIN(std::string buffer, fdList &allFds, int userNbr)
 		allFds.userData[userNbr].joinedChan.push_back(&allFds.channelList[chanNbr]); //add chan in user data
 		allFds.channelList[chanNbr].userList.push_back(&allFds.userData[userNbr]);//add user in chan data
 		allFds.channelList[chanNbr].nbrUser++;
-		//std::cout << "join2 nickname " << allFds.channelList.back().userList[0]->nickname << std::endl;
-		//std::cout << "join2 fd " << allFds.channelList.back().userList[0]->nickname << std::endl;
-		//message nickname joined the channel?
+		joined_chan = *(allFds.userData[userNbr].joinedChan.back());
 	}
 	else //chan doesn't exist yet
 	{
@@ -121,11 +135,16 @@ void JOIN(std::string buffer, fdList &allFds, int userNbr)
 		new_chan.nbrUser = 1;
 		new_chan.userList.push_back(&allFds.userData[userNbr]);
 		//new_chan.userList
-
+		joined_chan = new_chan;
 		allFds.channelList.push_back(new_chan);
 		allFds.userData[userNbr].joinedChan.push_back(&allFds.channelList.back());//add chan in user data
-		//std::cout << "join nickname " << allFds.channelList[0].userList[0]->nickname << std::endl;
-		//std::cout << "join fd " << allFds.channelList[0].userList[0]->fd << std::endl;
-		//message nickname created the channel?
 	}
+	for (int i = 0; i < joined_chan.nbrUser; i++)
+	{
+		std::string fullMsg;
+		fullMsg = ":" + allFds.userData[userNbr].nickname + "!" + allFds.userData[userNbr].userName + "@" + allFds.userData[userNbr].ip + " JOIN :" + joined_chan.name + "\n";
+		send(joined_chan.userList[i]->fd, fullMsg.c_str(), fullMsg.size(), 0);
+		std::cout << "loop here\n";
+	}
+	//send 352 and 315 or 353 and 366 (WHO or NAME)
 }

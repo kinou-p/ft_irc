@@ -6,13 +6,17 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:27:37 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/12 21:10:18 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:48:40 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <sys/socket.h> //socket function
+
+#include <netinet/in.h>//inet
+#include <arpa/inet.h>
+
 #include <cstdlib> 
 #include <cstring> //std::string
 #include <cerrno> //errno
@@ -85,7 +89,9 @@ struct clientData //each client have one
 {
 	bool registered;
 
-	clientData() { registered = 0; }
+	struct sockaddr_in addr;
+	std::string ip;
+
 	std::string nickname;
 	std::string password;
 
@@ -101,6 +107,8 @@ struct clientData //each client have one
 	
 	int fd;
 	int op;
+	clientData() : registered(0), op(0) {}
+	// { registered = 0; op = 0;}
 };
 
 struct channelData //each chan have one
@@ -157,6 +165,7 @@ void	cmd_error(fdList &allFds, int userNbr, std::string error);
 void	ft_error(std::string str);
 void	close_fd(int fd);
 int		contain_any(std::string str, std::string toFind);
+int		not_contain_other(std::string str, std::string toFind);
 
 /* ************************************************************************** */
 /* *******************************AUTH UTILS********************************* */
@@ -200,6 +209,7 @@ int		epoll_start();											//2nd
 
 void	new_connection(fdList &allFds);
 bool	clientRequest(fdList &allFds, int userNbr);
+void	connect_client(fdList &allFds, int userNbr);
 
 /* ************************************************************************** */
 /* ***************************COMMANDS PARSING******************************* */

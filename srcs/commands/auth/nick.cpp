@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:28:38 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/09 13:19:51 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/12 23:37:37 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ void	NICK(std::string buffer, fdList &allFds, int userNbr)
 	allFds.userData[userNbr].nickname = splitBuff[1];
 	if (!allFds.userData[userNbr].registered && !allFds.userData[userNbr].userName.empty())
 	{
-		allFds.userData[userNbr].registered = 1;
-		print_registered_msg(allFds, userNbr);
+		connect_client(allFds, userNbr);
+		// allFds.userData[userNbr].registered = 1;
+		// print_registered_msg(allFds, userNbr);
 	}
 	
 	return ;

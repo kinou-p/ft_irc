@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:46:41 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/12 20:52:45 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/13 10:52:07 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void ft_error(std::string str)
 	std::cerr << str << std::endl;
 	if (errno)
 	{
-		std::cerr << "errno: " << strerror(errno);
+		std::cerr << "errno: " << strerror(errno) << std::endl;
 		exit(errno);
 	}
 	exit(1);
@@ -31,25 +31,39 @@ void close_fd(int fd)
 
 void ft_putstr_fd(int fd, std::string str)
 {
-	write(fd, str.c_str(), str.size());
-	write(fd, "\n", 1);
+	// write(fd, str.c_str(), str.size());
+	// write(fd, "\n", 1);
+	str += "\n";
+	send(fd, str.c_str(), str.size(), 0);
 }
 
 void cmd_error(fdList &allFds, int fd, std::string error)
 {
 	(void)allFds; //to delete
-	write(fd, ":irc.local ", 11);
-	write(fd, error.c_str(), error.size());
+	error = ":irc.local " + error;
+	//write(fd, ":irc.local ", 11);
+	//write(fd, error.c_str(), error.size());
+	send(fd, error.c_str(), error.size(), 0);
 }
 
 int contain_any(std::string str, std::string toFind)
 {
-	for (int i = 0; toFind[i] != -1; i++)
+	for (int i = 0; toFind[i] != 0; i++)
 	{
 		if (str.find(toFind[i]) != std::string::npos)
 			return (1);
 	}
 	return (0);
+}
+
+int not_contain_other(std::string str, std::string toFind)
+{
+	for (int i = 0; str[i] != 0; i++)
+	{
+		if (toFind.find(str[i]) == std::string::npos)
+			return (0);
+	}
+	return (1);
 }
 
 // void find_user_in_chan(fdList &allFds, channelData *chan)

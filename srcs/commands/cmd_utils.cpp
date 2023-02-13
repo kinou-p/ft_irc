@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 15:46:10 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/11 13:51:28 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/13 18:22:37 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void split(std::string const &str, const char delim, std::vector<std::string> &o
 {
     size_t start;
     size_t end = 0;
- 
+
     while ((start = str.find_first_not_of(delim, end)) != std::string::npos)
     {
         end = str.find(delim, start);

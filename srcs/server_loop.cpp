@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:58:13 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/12 14:21:04 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/13 16:47:16 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@ void start_loop(fdList &allFds)
 	std::cout << "serverFd: " << allFds.serverFd << std::endl;
 	while (allFds.alive)
 	{
-		//std::cout << "loop" << std::endl;
+		
 		//std::cout << "\n\n\nwhile alive event loop" << std::endl;
 		//std::cout << "in loop nbr user = " << allFds.nbrUser << std::endl;
 		eventNbr = epoll_wait(allFds.epollFd, allFds.events, MAX_EVENTS, 5000);
+		//std::cout << "eventNbr = " << eventNbr << std::endl;
 		//std::cout << "eventNbr: " << eventNbr << std::endl;	
 		//std::cout << "in loop adress  " << &allFds << std::endl;
 		for (i = 0; i < eventNbr ; i++)

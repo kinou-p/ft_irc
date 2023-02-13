@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 20:38:50 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/12 20:39:10 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/13 20:25:45 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void del_user_in_chan(clientData *user, channelData *chan)
 	for (i = 0; user != chan->userList[i]; i++)
 		;
 	chan->userList.erase(chan->userList.begin() + i);
+	chan->nbrUser--;
 }
 
 void delete_user(fdList &allFds, int userNbr)

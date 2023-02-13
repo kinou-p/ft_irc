@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 22:04:11 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/12 17:30:37 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/13 16:32:24 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,21 +171,15 @@ void	KILL(std::string buffer, fdList &allFds, int userNbr)
 	return ;
 }
 
-void	PING(std::string buffer, fdList &allFds, int userNbr)
-{
-	(void)buffer; 
-	(void)allFds;
-	(void)userNbr;
-	return ;
-}
+// void	PING(std::string buffer, fdList &allFds, int userNbr)
+// {
+// 	(void)buffer; 
+// 	(void)allFds;
+// 	(void)userNbr;
+// 	return ;
+// }
 
-void	PONG(std::string buffer, fdList &allFds, int userNbr)
-{
-	(void)buffer; 
-	(void)allFds;
-	(void)userNbr;
-	return ;
-}
+
 
 void	ERROR(std::string buffer, fdList &allFds, int userNbr)
 {

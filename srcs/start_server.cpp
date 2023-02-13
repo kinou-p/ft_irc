@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:44:20 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/12 15:00:19 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/13 00:04:55 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void initialize(char **av)
 		ft_error("wrong format for <port>\nneed to be an positive integer");
 	if (bind(allFds.serverFd, (struct sockaddr *)&addr, sizeof(addr)) < 0)
 		ft_error("bind() error");
-	if (listen(allFds.serverFd, 100) == -1)
+	if (listen(allFds.serverFd, 10) == -1)
 		ft_error("listen() error");
 		
 	// newSockFd = accept(allFds.serverFd, (struct sockaddr *)&addr, (socklen_t*)&addrLen);
