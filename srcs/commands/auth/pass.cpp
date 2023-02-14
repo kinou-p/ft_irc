@@ -6,11 +6,13 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:40:42 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/14 02:28:03 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/14 18:46:53 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/ft_irc.hpp"
+
+
 
 void	PASS(std::string buffer, fdList &allFds, int userNbr)
 {
@@ -37,4 +39,11 @@ void	PASS(std::string buffer, fdList &allFds, int userNbr)
 
 	password = buffer.substr(5, buffer.npos);
 	allFds.userData[userNbr].password = password;
+
+	if (!allFds.userData[userNbr].userName.empty() && !allFds.userData[userNbr].nickname.empty())
+	{
+		connect_client(allFds, userNbr);
+		// allFds.userData[userNbr].registered = 1;
+		// print_registered_msg(allFds, userNbr);
+	}
 }

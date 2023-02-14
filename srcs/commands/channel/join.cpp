@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:40:33 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/14 00:41:43 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/14 14:50:57 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,10 @@ void join_or_create(std::vector<std::string> splitBuff, fdList &allFds, int user
 		send(joined_chan.userList[i]->fd, fullMsg.c_str(), fullMsg.size(), 0);
 		std::cout << "loop here\n";
 	}
+	// if (chanNbr == -1)
+	// {
+			
+	// }
 }
 
 

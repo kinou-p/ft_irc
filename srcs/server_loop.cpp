@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:58:13 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/13 16:47:16 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/14 18:11:44 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,19 @@ void start_loop(fdList &allFds)
 	
 	
 	allFds.alive = 1;
-	std::cout << "serverFd: " << allFds.serverFd << std::endl;
+	//std::cout << "serverFd: " << allFds.serverFd << std::endl;
 	while (allFds.alive)
 	{
-		
+		//std::cout << "---------start loop-----------\n";
 		//std::cout << "\n\n\nwhile alive event loop" << std::endl;
 		//std::cout << "in loop nbr user = " << allFds.nbrUser << std::endl;
-		eventNbr = epoll_wait(allFds.epollFd, allFds.events, MAX_EVENTS, 5000);
+		
+		eventNbr = epoll_wait(allFds.epollFd, allFds.events, MAX_EVENTS, 0);
+
+		//eventNbr = epoll_wait(allFds.epollFd, allFds.events, MAX_EVENTS, 5000);
+
 		//std::cout << "eventNbr = " << eventNbr << std::endl;
-		//std::cout << "eventNbr: " << eventNbr << std::endl;	
+		//std::cout << "eventNbr: " << eventNbr << std::endl;
 		//std::cout << "in loop adress  " << &allFds << std::endl;
 		for (i = 0; i < eventNbr ; i++)
 		{
@@ -50,9 +54,9 @@ void start_loop(fdList &allFds)
 				// if (!clientRequest(allFds, nbr))
 				// 	alive = false;
 				clientRequest(allFds, nbr);
-
 			}
 		}
+		//std::cout << "---------end loop-----------\n";
 	}
 	std::cout << "dead server\n";
 

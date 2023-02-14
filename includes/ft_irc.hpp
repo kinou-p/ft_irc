@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:27:37 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/14 02:40:49 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/14 20:54:22 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,7 @@ void	split_but_keep(std::string const &str, const char delim, std::vector<std::s
 /* *******************************CHAN UTILS********************************* */
 /* ************************************************************************** */
 
+int		is_joined(fdList &allFds, std::string chanName, int userNbr);
 int		find_channel(fdList &allFds, std::string chanName);
 int		find_user(fdList &allFds, std::string userName);
 void	send_msg(fdList &allFds, std::string msg, std::string dest, int userNbr); //in privmsg.cpp
