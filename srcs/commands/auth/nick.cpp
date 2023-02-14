@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:28:38 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/12 23:37:37 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/14 01:25:31 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	NICK(std::string buffer, fdList &allFds, int userNbr)
 	//if nickname ok then (another user has it? )
 	//ERR_NONICKNAMEGIVEN
 	allFds.userData[userNbr].nickname = splitBuff[1];
-	if (!allFds.userData[userNbr].registered && !allFds.userData[userNbr].userName.empty())
+	if (!allFds.userData[userNbr].registered && !allFds.userData[userNbr].userName.empty() /*&& !allFds.userData[userNbr].password.empty()*/)
 	{
 		connect_client(allFds, userNbr);
 		// allFds.userData[userNbr].registered = 1;

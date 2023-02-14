@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 22:01:25 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/13 19:44:43 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/14 01:16:34 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void parse_commands(std::string buffer, fdList &allFds, int userNbr)
 	std::cout << "===========parse command=============" << std::endl;
 	std::vector<std::string> splitBuff;
 	int a = 0;
-		
+
 	if (buffer.find(13) != std::string::npos) //change that pls
 	{
 		std::cout << "pos of bitch= " << buffer.find(13) << std::endl;

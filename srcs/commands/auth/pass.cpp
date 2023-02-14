@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:40:42 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/13 17:33:51 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/14 02:28:03 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ void	PASS(std::string buffer, fdList &allFds, int userNbr)
 	// }
 
 	password = buffer.substr(5, buffer.npos);
-	allFds.userData[userNbr].password = buffer;
+	allFds.userData[userNbr].password = password;
 }
