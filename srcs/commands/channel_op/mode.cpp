@@ -6,7 +6,7 @@
 /*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:30 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/15 22:57:31 by sadjigui         ###   ########.fr       */
+/*   Updated: 2023/02/15 23:22:55 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int search_and_erase(std::string &str, std::string toFind)
 // 	}
 // }
 
-void do_chan_opt(fdList &allFds, int userNbr, std::string opt /*, channel (string or direct reference or pointer but no copy)*/)
+void do_chan_opt(fdList &allFds, int userNbr, std::string opt, int chanNbr /*, channel (string or direct reference or pointer but no copy)*/)
 {
 	(void)allFds;
 	(void)userNbr;
@@ -83,17 +83,17 @@ void do_chan_opt(fdList &allFds, int userNbr, std::string opt /*, channel (strin
 		{
 			case 0: std::cout << "launching option: " << opt[i] << std::endl;
 			break ;
-			case 1: std::cout << "launching option: " << opt[i] << std::endl;
+			case 1: allFds.channelList[chanNbr].mode.p = (sign = true) ? true : false;
 			break ;
-			case 2: std::cout << "launching option: " << opt[i] << std::endl;
+			case 2: allFds.channelList[chanNbr].mode.s = (sign = true) ? true : false;
 			break ;
-			case 3: std::cout << "launching option: " << opt[i] << std::endl;
+			case 3: allFds.channelList[chanNbr].mode.i = (sign = true) ? true : false;
 			break ;
-			case 4: std::cout << "launching option: " << opt[i] << std::endl;
+			case 4: allFds.channelList[chanNbr].mode.t = (sign = true) ? true : false;
 			break ;
-			case 5: std::cout << "launching option: " << opt[i] << std::endl;
+			case 5: allFds.channelList[chanNbr].mode.n = (sign = true) ? true : false;
 			break ;
-			case 6: std::cout << "launching option: " << opt[i] << std::endl;
+			case 6: allFds.channelList[chanNbr].mode.m = (sign = true) ? true : false;
 			break ;
 			case 7: std::cout << "launching option: " << opt[i] << std::endl;
 			break ;
@@ -131,6 +131,7 @@ void	MODE(std::string buffer, fdList &allFds, int userNbr)
 {
 	(void)userNbr;
 	std::vector<std::string> splitBuff;
+	int pos;
 	split(buffer, ' ', splitBuff);
 	if (splitBuff.size() < 3) 
 	{
@@ -142,7 +143,7 @@ void	MODE(std::string buffer, fdList &allFds, int userNbr)
 		//else ??? erreur j'imagine mais j'ai pas trouvé
 	if (splitBuff[1][0] == '#' || splitBuff[1][0] == '&') //splitbuff[1] always equal to <channel> or <nickname>
 	{
-		if (find_channel(allFds, splitBuff[1]) == -1) //if true chan doesn't exist
+		if ((pos = find_channel(allFds, splitBuff[1])) == -1) //if true chan doesn't exist
 		{
 			std::cout << splitBuff[1] << ": No such channel" << std::endl;
 			// 403 ERR_NOSUCHCHANNEL
@@ -160,7 +161,7 @@ void	MODE(std::string buffer, fdList &allFds, int userNbr)
 			std::cout << "Bad params" << std::endl;
 			return ;
 		}
-		do_chan_opt(allFds, userNbr, splitBuff[2]);
+		do_chan_opt(allFds, userNbr, splitBuff[2], pos);
 		//do_option one by one here (do_chan_opt)?
 		return ;
 	}
