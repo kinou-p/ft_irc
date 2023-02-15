@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:44:20 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/14 01:51:55 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/15 00:14:07 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ void initialize(char **av)
 	// {
 	// 	nbrRead = read()
 	// }
-
+	time_t timer;
+	time(&timer);
+	allFds.creation_date = ctime(&timer);
 	allFds.epollFd = epoll_start();
 	//allFds.userData
 	epoll_add(allFds.epollFd, allFds.serverFd);

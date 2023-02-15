@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:27:37 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/14 20:54:22 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/15 00:16:02 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <cstdlib>
 #include <exception>
 
+#include <ctime>
 #include <cstring> //std::string
 #include <cerrno> //errno
 #include <iostream> //std::cout | cerr
@@ -150,6 +151,7 @@ struct fdList //&allFds in code | /!\ only one on the server | REFERENCE ONLY
 
 		int alive;
 		std::string password;
+		std::string creation_date;
 		int nbrUser;
 		functionTab parsingTab;
 };

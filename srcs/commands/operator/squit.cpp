@@ -6,24 +6,44 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:11:03 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/12 14:23:39 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/15 15:10:43 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/ft_irc.hpp"
+
+//ERR_NOPRIVILEGES                ERR_NOSUCHSERVER
 
 void	SQUIT(std::string buffer, fdList &allFds, int userNbr)
 {
 	(void)buffer; 
 	(void)allFds;
 	(void)userNbr;
-	
-	if (allFds.userData[userNbr].op)
-		allFds.alive = 0;
-	else
+
+	std::vector<std::string> splitBuff;
+	split(buffer, ' ', splitBuff);
+	if (splitBuff.size() < 2)
 	{
-		std::cout << "Not op but okay i'll do it\n";
-		allFds.alive = 0;
+		cmd_error(allFds, allFds.userData[userNbr].fd, "431 * SQUIT :Not enought argument\n");
+		return ;
 	}
+	if (!allFds.userData[userNbr].op)
+	{
+		cmd_error(allFds, allFds.userData[userNbr].fd, "481 * :Permission Denied- You're not an IRC operator\n");
+		return ;
+	}
+	if (splitBuff[2] != "irc.local")
+	{
+		cmd_error(allFds, allFds.userData[userNbr].fd, "402 * " + splitBuff[2] + " :No such server\n");
+		return ;
+	}
+	allFds.alive = 0;
+	// if (allFds.userData[userNbr].op)
+	// 	allFds.alive = 0;
+	// else
+	// {
+	// 	std::cout << "Not op but okay i'll do it\n";
+	// 	allFds.alive = 0;
+	// }
 	return ;
 }

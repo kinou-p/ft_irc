@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 08:53:03 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/14 20:58:20 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/15 15:18:38 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void send_msg(fdList &allFds, std::string msg, std::string dest, int userNbr)
 	pos = find_user(allFds, dest); //return direct user fd
 	if (pos != -1)
 	{
-		send(allFds.userData[pos].fd, fullMsg.c_str(), fullMsg.size(), 0);
+		cmd_error(allFds, allFds.userData[userNbr].fd, "401 * PRIVMSG " + dest + " :No such nick/channel\n");
 		return ;
 	}
-	cmd_error(allFds, allFds.userData[userNbr].fd, "401 * PRIVMSG " + dest + " :No such nick/channel\n");
+	send(allFds.userData[pos].fd, fullMsg.c_str(), fullMsg.size(), 0);
 }
