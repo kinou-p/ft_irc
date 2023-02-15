@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 22:04:11 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/14 21:28:14 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:00:46 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,13 +163,7 @@ void	WHOWAS(std::string buffer, fdList &allFds, int userNbr)
 	return ;
 }
 
-void	KILL(std::string buffer, fdList &allFds, int userNbr)
-{
-	(void)buffer; 
-	(void)allFds;
-	(void)userNbr;
-	return ;
-}
+
 
 // void	PING(std::string buffer, fdList &allFds, int userNbr)
 // {

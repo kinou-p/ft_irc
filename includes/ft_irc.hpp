@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:27:37 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/15 00:16:02 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/15 19:54:47 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <cstdlib>
 #include <exception>
 
+#include <cctype> //toupper
 #include <ctime>
 #include <cstring> //std::string
 #include <cerrno> //errno
@@ -39,6 +40,8 @@
 #define MAX_CHAN 10
 #define READ_SIZE 10
 #define CMD_NBR 10
+#define OP_PASSWORD "password"
+#define OP_NAME "operator"
 
 
 	// if (!allFds.userData[userNbr].registered) 

@@ -6,7 +6,7 @@
 #    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/01 17:27:29 by apommier          #+#    #+#              #
-#    Updated: 2023/02/14 22:21:45 by apommier         ###   ########.fr        #
+#    Updated: 2023/02/15 17:14:51 by apommier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRCS := main.cpp\
 \
 		commands/operator/squit.cpp\
 		commands/operator/oper.cpp\
+		commands/operator/kill.cpp\
 \
 		commands/not_done_cmd.cpp #special (temporary)
 
