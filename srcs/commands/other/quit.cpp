@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:10:26 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/15 13:27:15 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/15 20:15:13 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	QUIT(std::string buffer, fdList &allFds, int userNbr)
 	split(buffer, ' ', splitBuff);
 	if (splitBuff.size() == 2)
 	{
-		send_quit_msg(allFds, userNbr, splitBuff[2]);
+		send_quit_msg(allFds, userNbr, splitBuff[1]);
 		//print message?
 		//:kinou2!kinou@172.17.0.1 QUIT :Quit: leaving
 	}

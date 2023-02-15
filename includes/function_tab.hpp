@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 08:55:52 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/10 09:59:21 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/15 19:52:41 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,10 @@ struct functionTab
 	std::vector<void (*)(std::string buffer, fdList &allFds, int userNbr)>cmdPtr;
 	functionTab()
 	{
-
+	//cmdName.push_back("squit");
+	//cmdName.push_back("kill");
 //4.1 Etablissement de connexion
+	
 	cmdName.push_back("PASS");
 	cmdName.push_back("NICK");
 	cmdName.push_back("USER");
@@ -129,6 +131,9 @@ struct functionTab
 		//4. Détails des messages
 
 	// 	//4.1 Etablissement de connexion
+	
+	//cmdPtr.push_back(SQUIT);
+	//cmdPtr.push_back(KILL);
 	cmdPtr.push_back(PASS);
 	cmdPtr.push_back(NICK);
 	cmdPtr.push_back(USER);

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 22:01:25 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/14 01:16:34 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/15 20:09:04 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ std::string ft_test()
 	std::cout << "hehe je suis la" << std::endl;
 	return ("prout");
 }
+
+
 
 void parse_commands(std::string buffer, fdList &allFds, int userNbr)
 {
@@ -41,8 +43,10 @@ void parse_commands(std::string buffer, fdList &allFds, int userNbr)
 		return ;
 	allFds.userData[userNbr].cmdBuffer.erase(allFds.userData[userNbr].cmdBuffer.size() - 1);
 	split(allFds.userData[userNbr].cmdBuffer, ' ', splitBuff);
-
-	//std::cout << "BUFFER In PARSING: ---" << allFds.userData[userNbr].cmdBuffer << "---" << std::endl;
+	std::cout << "before toupper: " << splitBuff[0] << std::endl;
+	for (size_t i = 0; i < splitBuff[0].size(); i++)
+		splitBuff[0][i] = toupper(splitBuff[0][i]);
+	std::cout << "after toupper: " << splitBuff[0] << std::endl;
 	while (a < allFds.parsingTab.cmdNbr - 1 && splitBuff[0] != allFds.parsingTab.cmdName[a]) 
 		a++;
 	//std::cout << "after while \n";
