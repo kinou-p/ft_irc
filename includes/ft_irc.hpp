@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:27:37 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/13 19:48:40 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/15 00:16:02 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@
 #include <netinet/in.h>//inet
 #include <arpa/inet.h>
 
-#include <cstdlib> 
+#include <cstdlib>
+#include <exception>
+
+#include <ctime>
 #include <cstring> //std::string
 #include <cerrno> //errno
 #include <iostream> //std::cout | cerr
@@ -36,6 +39,14 @@
 #define MAX_CHAN 10
 #define READ_SIZE 10
 #define CMD_NBR 10
+
+
+	// if (!allFds.userData[userNbr].registered) 
+	// {
+	// 	/*change error*/
+	// 	cmd_error(allFds, allFds.userData[userNbr].fd, "451 * JOIN :You have not registered\n"); //ERR_NEEDMOREPARAMS
+	// 	return ;
+	// }
 
 /* ************************************************************************** */
 /* *********************************STRUCT*********************************** */
@@ -139,7 +150,8 @@ struct fdList //&allFds in code | /!\ only one on the server | REFERENCE ONLY
 		accessList<clientData> userData;
 
 		int alive;
-		
+		std::string password;
+		std::string creation_date;
 		int nbrUser;
 		functionTab parsingTab;
 };
@@ -185,6 +197,7 @@ void	split_but_keep(std::string const &str, const char delim, std::vector<std::s
 /* *******************************CHAN UTILS********************************* */
 /* ************************************************************************** */
 
+int		is_joined(fdList &allFds, std::string chanName, int userNbr);
 int		find_channel(fdList &allFds, std::string chanName);
 int		find_user(fdList &allFds, std::string userName);
 void	send_msg(fdList &allFds, std::string msg, std::string dest, int userNbr); //in privmsg.cpp

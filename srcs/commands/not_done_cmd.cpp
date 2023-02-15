@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 22:04:11 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/13 16:32:24 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/14 21:28:14 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,13 +131,13 @@ void	INFO(std::string buffer, fdList &allFds, int userNbr)
 // 	return ;
 // }
 
-void	NOTICE(std::string buffer, fdList &allFds, int userNbr)
-{
-	(void)buffer; 
-	(void)allFds;
-	(void)userNbr;
-	return ;
-}
+// void	NOTICE(std::string buffer, fdList &allFds, int userNbr)
+// {
+// 	(void)buffer; 
+// 	(void)allFds;
+// 	(void)userNbr;
+// 	return ;
+// }
 
 void	WHO(std::string buffer, fdList &allFds, int userNbr)
 {

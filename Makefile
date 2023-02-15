@@ -6,7 +6,7 @@
 #    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/01 17:27:29 by apommier          #+#    #+#              #
-#    Updated: 2023/02/13 00:20:18 by apommier         ###   ########.fr        #
+#    Updated: 2023/02/14 22:21:45 by apommier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,9 +32,9 @@ SRCS := main.cpp\
 		commands/channel/channel_utils.cpp\
 		commands/channel/join.cpp\
 		commands/channel/privmsg.cpp\
+		commands/channel/notice.cpp\
 \
 		commands/other/quit.cpp\
-		commands/other/squit.cpp\
 		commands/other/ping_pong.cpp\
 \
 		commands/channel_op/invite.cpp\
@@ -42,6 +42,7 @@ SRCS := main.cpp\
 		commands/channel_op/mode.cpp\
 		commands/channel_op/topic.cpp\
 \
+		commands/operator/squit.cpp\
 		commands/operator/oper.cpp\
 \
 		commands/not_done_cmd.cpp #special (temporary)

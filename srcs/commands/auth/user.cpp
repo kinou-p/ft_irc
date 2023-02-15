@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:40:39 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/13 20:05:39 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/14 01:25:22 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void USER(std::string buffer, fdList &allFds, int userNbr)
 	allFds.userData[userNbr].serverName = splitBuff[3];
 	
 	allFds.userData[userNbr].realName = realName;
-	if (!allFds.userData[userNbr].nickname.empty())
+	if (!allFds.userData[userNbr].nickname.empty() /*&& !allFds.userData[userNbr].password.empty()*/)
 	{
 		connect_client(allFds, userNbr);
 		// allFds.userData[userNbr].registered = 1;
