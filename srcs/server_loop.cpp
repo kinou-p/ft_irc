@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:58:13 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/14 18:11:44 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/16 23:01:04 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void start_loop(fdList &allFds)
 			}
 			else
 			{
-				nbr = find(allFds.userList.begin(), allFds.userList.end(), allFds.events[i].data.fd) - allFds.userList.begin();
+				nbr = find(allFds.userFdList.begin(), allFds.userFdList.end(), allFds.events[i].data.fd) - allFds.userFdList.begin();
 				//if (!clientRequest(allFds, i))
 				// if (!clientRequest(allFds, nbr))
 				// 	alive = false;

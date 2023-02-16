@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:10:26 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/15 20:15:13 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/16 22:25:37 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,11 @@ void	send_quit_msg(fdList &allFds, int userNbr, std::string msg)
 void	QUIT(std::string buffer, fdList &allFds, int userNbr)
 {
 	std::vector<std::string> splitBuff;
+	
 	split(buffer, ' ', splitBuff);
-	if (splitBuff.size() == 2)
+	if (splitBuff.size() > 2)
 	{
-		send_quit_msg(allFds, userNbr, splitBuff[1]);
+		send_quit_msg(allFds, userNbr, buffer.substr(5, std::string::npos));//to test
 		//print message?
 		//:kinou2!kinou@172.17.0.1 QUIT :Quit: leaving
 	}

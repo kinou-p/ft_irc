@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 22:04:11 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/15 17:00:46 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:19:44 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,6 @@ void	PART(std::string buffer, fdList &allFds, int userNbr)
 
 
 
-void	NAMES(std::string buffer, fdList &allFds, int userNbr)
-{
-	(void)buffer; 
-	(void)allFds;
-	(void)userNbr;
-	return ;
-}
 
 void	LIST(std::string buffer, fdList &allFds, int userNbr)
 {
@@ -139,13 +132,7 @@ void	INFO(std::string buffer, fdList &allFds, int userNbr)
 // 	return ;
 // }
 
-void	WHO(std::string buffer, fdList &allFds, int userNbr)
-{
-	(void)buffer; 
-	(void)allFds;
-	(void)userNbr;
-	return ;
-}
+
 
 void	WHOIS(std::string buffer, fdList &allFds, int userNbr)
 {

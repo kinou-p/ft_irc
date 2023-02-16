@@ -6,11 +6,28 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:21:57 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/14 20:13:38 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/16 22:52:31 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/ft_irc.hpp"
+
+int is_chan_op(fdList &allFds, channelData *chanName, int userNbr)
+{
+	std::vector<clientData*>::iterator start = chanName->opList.begin();
+	std::vector<clientData*>::iterator  pastEnd = chanName->opList.end();
+	//std::cout << "name1= ---" << chanName << "---\n";
+	while (start != pastEnd)
+	{
+		//std::cout << "result in find chan = " << pastEnd - start << std::endl;
+		std::cout << "test = " << chanName->opList[pastEnd - start - 1]->nickname << "---\n";
+		if (chanName->opList[pastEnd - start - 1]->nickname == allFds.userData[userNbr].nickname)
+			return (1);
+		start++;
+	}
+	std::cout << "chan not found\n";
+	return (0);	
+}
 
 int is_joined(fdList &allFds, std::string chanName, int userNbr)
 {

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:27:37 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/15 19:54:47 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/16 23:01:17 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ struct fdList //&allFds in code | /!\ only one on the server | REFERENCE ONLY
 		struct epoll_event events[MAX_EVENTS];
 		int epollFd;
 		int serverFd;
-		std::vector<int> userList;
+		std::vector<int> userFdList;
 		
 		accessList<channelData>	channelList;
 		accessList<clientData> userData;
@@ -200,6 +200,7 @@ void	split_but_keep(std::string const &str, const char delim, std::vector<std::s
 /* *******************************CHAN UTILS********************************* */
 /* ************************************************************************** */
 
+int		is_chan_op(fdList &allFds, channelData *chanName, int userNbr);
 int		is_joined(fdList &allFds, std::string chanName, int userNbr);
 int		find_channel(fdList &allFds, std::string chanName);
 int		find_user(fdList &allFds, std::string userName);

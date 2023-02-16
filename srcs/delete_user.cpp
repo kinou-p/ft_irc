@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 20:38:50 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/13 20:25:45 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/16 23:01:04 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void delete_user(fdList &allFds, int userNbr)
 	close(allFds.userData[userNbr].fd);
 	
 	allFds.userData.erase(allFds.userData.begin() + userNbr);
-	allFds.userList.erase(allFds.userList.begin() + userNbr);
+	allFds.userFdList.erase(allFds.userFdList.begin() + userNbr);
 	
 	allFds.nbrUser--;
 }

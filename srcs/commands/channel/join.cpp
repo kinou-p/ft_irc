@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:40:33 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/14 14:50:57 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:47:49 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,13 @@ int chan_check(fdList &allFds, int userNbr, int chanNbr, std::vector<std::string
 }
 
 
-
-
-
-
-void join_or_create(std::vector<std::string> splitBuff, fdList &allFds, int userNbr)
+void join_or_create(std::string buffer, fdList &allFds, int userNbr)
 {
 	int chanNbr;
 	channelData joined_chan;
-
+	std::vector<std::string> splitBuff;
+	
+	split(buffer, ' ', splitBuff);
 	chanNbr = find_channel(allFds, splitBuff[1]);
 	if (chanNbr != -1) //chan already exist
 	{
@@ -93,11 +91,10 @@ void join_or_create(std::vector<std::string> splitBuff, fdList &allFds, int user
 	{
 		std::cout << "new chan\n";
 		channelData new_chan;
-		
+
 		new_chan.name = splitBuff[1];
 		new_chan.nbrUser = 1;
 		new_chan.userList.push_back(&allFds.userData[userNbr]);
-		//new_chan.userList
 		joined_chan = new_chan;
 		allFds.channelList.push_back(new_chan);
 		allFds.userData[userNbr].joinedChan.push_back(&allFds.channelList.back());//add chan in user data
@@ -118,7 +115,36 @@ void join_or_create(std::vector<std::string> splitBuff, fdList &allFds, int user
 
 
 
-
+void join_loop(fdList &allFds, std::vector<std::string> splitBuff, int userNbr)
+{
+	std::vector<std::string>	splitChan;
+	std::vector<std::string>	splitPwd;
+	std::string					buffer;
+	
+	split(buffer, ',', splitChan);
+	split(buffer, ',', splitPwd);
+	if (splitBuff[1] == "0")
+	{
+		leave_all(allFds, userNbr);
+		return ;
+	}
+	for (size_t i = 0; i < splitChan.size(); i++)
+	{
+		if (splitBuff[1][0] != '#' && splitBuff[1][0] != '&')
+		{
+			//error bad channel name
+			buffer = "476 * JOIN " + splitBuff[1] + " ::Bad Channel Mask\n";
+			cmd_error(allFds, allFds.userData[userNbr].fd, buffer);
+			//:Bad Channel Mask
+			return ;
+		}
+		if (i < splitPwd.size())
+			buffer = "JOIN " + splitChan[i] + " " + splitPwd[i];
+		else
+			buffer = "JOIN " + splitChan[i];
+		join_or_create(buffer, allFds, userNbr);
+	}
+}
 
 
 
@@ -143,20 +169,8 @@ void JOIN(std::string buffer, fdList &allFds, int userNbr)
 		cmd_error(allFds, allFds.userData[userNbr].fd, "461 * JOIN :Not enough parameters\n"); //ERR_NEEDMOREPARAMS
 		return ;
 	}
+	join_loop(allFds, splitBuff, userNbr);
 	//if (splitBuff[1].find(' ') != std::string::npos || splitBuff[1].find(7) != std::string::npos) 
-	if (splitBuff[1][0] != '#' && splitBuff[1][0] != '&')
-	{
-		//error bad channel name
-		msg = "476 * JOIN " + splitBuff[1] + " ::Bad Channel Mask\n";
-		cmd_error(allFds, allFds.userData[userNbr].fd, msg);
-		//:Bad Channel Mask
-		return ;
-	}
-	if (splitBuff[1] == "0") 
-	{
-		leave_all(allFds, userNbr);
-		return ;
-	}
-	join_or_create(splitBuff, allFds, userNbr);
+
 	//send 352 and 315 or 353 and 366 (WHO or NAME)
 }
