@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:40:33 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/16 18:47:49 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/16 23:47:14 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ void join_or_create(std::string buffer, fdList &allFds, int userNbr)
 	{
 		std::cout << "new chan\n";
 		channelData new_chan;
-
+		if (splitBuff[1][0] != '#' && splitBuff[1][0] != '&')
+			cmd_error(allFds, allFds.userData[userNbr].fd, "476 * " + splitBuff[1] + " :Bad Channel Mask\n");
 		new_chan.name = splitBuff[1];
 		new_chan.nbrUser = 1;
 		new_chan.userList.push_back(&allFds.userData[userNbr]);

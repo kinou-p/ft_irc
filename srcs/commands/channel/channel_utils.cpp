@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:21:57 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/16 22:52:31 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/16 23:26:08 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int is_chan_op(fdList &allFds, channelData *chanName, int userNbr)
 	std::vector<clientData*>::iterator start = chanName->opList.begin();
 	std::vector<clientData*>::iterator  pastEnd = chanName->opList.end();
 	//std::cout << "name1= ---" << chanName << "---\n";
+	if (allFds.userData[userNbr].op)
+		return (1);
 	while (start != pastEnd)
 	{
 		//std::cout << "result in find chan = " << pastEnd - start << std::endl;

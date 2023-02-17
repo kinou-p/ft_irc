@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:27:37 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/16 23:01:17 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/17 21:56:13 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ struct channelData //each chan have one
 	
 	std::vector<clientData *> userList;
 	std::vector<clientData *> banList;
+	//std::vector<clientData *> invitedList;
 	std::vector<clientData *> opList;
 
 	chanMode mode;
@@ -169,6 +170,7 @@ struct fdList //&allFds in code | /!\ only one on the server | REFERENCE ONLY
 /* ************************************************************************** */
 
 void	del_user_in_chan(clientData *user, channelData *chan);
+void	del_chan_in_user(clientData *user, channelData *chan);
 void	delete_user(fdList &allFds, int userNbr);
 
 /* ************************************************************************** */

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 08:53:03 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/15 15:18:38 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/16 23:20:25 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,11 @@ void send_msg(fdList &allFds, std::string msg, std::string dest, int userNbr)
 			cmd_error(allFds, allFds.userData[userNbr].fd, "401 * PRIVMSG " + dest + " :No such nick/channel\n");
 			return ;
 		}
+		// if (allFds.channelList[pos].mode.m && !allFds.userData[userNbr].op && !is_chan_op(allFds, &allFds.channelList[pos], userNbr) && !allFds.channelList[pos].userMode[nbr].v)
+		// {	
+		// 	cmd_error(allFds, allFds.userData[userNbr].fd, "404 * PRIVMSG " + dest + " :Cannot send to channel\n");
+		// 	return ;
+		// }
 		for (size_t i = 0; i < allFds.channelList[pos].userList.size(); i++)
 		{
 			std::cout << "send nickname " << allFds.channelList[pos].userList[i]->nickname << std::endl;
