@@ -6,7 +6,7 @@
 /*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:30 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/15 23:22:55 by sadjigui         ###   ########.fr       */
+/*   Updated: 2023/02/23 00:15:27 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,24 +64,49 @@ int search_and_erase(std::string &str, std::string toFind)
 // 	}
 // }
 
-void do_chan_opt(fdList &allFds, int userNbr, std::string opt, int chanNbr /*, channel (string or direct reference or pointer but no copy)*/)
+void	chan_opt_o(fdList &allFds, int userNbr, std::vector<std::string> opt, int chanNbr, bool sign)
+{
+	(void)allFds;
+	(void)userNbr;
+	(void)chanNbr;
+	
+	if (opt.size() != 4)
+	{
+		std::cout << "ERR_NEEDMOREPARAMS" << std::endl;
+		return ;
+	}
+	if ((find_user(allFds, opt[3]) == -1))
+	{
+		std::cout << "User :" << opt[3] << " not found" << std::endl;
+		return ;
+	}
+
+	//A voir
+	if (allFds.userData[userNbr].mode.o == true && sign == true)
+		allFds.userData[find_user(allFds, opt[3])].mode.o = (sign = true) ? true : false;
+	
+	std::cout << "-------> " << opt[3] << std::endl;
+}
+
+void do_chan_opt(fdList &allFds, int userNbr, std::vector<std::string> opt, int chanNbr /*, channel (string or direct reference or pointer but no copy)*/)
 {
 	(void)allFds;
 	(void)userNbr;
 	char opts[11] = {'o','p','s','i','t','n','m','l','b','v','k'};
 	bool sign = true;
-	if (opt[0] == '-')
+	if (opt[2][0] == '-')
 		sign = false;
-	for (int i = 0; opt[i]; i++)
+	for (int i = 0; opt[2][i]; i++)
 	{
 		// exec_chan_opt(allFds, opt[i], sign);
 		int j = 0;
 
-		for (; opts[j] && opts[j] != opt[i]; j++){}
+		while (opts[j] && opts[j] != opt[2][i])
+			j++;
 	
 		switch (j)
 		{
-			case 0: std::cout << "launching option: " << opt[i] << std::endl;
+			case 0: chan_opt_o(allFds, userNbr, opt, chanNbr, sign); //std::cout << "launching option: " << opt[2][i] << std::endl;
 			break ;
 			case 1: allFds.channelList[chanNbr].mode.p = (sign = true) ? true : false;
 			break ;
@@ -95,13 +120,15 @@ void do_chan_opt(fdList &allFds, int userNbr, std::string opt, int chanNbr /*, c
 			break ;
 			case 6: allFds.channelList[chanNbr].mode.m = (sign = true) ? true : false;
 			break ;
-			case 7: std::cout << "launching option: " << opt[i] << std::endl;
+			case 7: std::cout << "launching option: " << opt[2][i] << std::endl;
 			break ;
-			case 8: std::cout << "launching option: " << opt[i] << std::endl;
+			case 8: std::cout << "launching option: " << opt[2][i] << std::endl;
 			break ;
-			case 9: std::cout << "launching option: " << opt[i] << std::endl;
+			case 9: std::cout << "launching option: " << opt[2][i] << std::endl;
 			break ;
-			case 10: std::cout << "launching option: " << opt[i] << std::endl;
+			case 10:
+				if (sign == true)
+					allFds.channelList[chanNbr].password = opt[3];
 			break ;
 			default : std::cout << "Not launching option" << std::endl;
 			break ;	
@@ -161,7 +188,7 @@ void	MODE(std::string buffer, fdList &allFds, int userNbr)
 			std::cout << "Bad params" << std::endl;
 			return ;
 		}
-		do_chan_opt(allFds, userNbr, splitBuff[2], pos);
+		do_chan_opt(allFds, userNbr, splitBuff, pos);
 		//do_option one by one here (do_chan_opt)?
 		return ;
 	}
