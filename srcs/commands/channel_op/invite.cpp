@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:56 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/16 23:03:43 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/19 22:27:00 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ void	INVITE(std::string buffer, fdList &allFds, int userNbr)
 		cmd_error(allFds, allFds.userData[userNbr].fd, "443 * " + splitBuff[1] + " " + splitBuff[2] + " :is already on channel\n");
 		return ;
 	}
-	if (is_joined(allFds, splitBuff[2], invitedNbr) != -1)
-	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "443 * " + splitBuff[1] + " " + splitBuff[2] + " :is already on channel\n");
-		return ;
-	}
+	// if (is_joined(allFds, splitBuff[2], invitedNbr) != -1)
+	// {
+	// 	cmd_error(allFds, allFds.userData[userNbr].fd, "443 * " + splitBuff[1] + " " + splitBuff[2] + " :is already on channel\n");
+	// 	return ;
+	// }
 	if ((chanNbr = find_channel(allFds, splitBuff[2])) != -1)
 	{
 		chan = allFds.channelList[chanNbr];

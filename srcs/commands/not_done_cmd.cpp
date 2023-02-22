@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 22:04:11 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/16 18:19:44 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/19 22:11:59 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,6 @@ void	SERVER(std::string buffer, fdList &allFds, int userNbr)
 // 	return ;
 // }
 
-void	PART(std::string buffer, fdList &allFds, int userNbr)
-{
-	(void)buffer; 
-	(void)allFds;
-	(void)userNbr;
-	return ;
-}
 
 
 
