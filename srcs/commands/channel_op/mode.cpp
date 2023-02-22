@@ -6,7 +6,7 @@
 /*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:30 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/23 00:15:27 by sadjigui         ###   ########.fr       */
+/*   Updated: 2023/02/23 00:41:10 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,19 @@ int search_and_erase(std::string &str, std::string toFind)
 	}
 	std::cout << "splitbuff[2]after? = " << str << std::endl;
 	return 1;
+}
+
+int ft_stoi(std::string str)
+{
+	int i = 0;
+	int result = 0;
+	
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		result = result * 10 +str[i] - 48;
+		i++;
+	}
+	return result;
 }
 
 // void	exec_chan_opt(fdList &allFds, char opt, bool sign)
@@ -118,7 +131,9 @@ void do_chan_opt(fdList &allFds, int userNbr, std::vector<std::string> opt, int 
 			break ;
 			case 5: allFds.channelList[chanNbr].mode.n = (sign = true) ? true : false;
 			break ;
-			case 6: allFds.channelList[chanNbr].mode.m = (sign = true) ? true : false;
+			case 6:
+				if (sign == true)
+					allFds.channelList[chanNbr].maxUser = ft_stoi(opt[3]);
 			break ;
 			case 7: std::cout << "launching option: " << opt[2][i] << std::endl;
 			break ;
