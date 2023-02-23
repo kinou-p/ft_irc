@@ -6,7 +6,7 @@
 /*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:30 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/23 20:35:05 by sadjigui         ###   ########.fr       */
+/*   Updated: 2023/02/23 22:06:54 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,11 +116,38 @@ void	chan_opt_k(fdList &allFds, std::vector<std::string> opt, int chanNbr, bool 
 	if (opt.size() != 4)
 	{
 		std::cout << "ERR_NEEDMOREPARAMS" << std::endl;
-		std::cout << "how to use it :/MODE +k <password>" << std::endl;
+		std::cout << "how to use it :/MODE <channel >+k <password>" << std::endl;
 		return ;
 	}
 	if (sign == true)
 		allFds.channelList[chanNbr].password = opt[3];
+}
+
+void	chan_opt_v(fdList &allFds, int userNbr, std::vector<std::string> opt, int chanNbr, bool sign)
+{
+	(void)userNbr;
+	(void)chanNbr;
+	(void)sign;
+	
+	if (opt.size() != 4)
+	{
+		std::cout << "ERR_NEEDMOREPARAMS" << std::endl;
+		std::cout << "how to use it :/MODE <channel> +/-v <user>" << std::endl;
+		return ;
+	}
+	
+	int target = find_user(allFds, opt[3]);
+	if (target == -1)
+	{
+		std::cout << "no user found " << std::endl;
+		return ;
+	}
+	
+	// int pos = find_client_list(allFds.channelList[chanNbr].verboseList, allFds.userData[target]);
+	// if (sign == true && pos == -1)
+	// 	allFds.channelList[chanNbr].verboseList.push_back(allFds.userData[target]);
+	// if (sign == false && pos != -1)
+	// 	allFds.channelList[chanNbr].verboseList.erase(allFds.channelList[chanNbr].verboseList.at(pos));
 }
 
 void do_chan_opt(fdList &allFds, int userNbr, std::vector<std::string> opt, int chanNbr /*, channel (string or direct reference or pointer but no copy)*/)
