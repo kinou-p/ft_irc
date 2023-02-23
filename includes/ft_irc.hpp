@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:27:37 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/15 19:54:47 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/22 13:40:08 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,8 @@ struct channelData //each chan have one
 	
 	std::vector<clientData *> userList;
 	std::vector<clientData *> banList;
+	//std::vector<clientData *> invitedList;
+	//std::vector<clientData *> verboseList;
 	std::vector<clientData *> opList;
 
 	chanMode mode;
@@ -147,7 +149,7 @@ struct fdList //&allFds in code | /!\ only one on the server | REFERENCE ONLY
 		struct epoll_event events[MAX_EVENTS];
 		int epollFd;
 		int serverFd;
-		std::vector<int> userList;
+		std::vector<int> userFdList;
 		
 		accessList<channelData>	channelList;
 		accessList<clientData> userData;
@@ -169,6 +171,7 @@ struct fdList //&allFds in code | /!\ only one on the server | REFERENCE ONLY
 /* ************************************************************************** */
 
 void	del_user_in_chan(clientData *user, channelData *chan);
+void	del_chan_in_user(clientData *user, channelData *chan);
 void	delete_user(fdList &allFds, int userNbr);
 
 /* ************************************************************************** */
@@ -177,6 +180,7 @@ void	delete_user(fdList &allFds, int userNbr);
 
 void	ft_putstr_fd(int fd, std::string str);
 void	cmd_error(fdList &allFds, int userNbr, std::string error);
+void	cmd_reply(fdList &allFds, int userNbr, std::string error);
 void	ft_error(std::string str);
 void	close_fd(int fd);
 int		contain_any(std::string str, std::string toFind);
@@ -200,6 +204,8 @@ void	split_but_keep(std::string const &str, const char delim, std::vector<std::s
 /* *******************************CHAN UTILS********************************* */
 /* ************************************************************************** */
 
+int		is_in_same(fdList &allFds, int userNbr, int userNbr2);
+int		is_chan_op(fdList &allFds, channelData *chanName, int userNbr);
 int		is_joined(fdList &allFds, std::string chanName, int userNbr);
 int		find_channel(fdList &allFds, std::string chanName);
 int		find_user(fdList &allFds, std::string userName);

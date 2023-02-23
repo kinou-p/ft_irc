@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 22:26:27 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/13 19:46:41 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/16 23:01:04 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void new_connection(fdList &allFds)
 	// }
 
 	//int newUserFd;
-	//allFds.userList.push_back(newUserFd);
+	//allFds.userFdList.push_back(newUserFd);
 	newFd = accept(allFds.serverFd, (struct sockaddr *)&addr, (socklen_t*)&addrLen);
-	//allFds.userList[allFds.nbrUser] = newFd;
-	allFds.userList.push_back(newFd);
+	//allFds.userFdList[allFds.nbrUser] = newFd;
+	allFds.userFdList.push_back(newFd);
 	//std::cout << "newConnection | old user fd = " << newFd << std::endl;
 	if (fcntl(newFd, F_SETFL, O_NONBLOCK) == -1)
 		ft_error("fctnl() error");
@@ -40,7 +40,7 @@ void new_connection(fdList &allFds)
 
 	//std::cout << "fcntl return = " << newFd;
 	//close(newFd);
-	//std::cout << "newConnection | user fd = " << allFds.userList[allFds.nbrUser] << std::endl;
+	//std::cout << "newConnection | user fd = " << allFds.userFdList[allFds.nbrUser] << std::endl;
 	
 	clientData newElement;
 	newElement.fd = newFd;
@@ -48,9 +48,9 @@ void new_connection(fdList &allFds)
 	newElement.ip = inet_ntoa(addr.sin_addr);
 	//newElement.op = 0; 
 	allFds.userData.push_back(newElement);
-	//allFds.userData[allFds.nbrUser].fd = allFds.userList[allFds.nbrUser];
+	//allFds.userData[allFds.nbrUser].fd = allFds.userFdList[allFds.nbrUser];
 	//std::cout << "newConnection | user in data fd = " << allFds.userData[allFds.nbrUser].fd << std::endl;
 	
-	epoll_add(allFds.epollFd, allFds.userList[allFds.nbrUser]);
+	epoll_add(allFds.epollFd, allFds.userFdList[allFds.nbrUser]);
 	allFds.nbrUser++; 	
 }

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 22:34:36 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/13 19:21:07 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/16 23:01:04 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool clientRequest(fdList &allFds, int userNbr)//,
 	//buf.reserve(1024);
 	//se demerder pour join quand pas \n
 	// std::cout << "fd in client request " << allFds.userData[userNbr].fd << std::endl;
-	// std::cout << "fd of list in client request " << allFds.userList[userNbr] << std::endl;
+	// std::cout << "fd of list in client request " << allFds.userFdList[userNbr] << std::endl;
 	// std::cout << "user nbr " << userNbr << std::endl;
 	
 	//std::cout << "client request!" << std::endl;
@@ -38,7 +38,7 @@ bool clientRequest(fdList &allFds, int userNbr)//,
 		delete_user(allFds, userNbr);
 		// close(allFds.userData[userNbr].fd);
 		// allFds.userData.erase(allFds.userData.begin() + userNbr);
-		// allFds.userList.erase(allFds.userList.begin() + userNbr);
+		// allFds.userFdList.erase(allFds.userFdList.begin() + userNbr);
 		// allFds.nbrUser--;
 		// std::cout << "buffer empty\n";
 		return (1);

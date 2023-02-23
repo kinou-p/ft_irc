@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:40:33 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/14 14:50:57 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/19 18:18:29 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,14 @@ int chan_check(fdList &allFds, int userNbr, int chanNbr, std::vector<std::string
 }
 
 
-
-
-
-
-void join_or_create(std::vector<std::string> splitBuff, fdList &allFds, int userNbr)
+void join_or_create(std::string buffer, fdList &allFds, int userNbr)
 {
 	int chanNbr;
 	channelData joined_chan;
-
+	std::vector<std::string> splitBuff;
+	
+	std::cout << "JOINORCREATE\n";
+	split(buffer, ' ', splitBuff);
 	chanNbr = find_channel(allFds, splitBuff[1]);
 	if (chanNbr != -1) //chan already exist
 	{
@@ -93,22 +92,29 @@ void join_or_create(std::vector<std::string> splitBuff, fdList &allFds, int user
 	{
 		std::cout << "new chan\n";
 		channelData new_chan;
-		
+		if (splitBuff[1][0] != '#' && splitBuff[1][0] != '&')
+			cmd_error(allFds, allFds.userData[userNbr].fd, "476 * " + splitBuff[1] + " :Bad Channel Mask\n");
 		new_chan.name = splitBuff[1];
 		new_chan.nbrUser = 1;
 		new_chan.userList.push_back(&allFds.userData[userNbr]);
-		//new_chan.userList
 		joined_chan = new_chan;
 		allFds.channelList.push_back(new_chan);
 		allFds.userData[userNbr].joinedChan.push_back(&allFds.channelList.back());//add chan in user data
 	}
+	std::string fullMsg;
+	fullMsg = ":" + allFds.userData[userNbr].nickname + "!" + allFds.userData[userNbr].userName + "@" + allFds.userData[userNbr].ip + " JOIN :" + joined_chan.name + "\n";
 	for (int i = 0; i < joined_chan.nbrUser; i++)
 	{
-		std::string fullMsg;
-		fullMsg = ":" + allFds.userData[userNbr].nickname + "!" + allFds.userData[userNbr].userName + "@" + allFds.userData[userNbr].ip + " JOIN :" + joined_chan.name + "\n";
 		send(joined_chan.userList[i]->fd, fullMsg.c_str(), fullMsg.size(), 0);
 		std::cout << "loop here\n";
 	}
+
+	if (chanNbr == -1)	
+		chanNbr = find_channel(allFds, splitBuff[1]);
+	if (!allFds.channelList[chanNbr].topic.empty())
+		cmd_reply(allFds, allFds.userData[userNbr].fd, "332 TOPIC " + allFds.channelList[chanNbr].name + " :" + allFds.channelList[chanNbr].topic + "\n");
+	else
+		cmd_error(allFds, allFds.userData[userNbr].fd, "331 TOPIC " + allFds.channelList[chanNbr].name + " :No topic is set\n");
 	// if (chanNbr == -1)
 	// {
 			
@@ -118,7 +124,44 @@ void join_or_create(std::vector<std::string> splitBuff, fdList &allFds, int user
 
 
 
-
+void join_loop(fdList &allFds, std::vector<std::string> splitBuff, int userNbr)
+{
+	std::vector<std::string>	splitChan;
+	std::vector<std::string>	splitPwd;
+	std::string					buffer;
+	
+	std::cout << "join loop buf= " << splitBuff[1] << std::endl;
+	std::cout << "==========join loop========\n";
+	split(splitBuff[1], ',', splitChan);
+	split(splitBuff[1], ',', splitPwd);
+	if (splitBuff[1] == "0")
+	{
+		leave_all(allFds, userNbr);
+		return ;
+	}
+	std::cout << "==========join loop2========\n";
+	std::cout << "size= " << splitChan.size() << std::endl;
+	std::cout << "content= " << splitChan[0] << std::endl;
+	for (size_t i = 0; i < splitChan.size(); i++)
+	{
+		if (splitChan[i][0] != '#' && splitChan[i][0] != '&')
+		{
+			//error bad channel name
+			buffer = "476 * JOIN " + splitChan[i] + " ::Bad Channel Mask\n";
+			cmd_error(allFds, allFds.userData[userNbr].fd, buffer);
+			//:Bad Channel Mask
+			std::cout << "bad chan mask\n";
+			return ;
+		}
+		if (i < splitPwd.size())
+			buffer = "JOIN " + splitChan[i] + " " + splitPwd[i];
+		else
+			buffer = "JOIN " + splitChan[i];
+		join_or_create(buffer, allFds, userNbr);
+		std::cout << "i= " << i << "   ==========join loop3========\n";
+	}
+	std::cout << "==========join loop3========\n";
+}
 
 
 
@@ -132,7 +175,7 @@ void JOIN(std::string buffer, fdList &allFds, int userNbr)
 	std::cout << "userNbr= " << userNbr << std::endl;
 	if (!allFds.userData[userNbr].registered) 
 	{
-		/*change error*/
+		std::cout << "user not registered\n";
 		cmd_error(allFds, allFds.userData[userNbr].fd, "451 * JOIN :You have not registered\n"); //ERR_NEEDMOREPARAMS
 		return ;
 	}
@@ -140,23 +183,12 @@ void JOIN(std::string buffer, fdList &allFds, int userNbr)
 	if (splitBuff.size() < 2) 
 	{
 		/*change error*/
+		std::cout << "JOIN : need more param\n";
 		cmd_error(allFds, allFds.userData[userNbr].fd, "461 * JOIN :Not enough parameters\n"); //ERR_NEEDMOREPARAMS
 		return ;
 	}
+	join_loop(allFds, splitBuff, userNbr);
 	//if (splitBuff[1].find(' ') != std::string::npos || splitBuff[1].find(7) != std::string::npos) 
-	if (splitBuff[1][0] != '#' && splitBuff[1][0] != '&')
-	{
-		//error bad channel name
-		msg = "476 * JOIN " + splitBuff[1] + " ::Bad Channel Mask\n";
-		cmd_error(allFds, allFds.userData[userNbr].fd, msg);
-		//:Bad Channel Mask
-		return ;
-	}
-	if (splitBuff[1] == "0") 
-	{
-		leave_all(allFds, userNbr);
-		return ;
-	}
-	join_or_create(splitBuff, allFds, userNbr);
+
 	//send 352 and 315 or 353 and 366 (WHO or NAME)
 }
