@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:27:37 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/22 13:40:08 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/23 21:12:34 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ struct userMode
 	bool w; //- l'utilisateur reçoit les WALLOPs ;
 	bool o; //- drapeau d'opérateur.
 	
-	userMode() 
+	userMode()
 	: i(0),
 	s(0),
 	w(0),
@@ -129,11 +129,11 @@ struct channelData //each chan have one
 {
 	std::string name;
 	std::string topic;
-	
+6
 	std::vector<clientData *> userList;
 	std::vector<clientData *> banList;
-	//std::vector<clientData *> invitedList;
-	//std::vector<clientData *> verboseList;
+	std::vector<clientData *> invitedList;
+	std::vector<clientData *> verboseList;
 	std::vector<clientData *> opList;
 
 	chanMode mode;
@@ -178,6 +178,7 @@ void	delete_user(fdList &allFds, int userNbr);
 /* *********************************UTILS************************************ */
 /* ************************************************************************** */
 
+int		find_client_list(std::vector<clientData *> &list, clientData *client);
 void	ft_putstr_fd(int fd, std::string str);
 void	cmd_error(fdList &allFds, int userNbr, std::string error);
 void	cmd_reply(fdList &allFds, int userNbr, std::string error);

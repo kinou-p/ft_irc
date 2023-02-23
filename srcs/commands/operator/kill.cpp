@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:34:57 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/15 19:50:16 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:47:50 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@ void	KILL(std::string buffer, fdList &allFds, int userNbr)
 {
 	int pos;
 	std::vector<std::string> splitBuff;
+
+	if (!allFds.userData[userNbr].registered) 
+	{
+		cmd_error(allFds, allFds.userData[userNbr].fd, "451 * KILL :You have not registered\n");
+		return ;
+	}
 	split(buffer, ' ', splitBuff);
 	if (splitBuff.size() < 3)
 	{
