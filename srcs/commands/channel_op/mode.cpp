@@ -6,11 +6,12 @@
 /*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:30 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/23 00:41:10 by sadjigui         ###   ########.fr       */
+/*   Updated: 2023/02/23 20:35:05 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/ft_irc.hpp"
+#include <sstream>
 
 int search_and_erase(std::string &str, std::string toFind)
 {
@@ -27,18 +28,27 @@ int search_and_erase(std::string &str, std::string toFind)
 	return 1;
 }
 
-int ft_stoi(std::string str)
+bool	str_to_int(int &i, const std::string s)
 {
-	int i = 0;
-	int result = 0;
-	
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		result = result * 10 +str[i] - 48;
-		i++;
-	}
-	return result;
+	std::stringstream ss(s);
+	ss >> i;
+	if (ss.fail())
+		return false;
+	return true;
 }
+
+// int ft_stoi(std::string str)
+// {
+// 	int i = 0;
+// 	int result = 0;
+	
+// 	while (str[i] >= '0' && str[i] <= '9')
+// 	{
+// 		result = result * 10 +str[i] - 48;
+// 		i++;
+// 	}
+// 	return result;
+// }
 
 // void	exec_chan_opt(fdList &allFds, char opt, bool sign)
 // {
@@ -101,6 +111,18 @@ void	chan_opt_o(fdList &allFds, int userNbr, std::vector<std::string> opt, int c
 	std::cout << "-------> " << opt[3] << std::endl;
 }
 
+void	chan_opt_k(fdList &allFds, std::vector<std::string> opt, int chanNbr, bool sign)
+{
+	if (opt.size() != 4)
+	{
+		std::cout << "ERR_NEEDMOREPARAMS" << std::endl;
+		std::cout << "how to use it :/MODE +k <password>" << std::endl;
+		return ;
+	}
+	if (sign == true)
+		allFds.channelList[chanNbr].password = opt[3];
+}
+
 void do_chan_opt(fdList &allFds, int userNbr, std::vector<std::string> opt, int chanNbr /*, channel (string or direct reference or pointer but no copy)*/)
 {
 	(void)allFds;
@@ -133,17 +155,15 @@ void do_chan_opt(fdList &allFds, int userNbr, std::vector<std::string> opt, int 
 			break ;
 			case 6:
 				if (sign == true)
-					allFds.channelList[chanNbr].maxUser = ft_stoi(opt[3]);
+					str_to_int(allFds.channelList[chanNbr].maxUser, opt[3]);
 			break ;
 			case 7: std::cout << "launching option: " << opt[2][i] << std::endl;
 			break ;
 			case 8: std::cout << "launching option: " << opt[2][i] << std::endl;
 			break ;
-			case 9: std::cout << "launching option: " << opt[2][i] << std::endl;
+			case 9: std::cout << "launching option: v " << std::endl;
 			break ;
-			case 10:
-				if (sign == true)
-					allFds.channelList[chanNbr].password = opt[3];
+			case 10: chan_opt_k(allFds, opt, chanNbr, sign);
 			break ;
 			default : std::cout << "Not launching option" << std::endl;
 			break ;	
