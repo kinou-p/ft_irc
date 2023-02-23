@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:56 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/19 22:27:00 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:47:06 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,16 @@
 void	INVITE(std::string buffer, fdList &allFds, int userNbr)
 {
 	std::vector<std::string> splitBuff;
+	std::string msg;
 	int invitedNbr;
 	channelData chan;
 	int chanNbr;
 	
+	if (!allFds.userData[userNbr].registered) 
+	{
+		cmd_error(allFds, allFds.userData[userNbr].fd, "451 * INVITE :You have not registered\n");
+		return ;
+	}
 	split(buffer, ' ', splitBuff);
 	if (splitBuff.size() < 3)
 	{
@@ -68,6 +74,7 @@ void	INVITE(std::string buffer, fdList &allFds, int userNbr)
 	std::cout << "invite him !!!!" << splitBuff[1] << " to " <<  splitBuff[2] << std::endl;
 	//RPL_INVITING
 	//RPL_AWAY
-	//set authorization to join
-	return ;
+	chan.invitedList.push_back(&allFds.userData[invitedNbr]);//set authorization to join
+	msg = "341 " + allFds.userData[userNbr].nickname + " " + chan.name + " " + splitBuff[1] + "\n";
+	cmd_reply(allFds, allFds.userData[userNbr].fd, msg);
 }

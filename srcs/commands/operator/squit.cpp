@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:11:03 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/15 20:05:27 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:48:11 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ void	SQUIT(std::string buffer, fdList &allFds, int userNbr)
 	std::cout << "squit | server end\n";
 	std::vector<std::string> splitBuff;
 	split(buffer, ' ', splitBuff);
+
+	if (!allFds.userData[userNbr].registered) 
+	{
+		cmd_error(allFds, allFds.userData[userNbr].fd, "451 * SQUIT :You have not registered\n");
+		return ;
+	}
 	if (splitBuff.size() < 2)
 	{
 		cmd_error(allFds, allFds.userData[userNbr].fd, "431 * SQUIT :Not enought argument\n");

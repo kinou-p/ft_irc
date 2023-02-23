@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:10:07 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/20 17:50:46 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:46:29 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,11 @@ void	PART(std::string buffer, fdList &allFds, int userNbr)
 	std::vector<std::string> splitChan;
 	std::string msg;
 	
+	if (!allFds.userData[userNbr].registered) 
+	{
+		cmd_error(allFds, allFds.userData[userNbr].fd, "451 * PART :You have not registered\n");
+		return ;
+	}
 	split(buffer, ' ', splitBuff);
 	if (splitBuff.size() < 2)
 	{

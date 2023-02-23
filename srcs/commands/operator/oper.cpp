@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:04:47 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/17 20:38:40 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:48:01 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ void	OPER(std::string buffer, fdList &allFds, int userNbr)
 	std::vector<std::string> splitBuff;
 	std::string msg;
 	
+	if (!allFds.userData[userNbr].registered) 
+	{
+		cmd_error(allFds, allFds.userData[userNbr].fd, "451 * OPER :You have not registered\n");
+		return ;
+	}
 	split(buffer, ' ', splitBuff);
 	if (splitBuff.size() < 3)
 	{

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 08:53:03 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/20 11:51:26 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:46:47 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ void PRIVMSG(std::string buffer, fdList &allFds, int userNbr)
 	std::vector<std::string> splitBuff;
 	std::string msg;
 	
+	if (!allFds.userData[userNbr].registered) 
+	{
+		cmd_error(allFds, allFds.userData[userNbr].fd, "451 * PRIVMSG :You have not registered\n");
+		return ;
+	}
 	std::cout << "privmsg bufer= --" << buffer << std::endl;
 	split(buffer, ' ', splitBuff);
 	if (splitBuff.size() < 2)
@@ -63,11 +68,17 @@ void send_msg(fdList &allFds, std::string msg, std::string dest, int userNbr)
 			cmd_error(allFds, allFds.userData[userNbr].fd, "442 * PRIVMSG " + dest + " :You're not on that channel\n");
 			return ;
 		}
-		// if (allFds.channelList[pos].mode.m && !allFds.userData[userNbr].op && !is_chan_op(allFds, &allFds.channelList[pos], userNbr) && !allFds.channelList[pos].userMode[nbr].v)
+		// if (find_client_list(allFds.channelList[pos].verboseList, &allFds.userData[userNbr]) != -1)
 		// {
-		// 	cmd_error(allFds, allFds.userData[userNbr].fd, "404 * PRIVMSG " + dest + " :Cannot send to channel\n");
-		// 	return ;
+		// 	allFds.channelList[pos].verboseList.erase();
 		// }
+		if (allFds.channelList[pos].mode.m && !allFds.userData[userNbr].op 
+			&& !is_chan_op(allFds, &allFds.channelList[pos], userNbr) 
+			&& find_client_list(allFds.channelList[pos].verboseList, &allFds.userData[userNbr]) == -1)
+		{
+			cmd_error(allFds, allFds.userData[userNbr].fd, "404 * PRIVMSG " + dest + " :Cannot send to channel\n");
+			return ;
+		}
 		for (size_t i = 0; i < allFds.channelList[pos].userList.size(); i++)
 		{
 			std::cout << "send nickname " << allFds.channelList[pos].userList[i]->nickname << std::endl;

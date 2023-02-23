@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:52 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/19 22:07:14 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:47:37 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ void	TOPIC(std::string buffer, fdList &allFds, int userNbr)
 	std::vector<std::string> splitBuff;
 	
 	std::cout << "topic im here1\n";//RPL_NOTOPIC //RPL_TOPIC
+	if (!allFds.userData[userNbr].registered) 
+	{
+		cmd_error(allFds, allFds.userData[userNbr].fd, "451 * TOPIC :You have not registered\n");
+		return ;
+	}
 	split(buffer, ' ', splitBuff);
 	if (splitBuff.size() < 2)
 	{

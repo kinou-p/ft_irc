@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:14:17 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/22 13:03:30 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:49:05 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,12 @@ void	WHO(std::string buffer, fdList &allFds, int userNbr)
 	std::vector<std::string> splitBuff;
 	int pos;
 	(void) userNbr;
+
+	if (!allFds.userData[userNbr].registered) 
+	{
+		cmd_error(allFds, allFds.userData[userNbr].fd, "451 * WHO :You have not registered\n");
+		return ;
+	}
 	split(buffer, ' ', splitBuff);
 	if (splitBuff.size() == 1 || splitBuff[1] == "0")
 	{

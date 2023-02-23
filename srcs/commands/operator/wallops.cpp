@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:09:38 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/17 21:13:21 by apommier         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:48:22 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ void	WALLOPS(std::string buffer, fdList &allFds, int userNbr)
 	std::string msg;
 	
 	//std::cout << "privmsg bufer= --" << buffer << std::endl;
+	if (!allFds.userData[userNbr].registered) 
+	{
+		cmd_error(allFds, allFds.userData[userNbr].fd, "451 * WALLOPS :You have not registered\n");
+		return ;
+	}
 	split(buffer, ' ', splitBuff);
 	if (splitBuff.size() < 2)
 	{
