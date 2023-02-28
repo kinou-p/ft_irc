@@ -6,7 +6,7 @@
 /*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:30 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/27 23:58:08 by sadjigui         ###   ########.fr       */
+/*   Updated: 2023/02/28 23:23:06 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,13 +239,33 @@ void do_chan_opt(fdList &allFds, int userNbr, std::vector<std::string> opt, int 
 	return;
 }
 
-void do_user_option(fdList &allFds, int userNbr, std::string opt, int new_target)
+void	do_user_opt(fdList &allFds, int userNbr, std::vector<std::string> opt, int new_target)
 {
 	(void)allFds;
 	(void)userNbr;
-	for (int i = 1; opt[i]; i++)
+	(void)new_target;
+	char opts[4] = {'i', 's', 'w', 'o'};
+	bool sign = true;
+	if (opt[2][0] == '-')
+		sign = false;
+	for (int i = 1; opt[2][i]; i++)
 	{
-		
+		int j = 0;
+		while (opts[j] && opts[j] != opt[2][i])
+			j++;
+		switch(j)
+		{
+			case 0: std::cout << "User i" << std::endl;
+			break ;
+			case 1: allFds.userData[new_target].mode.s = (sign = true) ? true : false;
+			break ;
+			case 2: allFds.userData[new_target].mode.w = (sign = true) ? true : false;
+			break ;
+			case 3: allFds.userData[new_target].mode.o = (sign = true) ? true : false;
+			break ;
+			default: std::cout << "Default" << std::endl;
+			break ;
+		}
 	}
 	return;
 }
