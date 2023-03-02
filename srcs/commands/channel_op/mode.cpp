@@ -6,7 +6,7 @@
 /*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:30 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/28 23:23:06 by sadjigui         ###   ########.fr       */
+/*   Updated: 2023/03/02 23:31:36 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	chan_opt_v(fdList &allFds, int userNbr, std::vector<std::string> opt, int c
 	(void)chanNbr;
 	(void)sign;
 	
-	if (opt.size() != 4)
+	if (opt.size() < 4)
 	{
 		std::cout << "ERR_NEEDMOREPARAMS" << std::endl;
 		std::cout << "how to use it :/MODE <channel> +/-v <user>" << std::endl;
@@ -147,7 +147,7 @@ void	chan_opt_v(fdList &allFds, int userNbr, std::vector<std::string> opt, int c
 	if (sign == true && pos == -1)
 		allFds.channelList[chanNbr].verboseList.push_back(&allFds.userData[target]);
 	if (sign == false && pos != -1)
-		allFds.channelList[chanNbr].verboseList.erase(allFds.channelList[chanNbr].verboseList.begin() + (pos -1));
+		allFds.channelList[chanNbr].verboseList.erase(allFds.channelList[chanNbr].verboseList.begin() + pos);
 }
 
 void	chan_opt_b(fdList &allFds, int userNbr, std::vector<std::string> opt, int chanNbr, bool sign)
@@ -170,7 +170,7 @@ void	chan_opt_b(fdList &allFds, int userNbr, std::vector<std::string> opt, int c
 			std::cout << ban[i]->userName << std::endl;
 		}
 	}
-	if (opt.size() == 4)
+	if (opt.size() <= 4)
 	{
 		int target_in_client = find_user(allFds, opt[3]);
 		if (target_in_client != -1)
@@ -182,7 +182,7 @@ void	chan_opt_b(fdList &allFds, int userNbr, std::vector<std::string> opt, int c
 		if (sign == true && target_in_ban == -1)
 			allFds.channelList[chanNbr].banList.push_back(&allFds.userData[target_in_client]);
 		if (sign == false && target_in_ban != -1)
-			allFds.channelList[chanNbr].banList.erase(allFds.channelList[chanNbr].banList.begin() + (target_in_ban -1));
+			allFds.channelList[chanNbr].banList.erase(allFds.channelList[chanNbr].banList.begin() + (target_in_ban));
 	}
 }
 
@@ -255,7 +255,7 @@ void	do_user_opt(fdList &allFds, int userNbr, std::vector<std::string> opt, int 
 			j++;
 		switch(j)
 		{
-			case 0: std::cout << "User i" << std::endl;
+			case 0: allFds.userData[new_target].mode.i = (sign = true) ? true : false;
 			break ;
 			case 1: allFds.userData[new_target].mode.s = (sign = true) ? true : false;
 			break ;
@@ -299,7 +299,7 @@ void	MODE(std::string buffer, fdList &allFds, int userNbr)
 		
 		search_and_erase(splitBuff[2], "opsitnmlbvk");
 		std::cout << "splitbuff[2] after = " << splitBuff[2] << std::endl;
-		if ((splitBuff[2].size() < 2) && (splitBuff[2][0] != '-' || splitBuff[2][0] != '+'))
+		if ((splitBuff[2].size() < 2) || (splitBuff[2][0] != '-' && splitBuff[2][0] != '+'))
 		{
 			std::cout << "Bad params" << std::endl;
 			return ;
@@ -308,16 +308,16 @@ void	MODE(std::string buffer, fdList &allFds, int userNbr)
 		//do_option one by one here (do_chan_opt)?
 		return ;
 	}
-	else if ((find_user(allFds, splitBuff[1]) == -1))
+	// pos = find_user(allFds, splitBuff[1]);
+	else if ((pos = find_user(allFds, splitBuff[1]))  == -1)
 	{
 		std::cout << "user doesn't exist" << std::endl;
 		// 401 ERR_NOSUCHNICK
 		// "<pseudonyme> :No such nick/channel"
 		return ;
 	}
-	else if ((find_user(allFds, splitBuff[1]) != -1))
+	else
 	{
-		pos = find_user(allFds, splitBuff[1]);
 		search_and_erase(splitBuff[2], "iswo");
 		if ((splitBuff[2].size() < 2) && (splitBuff[2][0] != '-' || splitBuff[2][0] != '+'))
 		{
