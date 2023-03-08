@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:10:26 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/16 22:25:37 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/03 22:24:47 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ void	send_quit_msg(fdList &allFds, int userNbr, std::string msg)
 		{
 			//std::cout << "send nickname " << allFds.userData[userNbr].joinedChan[i]->userList[j]->nickname << std::endl;
 			if (allFds.userData[userNbr].joinedChan[i]->userList[j] != &allFds.userData[userNbr])
-				send(allFds.userData[userNbr].joinedChan[i]->userList[j]->fd, fullMsg.c_str(), fullMsg.size(), 0);
+			{
+				if (allFds.userData[userNbr].joinedChan[i]->userList[j]->mode.s)
+					send(allFds.userData[userNbr].joinedChan[i]->userList[j]->fd, fullMsg.c_str(), fullMsg.size(), 0);
+			}
 			else
 				std::cout << "hehe je quitte\n";
 			std::cout << "loop here\n";

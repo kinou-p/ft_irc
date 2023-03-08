@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:27:37 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/23 21:12:34 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/03 22:19:08 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ struct userMode
 	
 	userMode()
 	: i(0),
-	s(0),
+	s(1),
 	w(0),
 	o(0)	{}
 };
@@ -129,7 +129,7 @@ struct channelData //each chan have one
 {
 	std::string name;
 	std::string topic;
-6
+
 	std::vector<clientData *> userList;
 	std::vector<clientData *> banList;
 	std::vector<clientData *> invitedList;
@@ -160,11 +160,6 @@ struct fdList //&allFds in code | /!\ only one on the server | REFERENCE ONLY
 		int nbrUser;
 		functionTab parsingTab;
 };
-
-
-
-
-
 
 /* ************************************************************************** */
 /* *******************************DEL USER*********************************** */

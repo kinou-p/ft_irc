@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:44:20 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/15 00:14:07 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/03 22:53:28 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ void initialize(char **av)
 	allFds.serverFd = socket(AF_INET, SOCK_STREAM, 0);
 	if (allFds.serverFd == -1)
 		ft_error("socket() error");
-	if (setsockopt(allFds.serverFd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt)))
+	// if (setsockopt(allFds.serverFd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt)))
+	// 	ft_error("setsockopt() error");
+	if (setsockopt(allFds.serverFd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)))
 		ft_error("setsockopt() error");
 
 	addr.sin_port = htons(atoi(av[1]));

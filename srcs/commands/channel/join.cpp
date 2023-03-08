@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:40:33 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/23 20:33:50 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/03 19:37:23 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void leave_all(fdList &allFds, int userNbr)
 int chan_check(fdList &allFds, int userNbr, int chanNbr, std::vector<std::string> splitBuff)
 {
 	std::string errorStr;
-	if (find_client_list(allFds.channelList[chanNbr].banList, &allFds.userData[userNbr]) == -1)
+	if (find_client_list(allFds.channelList[chanNbr].banList, &allFds.userData[userNbr]) != -1)
 	{
 		errorStr = "474 * JOIN " + allFds.channelList[chanNbr].name + " :Cannot join channel (+b)\n";
 		cmd_error(allFds, allFds.userData[userNbr].fd, errorStr); //ERR_INVITEONLYCHAN
@@ -99,6 +99,7 @@ void join_or_create(std::string buffer, fdList &allFds, int userNbr)
 			cmd_error(allFds, allFds.userData[userNbr].fd, "476 * " + splitBuff[1] + " :Bad Channel Mask\n");
 		new_chan.name = splitBuff[1];
 		new_chan.nbrUser = 1;
+		new_chan.opList.push_back(&allFds.userData[userNbr]);
 		new_chan.userList.push_back(&allFds.userData[userNbr]);
 		joined_chan = new_chan;
 		allFds.channelList.push_back(new_chan);
@@ -118,12 +119,12 @@ void join_or_create(std::string buffer, fdList &allFds, int userNbr)
 		std::cout << "loop here\n";
 	}
 
-	if (chanNbr == -1)	
+	if (chanNbr == -1)
 		chanNbr = find_channel(allFds, splitBuff[1]);
 	if (!allFds.channelList[chanNbr].topic.empty())
 		cmd_reply(allFds, allFds.userData[userNbr].fd, "332 TOPIC " + allFds.channelList[chanNbr].name + " :" + allFds.channelList[chanNbr].topic + "\n");
-	else
-		cmd_error(allFds, allFds.userData[userNbr].fd, "331 TOPIC " + allFds.channelList[chanNbr].name + " :No topic is set\n");
+	//else
+	//	cmd_error(allFds, allFds.userData[userNbr].fd, "NOTICE 331 TOPIC " + allFds.channelList[chanNbr].name + " :No topic is set\n");
 	// if (chanNbr == -1)
 	// {
 			
