@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:10:07 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/23 17:46:29 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/03 22:18:44 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,28 @@ void leave_chan(fdList &allFds, std::string chan, int userNbr, std::string msg)
 	//reply = ":" + allFds.userData[userNbr].nickname + "!" + 
 	
 	//reply = ":" + allFds.userData[userNbr].nickname + "!" + allFds.userData[userNbr].userName + "@" + allFds.userData[userNbr].ip + " PART " + allFds.channelList[chanPos].name;
-	reply = ":" + allFds.userData[userNbr].nickname + "!" + allFds.userData[userNbr].userName + "@" + allFds.userData[userNbr].hostName + " PART " + allFds.channelList[chanPos].name + "\n";
+	//reply = ":" + allFds.userData[userNbr].nickname + "!" + allFds.userData[userNbr].userName + "@" + allFds.userData[userNbr].ip + " PART :" + allFds.channelList[chanPos].name + "\n";
+	reply = ":" + allFds.userData[userNbr].nickname + "!" + allFds.userData[userNbr].userName + "@" + allFds.userData[userNbr].ip;
+	if (!msg.empty())
+		reply += " PART " + allFds.channelList[chanPos].name + " " + msg + "\n";
+	else
+		reply += " PART :" + allFds.channelList[chanPos].name + "\n";
+
 	//:awd!kinou@172.17.0.1 PART :#test tcpdump
 	//:awd!kinou@127.0.0.1 PART :#test
-	(void )msg;
-	//if (!msg.empty())
-	//	reply += " :" + msg;
+	//(void )msg;
+	//	reply += " " + msg;
+	//else
+	//	reply += "\n";
 	std::cout << "leave msg=" << reply << std::endl;
 	send(allFds.userData[userNbr].fd, reply.c_str(), reply.size(), 0);
+	for (int i = 0; i < allFds.channelList[chanPos].nbrUser; i++)
+	{
+		if (allFds.channelList[chanPos].userList[i]->mode.s)
+			send(allFds.channelList[chanPos].userList[i]->fd, reply.c_str(), reply.size(), 0);
+		std::cout << "loop here\n";
+	}
+	
 	//cmd_reply(allFds, allFds.userData[userNbr].fd, reply + "\n");
 }
 

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:32 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/23 17:47:18 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/03 22:24:11 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ void	KICK(std::string buffer, fdList &allFds, int userNbr)
 	//send_msg(allFds, msg, splitBuff[1], userNbr);
 	for (int i = 0; i < allFds.channelList[chanPos].nbrUser; i++)
 	{
-		send(allFds.channelList[chanPos].userList[i]->fd, kickMsg.c_str(), kickMsg.size(), 0);
+		if (allFds.channelList[chanPos].userList[i]->mode.s)
+			send(allFds.channelList[chanPos].userList[i]->fd, kickMsg.c_str(), kickMsg.size(), 0);
 	}
 	//cmd_reply(allFds, allFds.userData[userPos].fd, msg);
 	

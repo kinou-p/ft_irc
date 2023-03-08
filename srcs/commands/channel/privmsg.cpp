@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 08:53:03 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/23 17:46:47 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/03 22:28:18 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ void send_msg(fdList &allFds, std::string msg, std::string dest, int userNbr)
 		for (size_t i = 0; i < allFds.channelList[pos].userList.size(); i++)
 		{
 			std::cout << "send nickname " << allFds.channelList[pos].userList[i]->nickname << std::endl;
-			if (i != (size_t)userNbr)
+			
+			if (i != (size_t)userNbr && allFds.channelList[pos].userList[i]->mode.s)
 				send(allFds.channelList[pos].userList[i]->fd, fullMsg.c_str(), fullMsg.size(), 0);
 			std::cout << "loop here\n";
 		}
@@ -95,7 +96,8 @@ void send_msg(fdList &allFds, std::string msg, std::string dest, int userNbr)
 		cmd_error(allFds, allFds.userData[userNbr].fd, "401 * PRIVMSG " + dest + " :No such nick/channel\n");
 		return ;
 	}
-	send(allFds.userData[pos].fd, fullMsg.c_str(), fullMsg.size(), 0);
+	if (allFds.userData[pos].mode.s)
+		send(allFds.userData[pos].fd, fullMsg.c_str(), fullMsg.size(), 0);
 	std::cout << "msg send\n";
 	std::cout << "msg = " << fullMsg << std::endl;
 }

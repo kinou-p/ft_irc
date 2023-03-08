@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:46:41 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/23 20:29:25 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/03 22:56:34 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 void ft_error(std::string str)
 {
 	std::cerr << str << std::endl;
-	if (errno)
-	{
-		std::cerr << "errno: " << strerror(errno) << std::endl;
-		throw ;//std::bad_alloc();
-		//exit(errno);
-	}
-	exit(1);
+	throw std::exception();
+	// if (errno)
+	// {
+	// 	std::cerr << "errno: " << strerror(errno) << std::endl;
+	// 	throw std::exception();
+	// 	//exit(errno);
+	// }
+	//exit(1);
 }
 
 void close_fd(int fd)
