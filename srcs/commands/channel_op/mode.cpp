@@ -6,7 +6,7 @@
 /*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:30 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/02 23:31:36 by sadjigui         ###   ########.fr       */
+/*   Updated: 2023/03/09 00:14:57 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,8 @@ void	chan_opt_b(fdList &allFds, int userNbr, std::vector<std::string> opt, int c
 	(void)ban;
 	if (opt.size() == 3 && sign == true)
 	{
-		if (ban.size() < 1)
+		std::cout << "========ban = "<< ban[0] << std::endl;
+		if (ban.empty() == true)
 		{
 			std::cout << "Nobody was banned on this channel" << std::endl;
 			return ;
@@ -173,7 +174,7 @@ void	chan_opt_b(fdList &allFds, int userNbr, std::vector<std::string> opt, int c
 	if (opt.size() <= 4)
 	{
 		int target_in_client = find_user(allFds, opt[3]);
-		if (target_in_client != -1)
+		if (target_in_client == -1)
 		{
 			std::cout << "No user found" << std::endl;
 			return ;
@@ -255,13 +256,25 @@ void	do_user_opt(fdList &allFds, int userNbr, std::vector<std::string> opt, int 
 			j++;
 		switch(j)
 		{
-			case 0: allFds.userData[new_target].mode.i = (sign = true) ? true : false;
+			case 0:
+				if (allFds.userData[userNbr].userName != opt[1])
+				{
+					cmd_error(allFds, allFds.userData[userNbr].fd, "401 *" + opt[1] + " :No such nick/channel\n");
+					return ;
+				}
+				 allFds.userData[new_target].mode.i = (sign = true) ? true : false;
 			break ;
 			case 1: allFds.userData[new_target].mode.s = (sign = true) ? true : false;
 			break ;
 			case 2: allFds.userData[new_target].mode.w = (sign = true) ? true : false;
 			break ;
-			case 3: allFds.userData[new_target].mode.o = (sign = true) ? true : false;
+			case 3:
+				if (allFds.userData[userNbr].mode.o == false) 
+				{
+					cmd_error(allFds, allFds.userData[userNbr].fd, "482 *" + opt[1] + " :You're not channel\n");
+					return ;
+				}
+				allFds.userData[new_target].mode.o = (sign = true) ? true : false;
 			break ;
 			default: std::cout << "Default" << std::endl;
 			break ;
