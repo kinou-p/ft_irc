@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:10:07 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 01:48:54 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 03:11:17 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void leave_chan(fdList &allFds, std::string chan, int userNbr, std::string msg)
 	//del_user_in_chan(&allFds.userData[userNbr], &allFds.channelList[chanPos]);
 	int pos = find_client_list(allFds.channelList[chanPos].userList, &allFds.userData[userNbr]);
 	allFds.channelList[chanPos].userList.erase(allFds.channelList[chanPos].userList.begin() + pos);
+	allFds.channelList[chanPos].nbrUser--;
 	del_chan_in_user(&allFds.userData[userNbr], &allFds.channelList[chanPos]);
 	//:WiZ!jto@tolsun.oulu.fi PART #playzone :I lost
 	//:awd!kinou@kinou PART #test
@@ -51,6 +52,7 @@ void leave_chan(fdList &allFds, std::string chan, int userNbr, std::string msg)
 	//	reply += "\n";
 	std::cout << "leave msg=" << reply << std::endl;
 	send(allFds.userData[userNbr].fd, reply.c_str(), reply.size(), 0);
+	//allFds.channelList[chanPos].nbrUser--;
 	for (int i = 0; i < allFds.channelList[chanPos].nbrUser; i++)
 	{
 		if (allFds.channelList[chanPos].userList[i]->mode.s)

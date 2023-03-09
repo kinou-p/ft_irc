@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:27:37 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 01:11:57 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 03:07:21 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ struct channelData //each chan have one
 	std::string password;
 	int	maxUser;
 	//int banMask ???
-	
+
 	int nbrUser;
 };
 
@@ -241,7 +241,8 @@ void	parse_commands(std::string buffer, fdList &allFds, int userNbr);
 /* ******************************MODE UTILS********************************** */
 /* ************************************************************************** */
 
-std::string	chan_reply(channelData &chan, clientData &user);
-std::string	user_reply(clientData &user);
-int			search_and_erase(std::string &str, std::string toFind);
-bool		str_to_int(int &i, const std::string s);
+void	ban_reply(channelData &chan, clientData &user);
+void	chan_reply(channelData &chan, clientData &user);
+void	user_reply(clientData &user);
+int		search_and_erase(std::string &str, std::string toFind);
+bool	str_to_int(int &i, const std::string s);

@@ -6,15 +6,27 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 00:13:32 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 01:47:02 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 02:30:14 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/ft_irc.hpp"
 
-// std::string ban_reply
+void ban_reply(channelData &chan, clientData &user)
+{
+	std::string endReply;
+	std::string fullReply;
+	std::string reply = ":irc.local 367 " + user.nickname + " " + chan.name + " ";
+	for (size_t i = 0; i < chan.banList.size(); i++)
+	{
+		fullReply = reply + chan.banList[i]->nickname + "!" + chan.banList[i]->userName + "@" + chan.banList[i]->hostName + "\n";
+		send(user.fd, fullReply.c_str(), fullReply.size(), 0);
+	}
+	endReply = ":irc.local 367 " + user.nickname + " " + chan.name + " :End of channel ban list\n";
+	send(user.fd, endReply.c_str(), endReply.size(), 0);
+}
 
-std::string	chan_reply(channelData &chan, clientData &user)
+void chan_reply(channelData &chan, clientData &user)
 {
 	//:irc.server.com 324 ClientName #channel +tnkLs 10 operator1 operator2
 	(void) chan;
@@ -41,12 +53,13 @@ std::string	chan_reply(channelData &chan, clientData &user)
 		reply += chan.maxUser;
 	for (size_t i = 0; i < chan.opList.size(); i++)
 		reply += " " + chan.opList[i]->nickname;
+	send(user.fd, reply.c_str(), reply.size(), 0);
 	//if (reply.size() > 2)
 	//	reply_begin += reply;
-	return (reply);
+	//return (reply);
 }
 
-std::string	user_reply(clientData &user)
+void user_reply(clientData &user)
 {
 	//:irc.server.com 221 ClientName +ix
 
@@ -61,7 +74,7 @@ std::string	user_reply(clientData &user)
 		reply += 'w';
 	if (user.mode.o)
 		reply += 'o';
-	return (reply);	
+	send(user.fd, reply.c_str(), reply.size(), 0);	
 }
 
 int search_and_erase(std::string &str, std::string toFind)

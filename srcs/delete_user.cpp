@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 20:38:50 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 02:10:41 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 02:17:28 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void delete_user(fdList &allFds, int userNbr)
 	
 	for (size_t i = 0; i < allFds.channelList.size(); i++)//all joined chan
 	{
-		del_user_in_chan(&allFds.userData[userNbr], allFds.channelList[i]);
+		del_user_in_chan(&allFds.userData[userNbr], &allFds.channelList[i]);
 		//allFds.userData[userNbr].joinedChan[i].erase(find_user_in_chan(allFds.userData[userNbr].joinedChan[i])/*find user in chan*/)
 	}
 	close(allFds.userData[userNbr].fd);
