@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:30 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 02:09:55 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 03:32:36 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ void	chan_opt_b(fdList &allFds, int userNbr, std::vector<std::string> opt, int c
 	(void)chanNbr;
 	(void)sign;
 	(void)ban;
+	int pos;
+	
 	if (opt.size() == 3 && sign == true)
 	{
 		if (ban.empty() == true)
@@ -106,7 +108,14 @@ void	chan_opt_b(fdList &allFds, int userNbr, std::vector<std::string> opt, int c
 		}
 		int target_in_ban = find_client_list(allFds.channelList[chanNbr].banList, &allFds.userData[target_in_client]);
 		if (sign == true && target_in_ban == -1)
+		{
 			allFds.channelList[chanNbr].banList.push_back(&allFds.userData[target_in_client]);
+			KICK("/KICK " + allFds.channelList[chanNbr].name + " " + allFds.userData[target_in_client].nickname + " You have been banned from this channel", allFds, userNbr);
+			if ((pos = find_client_list(allFds.channelList[chanNbr].userList, &allFds.userData[target_in_client])) != -1)
+				allFds.channelList[chanNbr].userList.erase(allFds.channelList[chanNbr].userList.begin() + pos);
+			if ((pos = find_client_list(allFds.channelList[chanNbr].opList, &allFds.userData[target_in_client])) != -1)
+				allFds.channelList[chanNbr].opList.erase(allFds.channelList[chanNbr].opList.begin() + pos);
+		}
 		if (sign == false && target_in_ban != -1)
 		{
 			std::cout <<"target in bam == "<< allFds.channelList[chanNbr].banList[target_in_ban]->nickname << std::endl;
