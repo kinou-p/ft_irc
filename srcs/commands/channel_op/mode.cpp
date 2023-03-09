@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:30 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 02:04:59 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 02:09:55 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void	chan_opt_b(fdList &allFds, int userNbr, std::vector<std::string> opt, int c
 	(void)ban;
 	if (opt.size() == 3 && sign == true)
 	{
-		// std::cout << "========ban = "<< ban[0] << std::endl;
 		if (ban.empty() == true)
 		{
 			std::cout << "Nobody was banned on this channel" << std::endl;
@@ -173,7 +172,7 @@ void	do_user_opt(fdList &allFds, int userNbr, std::vector<std::string> opt, int 
 		sign = false;
 	if (allFds.userData[userNbr].userName != opt[1])
 	{
-		std::cout << "not the same user ! don't try to change someone else MODE you stupid bitch\n"
+		std::cout << "not the same user ! don't try to change someone else MODE you stupid bitch\n";
 		//cmd_error(allFds, allFds.userData[userNbr].fd, "401 *" + opt[1] + " :No such nick/channel\n");
 		return ;
 	}
