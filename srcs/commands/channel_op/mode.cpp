@@ -6,7 +6,7 @@
 /*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:30 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 00:14:57 by sadjigui         ###   ########.fr       */
+/*   Updated: 2023/03/09 01:32:07 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ void	chan_opt_b(fdList &allFds, int userNbr, std::vector<std::string> opt, int c
 	(void)ban;
 	if (opt.size() == 3 && sign == true)
 	{
-		std::cout << "========ban = "<< ban[0] << std::endl;
+		// std::cout << "========ban = "<< ban[0] << std::endl;
 		if (ban.empty() == true)
 		{
 			std::cout << "Nobody was banned on this channel" << std::endl;
@@ -171,7 +171,7 @@ void	chan_opt_b(fdList &allFds, int userNbr, std::vector<std::string> opt, int c
 			std::cout << ban[i]->userName << std::endl;
 		}
 	}
-	if (opt.size() <= 4)
+	if (opt.size() >= 4)
 	{
 		int target_in_client = find_user(allFds, opt[3]);
 		if (target_in_client == -1)
@@ -183,7 +183,10 @@ void	chan_opt_b(fdList &allFds, int userNbr, std::vector<std::string> opt, int c
 		if (sign == true && target_in_ban == -1)
 			allFds.channelList[chanNbr].banList.push_back(&allFds.userData[target_in_client]);
 		if (sign == false && target_in_ban != -1)
+		{
+			std::cout <<"target in bam == "<< allFds.channelList[chanNbr].banList[target_in_ban]->nickname << std::endl;
 			allFds.channelList[chanNbr].banList.erase(allFds.channelList[chanNbr].banList.begin() + (target_in_ban));
+		}
 	}
 }
 
