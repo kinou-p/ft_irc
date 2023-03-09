@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:46:41 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/03 22:56:34 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 01:18:14 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,11 @@ int not_contain_other(std::string str, std::string toFind)
 
 int find_client_list(std::vector<clientData *> &list, clientData *client)
 {
-	std::vector<clientData*>::iterator start = list.begin();
-	std::vector<clientData*>::iterator  pastEnd = list.end();
-	while (start != pastEnd)
+	int size = list.size();
+	for (int i = 0; i < size; i++)
 	{
-		if (*start == client)
-			return (start - pastEnd - 1);	
-		start++;
+		if (list[i] == client)
+			return (i);
 	}
 	return (-1);
 }

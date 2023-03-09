@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:10:07 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/03 22:18:44 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 01:48:54 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void leave_chan(fdList &allFds, std::string chan, int userNbr, std::string msg)
 	std::string reply;
 	
 	if ((chanPos = find_channel(allFds, chan)) == -1)
-	{	
+	{
 		cmd_error(allFds, allFds.userData[userNbr].fd, "401 * PART " + chan + " :No such nick/channel\n");
 		return ;
 	}
@@ -27,7 +27,9 @@ void leave_chan(fdList &allFds, std::string chan, int userNbr, std::string msg)
 		cmd_error(allFds, allFds.userData[userNbr].fd, "422 * " + chan + " :You're not on that channel\n");
 		return ;
 	}
-	del_user_in_chan(&allFds.userData[userNbr], &allFds.channelList[chanPos]);
+	//del_user_in_chan(&allFds.userData[userNbr], &allFds.channelList[chanPos]);
+	int pos = find_client_list(allFds.channelList[chanPos].userList, &allFds.userData[userNbr]);
+	allFds.channelList[chanPos].userList.erase(allFds.channelList[chanPos].userList.begin() + pos);
 	del_chan_in_user(&allFds.userData[userNbr], &allFds.channelList[chanPos]);
 	//:WiZ!jto@tolsun.oulu.fi PART #playzone :I lost
 	//:awd!kinou@kinou PART #test

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 20:38:50 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/08 01:08:10 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 01:44:08 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ void del_user_in_chan(clientData *user, channelData *chan)
 		chan->userList.erase(chan->userList.begin() + pos);
 
 	if ((pos = find_client_list(chan->banList, user)) != -1)
-		chan->userList.erase(chan->banList.begin() + pos);
+		chan->banList.erase(chan->banList.begin() + pos);
 
 	if ((pos = find_client_list(chan->invitedList, user)) != -1)
-		chan->userList.erase(chan->invitedList.begin() + pos);
+		chan->invitedList.erase(chan->invitedList.begin() + pos);
 
 	if ((pos = find_client_list(chan->verboseList, user)) != -1)
-		chan->userList.erase(chan->verboseList.begin() + pos);
+		chan->verboseList.erase(chan->verboseList.begin() + pos);
 		
 	if ((pos = find_client_list(chan->opList, user)) != -1)
-		chan->userList.erase(chan->opList.begin() + pos);
+		chan->opList.erase(chan->opList.begin() + pos);
 
 	chan->nbrUser--;
 }

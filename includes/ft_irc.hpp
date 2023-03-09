@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:27:37 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/03 22:19:08 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 01:11:57 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 #include <vector>
 #include <algorithm>
 #include <list>
+
+#include <sstream>
 
 #include "function_tab.hpp"
 #include "accessList.hpp"
@@ -60,8 +62,8 @@ struct channelData;
 struct chanMode
 {
 	bool o; //- donne/retire les privilèges d'opérateur de canal
-	bool p; //- drapeau de canal privé
-	bool s; //- drapeau de canal secret
+	bool p; //- drapeau de canal privé *
+	bool s; //- drapeau de canal secret *
 	bool i; //- drapeau de canal accessible uniquement sur invitation
 	bool t; //- drapeau de sujet de canal modifiable uniquement par les opérateurs
 	bool n; //- pas de messages dans un canal provenant de clients à l'extérieur du canal
@@ -235,3 +237,11 @@ void	connect_client(fdList &allFds, int userNbr);
 
 void	parse_commands(std::string buffer, fdList &allFds, int userNbr);
 
+/* ************************************************************************** */
+/* ******************************MODE UTILS********************************** */
+/* ************************************************************************** */
+
+std::string	chan_reply(channelData &chan, clientData &user);
+std::string	user_reply(clientData &user);
+int			search_and_erase(std::string &str, std::string toFind);
+bool		str_to_int(int &i, const std::string s);
