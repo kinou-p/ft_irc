@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:40:39 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/14 01:25:22 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 05:01:38 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void USER(std::string buffer, fdList &allFds, int userNbr)
 	
 	
 	buffer.resize(buffer.size() - realName.size());
-	std::cout << "Buffer in userNbr = ---" << buffer << "---" << std::endl;
-	std::cout << "realname in userNbr = ---" << realName << "---" << std::endl;
+	//std::cout << "Buffer in userNbr = ---" << buffer << "---" << std::endl;
+	//std::cout << "realname in userNbr = ---" << realName << "---" << std::endl;
 	split(buffer, ' ', splitBuff);
 	if (splitBuff.size() < 4)
 	{

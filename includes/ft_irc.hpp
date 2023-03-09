@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:27:37 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 03:07:21 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 05:45:36 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@
 #define MAX_CHAN 10
 #define READ_SIZE 10
 #define CMD_NBR 10
-#define OP_PASSWORD "password"
-#define OP_NAME "operator"
+#define OP_PASSWORD "q"
+#define OP_NAME "q"
 
 
 	// if (!allFds.userData[userNbr].registered) 
@@ -78,7 +78,7 @@ struct chanMode
 	s(0),
 	i(0),
 	t(0),
-	n(0),
+	n(1),
 	m(0),
 	l(0),
 	b(0),

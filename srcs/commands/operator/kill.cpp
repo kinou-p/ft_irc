@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:34:57 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/23 17:47:50 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 05:55:10 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	KILL(std::string buffer, fdList &allFds, int userNbr)
 	pos = find_user(allFds, splitBuff[1]); 
 	if (pos == -1)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "401 * KILL " + splitBuff[1] + " :No such nick/channel\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "401 * KILL " + splitBuff[1] + " :No such nick\n");
 		return ;
 	}
 	std::string msg;

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:40:33 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/03 19:37:23 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 05:18:05 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void join_or_create(std::string buffer, fdList &allFds, int userNbr)
 	for (int i = 0; i < joined_chan.nbrUser; i++)
 	{
 		send(joined_chan.userList[i]->fd, fullMsg.c_str(), fullMsg.size(), 0);
-		std::cout << "loop here\n";
+		//std::cout << "loop here\n";
 	}
 
 	if (chanNbr == -1)
@@ -140,8 +140,8 @@ void join_loop(fdList &allFds, std::vector<std::string> splitBuff, int userNbr)
 	std::vector<std::string>	splitPwd;
 	std::string					buffer;
 	
-	std::cout << "join loop buf= " << splitBuff[1] << std::endl;
-	std::cout << "==========join loop========\n";
+	//std::cout << "join loop buf= " << splitBuff[1] << std::endl;
+	//std::cout << "==========join loop========\n";
 	split(splitBuff[1], ',', splitChan);
 	split(splitBuff[1], ',', splitPwd);
 	if (splitBuff[1] == "0")
@@ -149,9 +149,9 @@ void join_loop(fdList &allFds, std::vector<std::string> splitBuff, int userNbr)
 		leave_all(allFds, userNbr);
 		return ;
 	}
-	std::cout << "==========join loop2========\n";
-	std::cout << "size= " << splitChan.size() << std::endl;
-	std::cout << "content= " << splitChan[0] << std::endl;
+	//std::cout << "==========join loop2========\n";
+	//std::cout << "size= " << splitChan.size() << std::endl;
+	//std::cout << "content= " << splitChan[0] << std::endl;
 	for (size_t i = 0; i < splitChan.size(); i++)
 	{
 		if (splitChan[i][0] != '#' && splitChan[i][0] != '&')
@@ -160,7 +160,7 @@ void join_loop(fdList &allFds, std::vector<std::string> splitBuff, int userNbr)
 			buffer = "476 * JOIN " + splitChan[i] + " ::Bad Channel Mask\n";
 			cmd_error(allFds, allFds.userData[userNbr].fd, buffer);
 			//:Bad Channel Mask
-			std::cout << "bad chan mask\n";
+			//std::cout << "bad chan mask\n";
 			return ;
 		}
 		if (i < splitPwd.size())
@@ -168,9 +168,9 @@ void join_loop(fdList &allFds, std::vector<std::string> splitBuff, int userNbr)
 		else
 			buffer = "JOIN " + splitChan[i];
 		join_or_create(buffer, allFds, userNbr);
-		std::cout << "i= " << i << "   ==========join loop3========\n";
+		//std::cout << "i= " << i << "   ==========join loop3========\n";
 	}
-	std::cout << "==========join loop3========\n";
+	//std::cout << "==========join loop3========\n";
 }
 
 
@@ -180,7 +180,7 @@ void JOIN(std::string buffer, fdList &allFds, int userNbr)
 {
 	std::vector<std::string> splitBuff;
 	std::string msg;
-	std::cout << "==========join start========\n";
+	//std::cout << "==========join start========\n";
 
 	std::cout << "userNbr= " << userNbr << std::endl;
 	if (!allFds.userData[userNbr].registered) 
@@ -192,7 +192,7 @@ void JOIN(std::string buffer, fdList &allFds, int userNbr)
 	if (splitBuff.size() < 2) 
 	{
 		/*change error*/
-		std::cout << "JOIN : need more param\n";
+		//std::cout << "JOIN : need more param\n";
 		cmd_error(allFds, allFds.userData[userNbr].fd, "461 * JOIN :Not enough parameters\n"); //ERR_NEEDMOREPARAMS
 		return ;
 	}

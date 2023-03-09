@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:10:07 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 03:11:17 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 05:54:44 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void leave_chan(fdList &allFds, std::string chan, int userNbr, std::string msg)
 	
 	if ((chanPos = find_channel(allFds, chan)) == -1)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "401 * PART " + chan + " :No such nick/channel\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "401 * PART " + chan + " :No such channel\n");
 		return ;
 	}
 	if (is_joined(allFds, chan, userNbr) == -1)
@@ -50,14 +50,14 @@ void leave_chan(fdList &allFds, std::string chan, int userNbr, std::string msg)
 	//	reply += " " + msg;
 	//else
 	//	reply += "\n";
-	std::cout << "leave msg=" << reply << std::endl;
+	//std::cout << "leave msg=" << reply << std::endl;
 	send(allFds.userData[userNbr].fd, reply.c_str(), reply.size(), 0);
 	//allFds.channelList[chanPos].nbrUser--;
 	for (int i = 0; i < allFds.channelList[chanPos].nbrUser; i++)
 	{
 		if (allFds.channelList[chanPos].userList[i]->mode.s)
 			send(allFds.channelList[chanPos].userList[i]->fd, reply.c_str(), reply.size(), 0);
-		std::cout << "loop here\n";
+		//std::cout << "loop here\n";
 	}
 	
 	//cmd_reply(allFds, allFds.userData[userNbr].fd, reply + "\n");

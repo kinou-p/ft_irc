@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 00:16:27 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/14 14:27:53 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 05:02:08 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ void	PING(std::string buffer, fdList &allFds, int userNbr)
 	msg = ":irc.local PONG irc.local :" + splitBuff[1] + "\n";
 	//msg = "PONG irc.local " + splitBuff[1];
 	send(allFds.userData[userNbr].fd, msg.c_str(), msg.size(), 0);
-	std::cout << "pong send\n";
-	std::cout << "/r = " << (int)'\r' << "\n";
-	std::cout << "/n = " << (int)'\n' << "\n";
-	std::cout << "msg=" << msg << "\n";
+	//std::cout << "pong send\n";
+	//std::cout << "/r = " << (int)'\r' << "\n";
+	//std::cout << "/n = " << (int)'\n' << "\n";
+	//std::cout << "msg=" << msg << "\n";
 	// if (splitBuff.size() < 2)
 	// {
 	// 	cmd_error(allFds, allFds.userData[userNbr].fd, "431 * NICK :No nickname given\n");

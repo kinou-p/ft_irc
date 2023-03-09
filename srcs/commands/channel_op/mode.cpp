@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:30 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 03:32:36 by sadjigui         ###   ########.fr       */
+/*   Updated: 2023/03/09 05:44:57 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void	chan_opt_b(fdList &allFds, int userNbr, std::vector<std::string> opt, int c
 		if (sign == true && target_in_ban == -1)
 		{
 			allFds.channelList[chanNbr].banList.push_back(&allFds.userData[target_in_client]);
+			std::cout << "call kick\n";
 			KICK("/KICK " + allFds.channelList[chanNbr].name + " " + allFds.userData[target_in_client].nickname + " You have been banned from this channel", allFds, userNbr);
 			if ((pos = find_client_list(allFds.channelList[chanNbr].userList, &allFds.userData[target_in_client])) != -1)
 				allFds.channelList[chanNbr].userList.erase(allFds.channelList[chanNbr].userList.begin() + pos);
@@ -179,7 +180,7 @@ void	do_user_opt(fdList &allFds, int userNbr, std::vector<std::string> opt, int 
 	bool sign = true;
 	if (opt[2][0] == '-')
 		sign = false;
-	if (allFds.userData[userNbr].userName != opt[1])
+	if (allFds.userData[userNbr].nickname != opt[1])
 	{
 		std::cout << "not the same user ! don't try to change someone else MODE you stupid bitch\n";
 		//cmd_error(allFds, allFds.userData[userNbr].fd, "401 *" + opt[1] + " :No such nick/channel\n");

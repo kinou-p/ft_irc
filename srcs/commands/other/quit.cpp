@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:10:26 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/03 22:24:47 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 05:18:42 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	send_quit_msg(fdList &allFds, int userNbr, std::string msg)
 				if (allFds.userData[userNbr].joinedChan[i]->userList[j]->mode.s)
 					send(allFds.userData[userNbr].joinedChan[i]->userList[j]->fd, fullMsg.c_str(), fullMsg.size(), 0);
 			}
-			else
-				std::cout << "hehe je quitte\n";
-			std::cout << "loop here\n";
+			//else
+			//	std::cout << "hehe je quitte\n";
+			//std::cout << "loop here\n";
 		}
 	}
 }

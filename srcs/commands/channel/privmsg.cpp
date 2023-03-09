@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 08:53:03 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/03 22:28:18 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 05:54:52 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void PRIVMSG(std::string buffer, fdList &allFds, int userNbr)
 		cmd_error(allFds, allFds.userData[userNbr].fd, "451 * PRIVMSG :You have not registered\n");
 		return ;
 	}
-	std::cout << "privmsg bufer= --" << buffer << std::endl;
+	//std::cout << "privmsg bufer= --" << buffer << std::endl;
 	split(buffer, ' ', splitBuff);
 	if (splitBuff.size() < 2)
 	{
@@ -60,7 +60,7 @@ void send_msg(fdList &allFds, std::string msg, std::string dest, int userNbr)
 		pos = find_channel(allFds, dest);
 		if (pos == -1)
 		{	
-			cmd_error(allFds, allFds.userData[userNbr].fd, "401 * PRIVMSG " + dest + " :No such nick/channel\n");
+			cmd_error(allFds, allFds.userData[userNbr].fd, "401 * PRIVMSG " + dest + " :No such channel\n");
 			return ;
 		}
 		if (allFds.channelList[pos].mode.n && is_joined(allFds, dest, userNbr) == -1  )
@@ -81,23 +81,26 @@ void send_msg(fdList &allFds, std::string msg, std::string dest, int userNbr)
 		}
 		for (size_t i = 0; i < allFds.channelList[pos].userList.size(); i++)
 		{
-			std::cout << "send nickname " << allFds.channelList[pos].userList[i]->nickname << std::endl;
+			//std::cout << "send nickname " << allFds.channelList[pos].userList[i]->nickname << std::endl;
 			
-			if (i != (size_t)userNbr && allFds.channelList[pos].userList[i]->mode.s)
+			if (&allFds.userData[userNbr] != allFds.channelList[pos].userList[i] && allFds.channelList[pos].userList[i]->mode.s)
+			{
+				//std::cout << "send msg to user nbr" << i << std::endl;
 				send(allFds.channelList[pos].userList[i]->fd, fullMsg.c_str(), fullMsg.size(), 0);
-			std::cout << "loop here\n";
+			}
+			//std::cout << "loop here\n";
 		}
 		return ;
 	}
 	pos = find_user(allFds, dest); //return direct user fd
-	std::cout << "pos of user = " << pos << std::endl;
+	//std::cout << "pos of user = " << pos << std::endl;
 	if (pos == -1)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "401 * PRIVMSG " + dest + " :No such nick/channel\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "401 * PRIVMSG " + dest + " :No such nick\n");
 		return ;
 	}
 	if (allFds.userData[pos].mode.s)
 		send(allFds.userData[pos].fd, fullMsg.c_str(), fullMsg.size(), 0);
-	std::cout << "msg send\n";
-	std::cout << "msg = " << fullMsg << std::endl;
+	//std::cout << "msg send\n";
+	//std::cout << "msg = " << fullMsg << std::endl;
 }

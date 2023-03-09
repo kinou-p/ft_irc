@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:14:17 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/23 17:49:05 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 05:55:15 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	WHO(std::string buffer, fdList &allFds, int userNbr)
 	}
 	if ((pos = find_channel(allFds, splitBuff[1])) == -1)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "401 * " + splitBuff[1] + " :No such nick/channel\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "401 * " + splitBuff[1] + " :No such channel\n");
 		return ;
 	}
 	for (int i = 0; i < allFds.channelList[pos].nbrUser; i++)

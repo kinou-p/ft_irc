@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:56 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/23 17:47:06 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 05:54:59 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	INVITE(std::string buffer, fdList &allFds, int userNbr)
 	}
 	if ((invitedNbr = find_user(allFds, splitBuff[1])) == -1)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "401 * " + splitBuff[1] + " :No such nick/channel\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "401 * " + splitBuff[1] + " :No such nick\n");
 		return ;
 	}
 	if (is_joined(allFds, splitBuff[2], userNbr) == -1)

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 22:34:36 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/16 23:01:04 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 05:00:20 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ bool clientRequest(fdList &allFds, int userNbr)//,
 		// std::cout << "buffer empty\n";
 		return (1);
 	}
-	std::cout << "BUFFER: ---" << buf << "---" << std::endl;
 	// for (int i = 0; buffer[i]; i++)
 	// {
 	// 	std::cout << i << " = " << (int)buffer[i] << std::endl;	

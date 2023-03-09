@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 21:24:55 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/14 21:35:45 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 05:18:13 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void send_notice_msg(fdList &allFds, std::string msg, std::string dest, int user
 			return ;
 		for (size_t i = 0; i < allFds.channelList[pos].userList.size(); i++)
 		{
-			std::cout << "send nickname " << allFds.channelList[pos].userList[i]->nickname << std::endl;
+			//std::cout << "send nickname " << allFds.channelList[pos].userList[i]->nickname << std::endl;
 			if (i != (size_t)userNbr)
 				send(allFds.channelList[pos].userList[i]->fd, fullMsg.c_str(), fullMsg.size(), 0);
-			std::cout << "loop here\n";
+			//std::cout << "loop here\n";
 		}
 		return ;
 	}
@@ -54,7 +54,7 @@ void NOTICE(std::string buffer, fdList &allFds, int userNbr)
 	std::vector<std::string> splitBuff;
 	std::string msg;
 	
-	std::cout << "notice bufer= --" << buffer << std::endl;
+	//std::cout << "notice bufer= --" << buffer << std::endl;
 	split(buffer, ' ', splitBuff);
 	if (splitBuff.size() < 2)
 		return ;

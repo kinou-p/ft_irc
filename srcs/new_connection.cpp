@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 22:26:27 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/16 23:01:04 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 04:59:05 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void new_connection(fdList &allFds)
 	int addrLen = sizeof(addr);
 	int newFd;
 
-	std::cout << "==========newconnection========\n";
+	std::cout << "==========NEW CLIENT========\n";
 	//std::cout << "in new adress  " << &allFds << std::endl;
 	//std::cout << "new connection !" << std::endl;
 

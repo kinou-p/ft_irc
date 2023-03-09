@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:32 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/03 22:24:11 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 05:25:45 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	KICK(std::string buffer, fdList &allFds, int userNbr)
 
 	if ((chanPos = find_channel(allFds, splitBuff[1])) == -1)
 	{	
-		cmd_error(allFds, allFds.userData[userNbr].fd, "401 * KICK " + splitBuff[1] + " :No such nick/channel\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "401 * KICK " + splitBuff[1] + " :No such channel\n");
 		return ;
 	}
 	if (!allFds.userData[userNbr].op && is_joined(allFds, splitBuff[1], userNbr) == -1)
@@ -45,6 +45,13 @@ void	KICK(std::string buffer, fdList &allFds, int userNbr)
 		cmd_error(allFds, allFds.userData[userNbr].fd, "422 * " + splitBuff[1] + " :You're not on that channel\n");
 		return ;
 	}
+
+	if ((find_user(allFds, splitBuff[2])) == -1)
+	{	
+		cmd_error(allFds, allFds.userData[userNbr].fd, "401 * KICK " + splitBuff[1] + " :No such nick\n");
+		return ;
+	}
+	
 	if (chanPos != -1)
 	{
 		chan = allFds.channelList[chanPos];
@@ -62,7 +69,7 @@ void	KICK(std::string buffer, fdList &allFds, int userNbr)
 		return ;
 	}
 	kickMsg = allFds.userData[userPos].nickname + " have been kicked by " + allFds.userData[userNbr].nickname + "\n";
-	PART("PART " + splitBuff[1], allFds, userPos);
+	PART("PART " + splitBuff[1] + " has been kicked by " + allFds.userData[userNbr].nickname, allFds, userPos);
 	//del_user_in_chan(&allFds.userData[userPos], &allFds.channelList[chanPos]);
 	//del_chan_in_user(&allFds.userData[userPos], &allFds.channelList[chanPos]);
 	std::cout << "kick msg---" << msg << "---" << std::endl;
