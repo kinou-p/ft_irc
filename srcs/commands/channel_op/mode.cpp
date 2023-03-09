@@ -6,11 +6,12 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:30 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 01:49:10 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/09 02:04:59 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/ft_irc.hpp"
+#include <sstream>
 
 void	chan_opt_o(fdList &allFds, int userNbr, std::vector<std::string> opt, int chanNbr, bool sign)
 {
@@ -85,7 +86,8 @@ void	chan_opt_b(fdList &allFds, int userNbr, std::vector<std::string> opt, int c
 	(void)ban;
 	if (opt.size() == 3 && sign == true)
 	{
-		if (ban.empty())
+		// std::cout << "========ban = "<< ban[0] << std::endl;
+		if (ban.empty() == true)
 		{
 			std::cout << "Nobody was banned on this channel" << std::endl;
 			return ;
@@ -95,7 +97,7 @@ void	chan_opt_b(fdList &allFds, int userNbr, std::vector<std::string> opt, int c
 			std::cout << ban[i]->userName << std::endl;
 		}
 	}
-	if (opt.size() > 3)
+	if (opt.size() >= 4)
 	{
 		int target_in_client = find_user(allFds, opt[3]);
 		if (target_in_client == -1)
@@ -107,7 +109,10 @@ void	chan_opt_b(fdList &allFds, int userNbr, std::vector<std::string> opt, int c
 		if (sign == true && target_in_ban == -1)
 			allFds.channelList[chanNbr].banList.push_back(&allFds.userData[target_in_client]);
 		if (sign == false && target_in_ban != -1)
+		{
+			std::cout <<"target in bam == "<< allFds.channelList[chanNbr].banList[target_in_ban]->nickname << std::endl;
 			allFds.channelList[chanNbr].banList.erase(allFds.channelList[chanNbr].banList.begin() + (target_in_ban));
+		}
 	}
 }
 
@@ -123,32 +128,36 @@ void do_chan_opt(fdList &allFds, int userNbr, std::vector<std::string> opt, int 
 		switch (opt[2][i])
 		{
 			case 'o': chan_opt_o(allFds, userNbr, opt, chanNbr, sign); //std::cout << "launching option: " << opt[2][i] << std::endl;
-			break ;
+				break ;
 			case 'p': allFds.channelList[chanNbr].mode.p = (sign = true) ? true : false;
-			break ;
+				break ;
 			case 's': allFds.channelList[chanNbr].mode.s = (sign = true) ? true : false;
-			break ;
+				break ;
 			case 'i': allFds.channelList[chanNbr].mode.i = (sign = true) ? true : false;
-			break ;
+				break ;
 			case 't': allFds.channelList[chanNbr].mode.t = (sign = true) ? true : false;
-			break ;
+				break ;
 			case 'n': allFds.channelList[chanNbr].mode.n = (sign = true) ? true : false;
-			break ;
+				break ;
 			case 'm': allFds.channelList[chanNbr].mode.m = (sign = true) ? true : false;
-			break ;
+				break ;
 			case 'l':
 				if (sign == true)
 					str_to_int(allFds.channelList[chanNbr].maxUser, opt[3]);
-			break ;
+				break ;
 			case 'b': chan_opt_b(allFds, userNbr, opt, chanNbr, sign);
-			break ;
+				break ;
 			case 'v': chan_opt_v(allFds, userNbr, opt, chanNbr, sign);
-			break ;
+				break ;
 			case 'k': chan_opt_k(allFds, opt, chanNbr, sign);
-			break ;
+				break ;
 			default : std::cout << "Not launching option" << std::endl;
-			break ;	
+				break ;	
 		}
+		//mode_i()
+		//call option 
+		//switch ? if forest? map container ? 2 tab (name and function pointer) ?
+		// opt_i(int signe (+ ou -), channel, user);
 	}
 	return;
 }
@@ -162,6 +171,12 @@ void	do_user_opt(fdList &allFds, int userNbr, std::vector<std::string> opt, int 
 	bool sign = true;
 	if (opt[2][0] == '-')
 		sign = false;
+	if (allFds.userData[userNbr].userName != opt[1])
+	{
+		std::cout << "not the same user ! don't try to change someone else MODE you stupid bitch\n"
+		//cmd_error(allFds, allFds.userData[userNbr].fd, "401 *" + opt[1] + " :No such nick/channel\n");
+		return ;
+	}
 	for (int i = 1; opt[2][i]; i++)
 	{
 		//int j = 0;
@@ -169,18 +184,12 @@ void	do_user_opt(fdList &allFds, int userNbr, std::vector<std::string> opt, int 
 		//	j++;
 		switch(opt[2][i])
 		{
-			case 'i':
-				if (allFds.userData[userNbr].userName != opt[1])
-				{
-					cmd_error(allFds, allFds.userData[userNbr].fd, "401 *" + opt[1] + " :No such nick/channel\n");
-					return ;
-				}
-				 allFds.userData[new_target].mode.i = (sign = true) ? true : false;
-			break ;
+			case 'i': allFds.userData[new_target].mode.i = (sign = true) ? true : false;
+				break ;
 			case 's': allFds.userData[new_target].mode.s = (sign = true) ? true : false;
-			break ;
+				break ;
 			case 'w': allFds.userData[new_target].mode.w = (sign = true) ? true : false;
-			break ;
+				break ;
 			case 'o':
 				if (allFds.userData[userNbr].mode.o == false) 
 				{
@@ -188,9 +197,9 @@ void	do_user_opt(fdList &allFds, int userNbr, std::vector<std::string> opt, int 
 					return ;
 				}
 				allFds.userData[new_target].mode.o = (sign = true) ? true : false;
-			break ;
+				break ;
 			default: std::cout << "Default" << std::endl;
-			break ;
+				break ;
 		}
 	}
 	return;
@@ -212,6 +221,8 @@ void	MODE(std::string buffer, fdList &allFds, int userNbr)
 		if ((pos = find_channel(allFds, splitBuff[1])) == -1) //if true chan doesn't exist
 		{
 			std::cout << splitBuff[1] << ": No such channel" << std::endl;
+			// 403 ERR_NOSUCHCHANNEL
+			// "<nom de canal> :No such channel"
 			return ;
 		}//else
 		//verify_option(allFds, str, i); //needed?
