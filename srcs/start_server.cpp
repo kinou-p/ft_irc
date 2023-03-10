@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:44:20 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/03 22:53:28 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 21:13:21 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void initialize(char **av)
 	//allFds.channelList.reserve(MAX_CHAN);
 	allFds.password = av[2];
 	std::cout << "pass= " << av[2] << std::endl;
-	allFds.nbrUser = 0;
+	//allFds.nbrUser = 0;
 	allFds.serverFd = socket(AF_INET, SOCK_STREAM, 0);
 	if (allFds.serverFd == -1)
 		ft_error("socket() error");

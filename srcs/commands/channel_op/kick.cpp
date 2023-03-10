@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:32 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 05:25:45 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 21:21:43 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,30 +25,30 @@ void	KICK(std::string buffer, fdList &allFds, int userNbr)
 
 	if (!allFds.userData[userNbr].registered) 
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "451 * KICK :You have not registered\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "451 " + allFds.userData[userNbr].nickname + " KICK :You have not registered\n");
 		return ;
 	}
 	split(buffer, ' ', splitBuff);
 	if (splitBuff.size() < 3)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "431 * KICK :Not enought argument\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "431 " + allFds.userData[userNbr].nickname + " KICK :Not enought argument\n");
 		return ;
 	}
 
 	if ((chanPos = find_channel(allFds, splitBuff[1])) == -1)
 	{	
-		cmd_error(allFds, allFds.userData[userNbr].fd, "401 * KICK " + splitBuff[1] + " :No such channel\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "401 " + allFds.userData[userNbr].nickname + " KICK " + splitBuff[1] + " :No such channel\n");
 		return ;
 	}
 	if (!allFds.userData[userNbr].op && is_joined(allFds, splitBuff[1], userNbr) == -1)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "422 * " + splitBuff[1] + " :You're not on that channel\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "422 " + allFds.userData[userNbr].nickname + " " + splitBuff[1] + " :You're not on that channel\n");
 		return ;
 	}
 
 	if ((find_user(allFds, splitBuff[2])) == -1)
 	{	
-		cmd_error(allFds, allFds.userData[userNbr].fd, "401 * KICK " + splitBuff[1] + " :No such nick\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "401 " + allFds.userData[userNbr].nickname + " KICK " + splitBuff[1] + " :No such nick\n");
 		return ;
 	}
 	
@@ -57,7 +57,7 @@ void	KICK(std::string buffer, fdList &allFds, int userNbr)
 		chan = allFds.channelList[chanPos];
 		if (!is_chan_op(allFds, &chan, userNbr) && !allFds.userData[userNbr].op)
 		{
-			cmd_error(allFds, allFds.userData[userNbr].fd, "482 * " + splitBuff[1] + " :You're not channel operator\n");
+			cmd_error(allFds, allFds.userData[userNbr].fd, "482 " + allFds.userData[userNbr].nickname + " " + splitBuff[1] + " :You're not channel operator\n");
 			return ;
 		}
 	}
@@ -75,7 +75,7 @@ void	KICK(std::string buffer, fdList &allFds, int userNbr)
 	std::cout << "kick msg---" << msg << "---" << std::endl;
 	send(allFds.userData[userPos].fd, msg.c_str(), msg.size(), 0);
 	//send_msg(allFds, msg, splitBuff[1], userNbr);
-	for (int i = 0; i < allFds.channelList[chanPos].nbrUser; i++)
+	for (size_t i = 0; i < allFds.channelList[chanPos].userList.size(); i++)
 	{
 		if (allFds.channelList[chanPos].userList[i]->mode.s)
 			send(allFds.channelList[chanPos].userList[i]->fd, kickMsg.c_str(), kickMsg.size(), 0);
@@ -84,7 +84,7 @@ void	KICK(std::string buffer, fdList &allFds, int userNbr)
 	
 	// else if (!allFds.userData[userNbr].op)
 	// {
-	// 	cmd_error(allFds, allFds.userData[userNbr].fd, "482 * " + splitBuff[1] + " :You're not channel operator\n");
+	// 	cmd_error(allFds, allFds.userData[userNbr].fd, "482 " + allFds.userData[userNbr].nickname + " " + splitBuff[1] + " :You're not channel operator\n");
 	// 	return ;
 	// }
 	return ;

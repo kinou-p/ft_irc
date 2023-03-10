@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:27:37 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 05:45:36 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 21:04:49 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 	// if (!allFds.userData[userNbr].registered) 
 	// {
 	// 	/*change error*/
-	// 	cmd_error(allFds, allFds.userData[userNbr].fd, "451 * JOIN :You have not registered\n"); //ERR_NEEDMOREPARAMS
+	// 	cmd_error(allFds, allFds.userData[userNbr].fd, "451 " + allFds.userData[userNbr].nickname + " JOIN :You have not registered\n"); //ERR_NEEDMOREPARAMS
 	// 	return ;
 	// }
 

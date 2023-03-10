@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:09:38 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/23 17:48:22 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 21:04:49 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	WALLOPS(std::string buffer, fdList &allFds, int userNbr)
 	//std::cout << "privmsg bufer= --" << buffer << std::endl;
 	if (!allFds.userData[userNbr].registered) 
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "451 * WALLOPS :You have not registered\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "451 " + allFds.userData[userNbr].nickname + " WALLOPS :You have not registered\n");
 		return ;
 	}
 	split(buffer, ' ', splitBuff);
 	if (splitBuff.size() < 2)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "431 * WALLOPS :Not enought argument\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "431 " + allFds.userData[userNbr].nickname + " WALLOPS :Not enought argument\n");
 		return ;
 	}
 	msg = ":" + allFds.userData[userNbr].nickname + " WALLOPS :" + buffer.substr(splitBuff[1].size() + std::string::npos + 1) + "\n";

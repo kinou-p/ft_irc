@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:11:03 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/08 02:09:55 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 21:04:49 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,23 @@ void	SQUIT(std::string buffer, fdList &allFds, int userNbr)
 
 	if (!allFds.userData[userNbr].registered) 
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "451 * SQUIT :You have not registered\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "451 " + allFds.userData[userNbr].nickname + " SQUIT :You have not registered\n");
 		return ;
 	}
 	if (splitBuff.size() < 2)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "431 * SQUIT :Not enought argument\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "431 " + allFds.userData[userNbr].nickname + " SQUIT :Not enought argument\n");
 		return ;
 	}
 	if (!allFds.userData[userNbr].op)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "481 * :Permission Denied- You're not an IRC operator\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "481 " + allFds.userData[userNbr].nickname + " :Permission Denied- You're not an IRC operator\n");
 		return ;
 	}
 	std::cout << "squit serv= " << splitBuff[2] << std::endl;
 	if (splitBuff[1] != "irc.local")
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "402 * " + splitBuff[2] + " :No such server\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "402 " + allFds.userData[userNbr].nickname + " " + splitBuff[2] + " :No such server\n");
 		return ;
 	}
 	std::string fullMsg;

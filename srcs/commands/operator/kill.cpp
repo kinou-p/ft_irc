@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:34:57 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 05:55:10 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 21:04:49 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,24 @@ void	KILL(std::string buffer, fdList &allFds, int userNbr)
 
 	if (!allFds.userData[userNbr].registered) 
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "451 * KILL :You have not registered\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "451 " + allFds.userData[userNbr].nickname + " KILL :You have not registered\n");
 		return ;
 	}
 	split(buffer, ' ', splitBuff);
 	if (splitBuff.size() < 3)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "431 * KILL :Not enought argument\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "431 " + allFds.userData[userNbr].nickname + " KILL :Not enought argument\n");
 		return ;
 	}
 	if (!allFds.userData[userNbr].op)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "481 * :Permission Denied- You're not an IRC operator\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "481 " + allFds.userData[userNbr].nickname + " :Permission Denied- You're not an IRC operator\n");
 		return ;
 	}
 	pos = find_user(allFds, splitBuff[1]); 
 	if (pos == -1)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "401 * KILL " + splitBuff[1] + " :No such nick\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "401 " + allFds.userData[userNbr].nickname + " KILL " + splitBuff[1] + " :No such nick\n");
 		return ;
 	}
 	std::string msg;

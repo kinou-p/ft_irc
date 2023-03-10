@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:10:07 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 05:54:44 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 21:20:26 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ void leave_chan(fdList &allFds, std::string chan, int userNbr, std::string msg)
 	
 	if ((chanPos = find_channel(allFds, chan)) == -1)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "401 * PART " + chan + " :No such channel\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "401 " + allFds.userData[userNbr].nickname + " PART " + chan + " :No such channel\n");
 		return ;
 	}
 	if (is_joined(allFds, chan, userNbr) == -1)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "422 * " + chan + " :You're not on that channel\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "422 " + allFds.userData[userNbr].nickname + " " + chan + " :You're not on that channel\n");
 		return ;
 	}
 	//del_user_in_chan(&allFds.userData[userNbr], &allFds.channelList[chanPos]);
 	int pos = find_client_list(allFds.channelList[chanPos].userList, &allFds.userData[userNbr]);
 	allFds.channelList[chanPos].userList.erase(allFds.channelList[chanPos].userList.begin() + pos);
-	allFds.channelList[chanPos].nbrUser--;
+	//allFds.channelList[chanPos].size()--;
 	del_chan_in_user(&allFds.userData[userNbr], &allFds.channelList[chanPos]);
 	//:WiZ!jto@tolsun.oulu.fi PART #playzone :I lost
 	//:awd!kinou@kinou PART #test
@@ -52,8 +52,8 @@ void leave_chan(fdList &allFds, std::string chan, int userNbr, std::string msg)
 	//	reply += "\n";
 	//std::cout << "leave msg=" << reply << std::endl;
 	send(allFds.userData[userNbr].fd, reply.c_str(), reply.size(), 0);
-	//allFds.channelList[chanPos].nbrUser--;
-	for (int i = 0; i < allFds.channelList[chanPos].nbrUser; i++)
+	//allFds.channelList[chanPos].size()--;
+	for (size_t i = 0; i < allFds.channelList[chanPos].userList.size(); i++)
 	{
 		if (allFds.channelList[chanPos].userList[i]->mode.s)
 			send(allFds.channelList[chanPos].userList[i]->fd, reply.c_str(), reply.size(), 0);
@@ -71,13 +71,13 @@ void	PART(std::string buffer, fdList &allFds, int userNbr)
 	
 	if (!allFds.userData[userNbr].registered) 
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "451 * PART :You have not registered\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "451 " + allFds.userData[userNbr].nickname + " PART :You have not registered\n");
 		return ;
 	}
 	split(buffer, ' ', splitBuff);
 	if (splitBuff.size() < 2)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "431 * PART :Not enought argument\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "431 " + allFds.userData[userNbr].nickname + " PART :Not enought argument\n");
 		return ;
 	}
 	split(splitBuff[1], ',', splitChan);

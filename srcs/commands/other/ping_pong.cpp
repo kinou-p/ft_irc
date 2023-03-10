@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 00:16:27 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 05:02:08 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 21:04:49 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	PONG(std::string buffer, fdList &allFds, int userNbr)
 	send(allFds.userData[userNbr].fd, msg.c_str(), msg.size(), 0);
 	// if (splitBuff.size() < 2)
 	// {
-	// 	cmd_error(allFds, allFds.userData[userNbr].fd, "431 * NICK :No nickname given\n");
+	// 	cmd_error(allFds, allFds.userData[userNbr].fd, "431 " + allFds.userData[userNbr].nickname + " NICK :No nickname given\n");
 	// 	//write(allFds.userData[user].fd, "ERR_NEEDMOREPARAMS", 18);
 	// 	return ;
 	// }
@@ -60,7 +60,7 @@ void	PING(std::string buffer, fdList &allFds, int userNbr)
 	//std::cout << "msg=" << msg << "\n";
 	// if (splitBuff.size() < 2)
 	// {
-	// 	cmd_error(allFds, allFds.userData[userNbr].fd, "431 * NICK :No nickname given\n");
+	// 	cmd_error(allFds, allFds.userData[userNbr].fd, "431 " + allFds.userData[userNbr].nickname + " NICK :No nickname given\n");
 	// 	//write(allFds.userData[user].fd, "ERR_NEEDMOREPARAMS", 18);
 	// 	return ;
 	// }

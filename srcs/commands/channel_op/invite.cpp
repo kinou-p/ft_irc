@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:56 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 05:54:59 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 21:04:49 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,45 +30,45 @@ void	INVITE(std::string buffer, fdList &allFds, int userNbr)
 	
 	if (!allFds.userData[userNbr].registered) 
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "451 * INVITE :You have not registered\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "451 " + allFds.userData[userNbr].nickname + " INVITE :You have not registered\n");
 		return ;
 	}
 	split(buffer, ' ', splitBuff);
 	if (splitBuff.size() < 3)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "461 * INVITE :Not enough parameters\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "461 " + allFds.userData[userNbr].nickname + " INVITE :Not enough parameters\n");
 		return ;
 	}
 	if ((invitedNbr = find_user(allFds, splitBuff[1])) == -1)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "401 * " + splitBuff[1] + " :No such nick\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "401 " + allFds.userData[userNbr].nickname + " " + splitBuff[1] + " :No such nick\n");
 		return ;
 	}
 	if (is_joined(allFds, splitBuff[2], userNbr) == -1)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "422 * " + splitBuff[2] + " :You're not on that channel\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "422 " + allFds.userData[userNbr].nickname + " " + splitBuff[2] + " :You're not on that channel\n");
 		return ;
 	}
 	if (is_joined(allFds, splitBuff[2], invitedNbr) != -1)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "443 * " + splitBuff[1] + " " + splitBuff[2] + " :is already on channel\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "443 " + allFds.userData[userNbr].nickname + " " + splitBuff[1] + " " + splitBuff[2] + " :is already on channel\n");
 		return ;
 	}
 	// if (is_joined(allFds, splitBuff[2], invitedNbr) != -1)
 	// {
-	// 	cmd_error(allFds, allFds.userData[userNbr].fd, "443 * " + splitBuff[1] + " " + splitBuff[2] + " :is already on channel\n");
+	// 	cmd_error(allFds, allFds.userData[userNbr].fd, "443 " + allFds.userData[userNbr].nickname + " " + splitBuff[1] + " " + splitBuff[2] + " :is already on channel\n");
 	// 	return ;
 	// }
 	if ((chanNbr = find_channel(allFds, splitBuff[2])) != -1)
 	{
 		chan = allFds.channelList[chanNbr];
 		if (!is_chan_op(allFds, &chan, userNbr))
-			cmd_error(allFds, allFds.userData[userNbr].fd, "482 * " + splitBuff[2] + " :You're not channel operator\n");
+			cmd_error(allFds, allFds.userData[userNbr].fd, "482 " + allFds.userData[userNbr].nickname + " " + splitBuff[2] + " :You're not channel operator\n");
 		return ;
 	}
 	else if (!allFds.userData[userNbr].op)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "482 * " + splitBuff[2] + " :You're not channel operator\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "482 " + allFds.userData[userNbr].nickname + " " + splitBuff[2] + " :You're not channel operator\n");
 		return ;
 	}
 	std::cout << "invite him !!!!" << splitBuff[1] << " to " <<  splitBuff[2] << std::endl;

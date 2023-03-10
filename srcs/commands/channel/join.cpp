@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:40:33 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 05:18:05 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 21:21:15 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ int chan_check(fdList &allFds, int userNbr, int chanNbr, std::vector<std::string
 	std::string errorStr;
 	if (find_client_list(allFds.channelList[chanNbr].banList, &allFds.userData[userNbr]) != -1)
 	{
-		errorStr = "474 * JOIN " + allFds.channelList[chanNbr].name + " :Cannot join channel (+b)\n";
+		errorStr = "474 " + allFds.userData[userNbr].nickname + " JOIN " + allFds.channelList[chanNbr].name + " :Cannot join channel (+b)\n";
 		cmd_error(allFds, allFds.userData[userNbr].fd, errorStr); //ERR_INVITEONLYCHAN
 		return (0);
 	}
 	else if (allFds.channelList[chanNbr].mode.i && find_client_list(allFds.channelList[chanNbr].invitedList, &allFds.userData[userNbr]) == -1)
 	{
-		errorStr = "461 * JOIN " + allFds.channelList[chanNbr].name + " :Cannot join channel (+i)\n";
+		errorStr = "461 " + allFds.userData[userNbr].nickname + " JOIN " + allFds.channelList[chanNbr].name + " :Cannot join channel (+i)\n";
 		cmd_error(allFds, allFds.userData[userNbr].fd, errorStr); //ERR_INVITEONLYCHAN
 		return (0);
 	}
@@ -55,14 +55,14 @@ int chan_check(fdList &allFds, int userNbr, int chanNbr, std::vector<std::string
 	{
 		if (splitBuff.size() < 3 || allFds.channelList[chanNbr].password != splitBuff[2])
 		{
-			errorStr = "475 * JOIN " + allFds.channelList[chanNbr].name + " :Cannot join channel (+k)\n";
+			errorStr = "475 " + allFds.userData[userNbr].nickname + " JOIN " + allFds.channelList[chanNbr].name + " :Cannot join channel (+k)\n";
 			cmd_error(allFds, allFds.userData[userNbr].fd, errorStr); //ERR_BADCHANNELKEY
 		}
 		return (0);
 	}
-	if (allFds.channelList[chanNbr].mode.l && allFds.channelList[chanNbr].nbrUser == allFds.channelList[chanNbr].maxUser)
+	if (allFds.channelList[chanNbr].mode.l && allFds.channelList[chanNbr].userList.size() >= (size_t)allFds.channelList[chanNbr].maxUser)
 	{
-		errorStr = "471 * JOIN " + allFds.channelList[chanNbr].name + " :Cannot join channel (+l)\n";
+		errorStr = "471 " + allFds.userData[userNbr].nickname + " JOIN " + allFds.channelList[chanNbr].name + " :Cannot join channel (+l)\n";
 		cmd_error(allFds, allFds.userData[userNbr].fd, errorStr); //ERR_CHANNELISFULL
 		return (0);
 	}
@@ -86,7 +86,7 @@ void join_or_create(std::string buffer, fdList &allFds, int userNbr)
 			return ;
 		allFds.userData[userNbr].joinedChan.push_back(&allFds.channelList[chanNbr]); //add chan in user data
 		allFds.channelList[chanNbr].userList.push_back(&allFds.userData[userNbr]);//add user in chan data
-		allFds.channelList[chanNbr].nbrUser++;
+		//allFds.channelList[chanNbr].size()++;
 		joined_chan = *(allFds.userData[userNbr].joinedChan.back());
 		if ((invitedUser = find_client_list(allFds.channelList[chanNbr].invitedList, &allFds.userData[userNbr])) != -1)
 			allFds.channelList[chanNbr].invitedList.erase(allFds.channelList[chanNbr].invitedList.begin() + invitedUser);
@@ -96,9 +96,9 @@ void join_or_create(std::string buffer, fdList &allFds, int userNbr)
 		std::cout << "new chan\n";
 		channelData new_chan;
 		if (splitBuff[1][0] != '#' && splitBuff[1][0] != '&')
-			cmd_error(allFds, allFds.userData[userNbr].fd, "476 * " + splitBuff[1] + " :Bad Channel Mask\n");
+			cmd_error(allFds, allFds.userData[userNbr].fd, "476 " + allFds.userData[userNbr].nickname + " " + splitBuff[1] + " :Bad Channel Mask\n");
 		new_chan.name = splitBuff[1];
-		new_chan.nbrUser = 1;
+		//new_chan.nbrUser = 1;
 		new_chan.opList.push_back(&allFds.userData[userNbr]);
 		new_chan.userList.push_back(&allFds.userData[userNbr]);
 		joined_chan = new_chan;
@@ -157,7 +157,7 @@ void join_loop(fdList &allFds, std::vector<std::string> splitBuff, int userNbr)
 		if (splitChan[i][0] != '#' && splitChan[i][0] != '&')
 		{
 			//error bad channel name
-			buffer = "476 * JOIN " + splitChan[i] + " ::Bad Channel Mask\n";
+			buffer = "476 " + allFds.userData[userNbr].nickname + " JOIN " + splitChan[i] + " ::Bad Channel Mask\n";
 			cmd_error(allFds, allFds.userData[userNbr].fd, buffer);
 			//:Bad Channel Mask
 			//std::cout << "bad chan mask\n";
@@ -185,7 +185,7 @@ void JOIN(std::string buffer, fdList &allFds, int userNbr)
 	std::cout << "userNbr= " << userNbr << std::endl;
 	if (!allFds.userData[userNbr].registered) 
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "451 * JOIN :You have not registered\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "451 " + allFds.userData[userNbr].nickname + " JOIN :You have not registered\n");
 		return ;
 	}
 	split(buffer, ' ', splitBuff);
@@ -193,7 +193,7 @@ void JOIN(std::string buffer, fdList &allFds, int userNbr)
 	{
 		/*change error*/
 		//std::cout << "JOIN : need more param\n";
-		cmd_error(allFds, allFds.userData[userNbr].fd, "461 * JOIN :Not enough parameters\n"); //ERR_NEEDMOREPARAMS
+		cmd_error(allFds, allFds.userData[userNbr].fd, "461 " + allFds.userData[userNbr].nickname + " JOIN :Not enough parameters\n"); //ERR_NEEDMOREPARAMS
 		return ;
 	}
 	join_loop(allFds, splitBuff, userNbr);

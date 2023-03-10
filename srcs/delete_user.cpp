@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 20:38:50 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 02:17:28 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 21:15:00 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void del_user_in_chan(clientData *user, channelData *chan)
 	if ((pos = find_client_list(chan->opList, user)) != -1)
 		chan->opList.erase(chan->opList.begin() + pos);
 
-	chan->nbrUser--;
+	//chan->nbrUser--;
 }
 
 void del_chan_in_user(clientData *user, channelData *chan)
