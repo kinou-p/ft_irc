@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:14:15 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/10 21:04:49 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 21:40:02 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	names_reply(fdList &allFds, channelData &chan, int fd, std::string user)
 {
 	std::string msg;
 	msg = "353 " + user + " = " + chan.name + " :";
-	for (int i = 0; i < chan.nbrUser; i++)
+	for (size_t i = 0; i < chan.userList.size(); i++)
 	{
 		if (chan.userList[i]->mode.o)//ischanop 
 			msg += "=" + chan.userList[i]->nickname + " ";

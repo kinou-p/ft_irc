@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:40:33 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/10 21:21:15 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 21:26:08 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void join_or_create(std::string buffer, fdList &allFds, int userNbr)
 
 	std::string fullMsg;
 	fullMsg = ":" + allFds.userData[userNbr].nickname + "!" + allFds.userData[userNbr].userName + "@" + allFds.userData[userNbr].ip + " JOIN :" + joined_chan.name + "\n";
-	for (int i = 0; i < joined_chan.nbrUser; i++)
+	for (size_t i = 0; i < joined_chan.userList.size(); i++)
 	{
 		send(joined_chan.userList[i]->fd, fullMsg.c_str(), fullMsg.size(), 0);
 		//std::cout << "loop here\n";
