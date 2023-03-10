@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 00:13:32 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 02:30:14 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 22:03:03 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void ban_reply(channelData &chan, clientData &user)
 	std::string reply = ":irc.local 367 " + user.nickname + " " + chan.name + " ";
 	for (size_t i = 0; i < chan.banList.size(); i++)
 	{
-		fullReply = reply + chan.banList[i]->nickname + "!" + chan.banList[i]->userName + "@" + chan.banList[i]->hostName + "\n";
+		fullReply = reply + chan.banList[i]->nickname + "!" + chan.banList[i]->userName + "@" + chan.banList[i]->hostName + "\r\n";
 		send(user.fd, fullReply.c_str(), fullReply.size(), 0);
 	}
-	endReply = ":irc.local 367 " + user.nickname + " " + chan.name + " :End of channel ban list\n";
+	endReply = ":irc.local 367 " + user.nickname + " " + chan.name + " :End of channel ban list\r\n";
 	send(user.fd, endReply.c_str(), endReply.size(), 0);
 }
 
@@ -53,6 +53,7 @@ void chan_reply(channelData &chan, clientData &user)
 		reply += chan.maxUser;
 	for (size_t i = 0; i < chan.opList.size(); i++)
 		reply += " " + chan.opList[i]->nickname;
+	reply += "\r\n";
 	send(user.fd, reply.c_str(), reply.size(), 0);
 	//if (reply.size() > 2)
 	//	reply_begin += reply;
@@ -74,6 +75,7 @@ void user_reply(clientData &user)
 		reply += 'w';
 	if (user.mode.o)
 		reply += 'o';
+	reply += "\r\n";
 	send(user.fd, reply.c_str(), reply.size(), 0);	
 }
 

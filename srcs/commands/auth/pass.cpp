@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:40:42 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/15 15:42:16 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 22:21:05 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ void	PASS(std::string buffer, fdList &allFds, int userNbr)
 
 	if (buffer.size() < 6)// ---PASS ---
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "461 * PASS :Not enough parameters\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "461 * PASS :Not enough parameters\r\n");
 		return ;
 	}
 	if (allFds.userData[userNbr].registered)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "462 * PASS :You may not reregister\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "462 * PASS :You may not reregister\r\n");
 		return ;
 	}
 	

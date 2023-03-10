@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:21:57 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 05:17:20 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 22:21:38 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ int is_chan_op(fdList &allFds, channelData *chanName, int userNbr)
 	while (start != pastEnd)
 	{
 		//std::cout << "result in find chan = " << pastEnd - start << std::endl;
-		std::cout << "test = " << chanName->opList[pastEnd - start - 1]->nickname << "---\n";
+		//std::cout << "test = " << chanName->opList[pastEnd - start - 1]->nickname << "---\n";
 		if (chanName->opList[pastEnd - start - 1]->nickname == allFds.userData[userNbr].nickname)
 			return (1);
 		start++;
 	}
-	std::cout << "chan not found in is op\n";
+	//std::cout << "chan not found in is op\n";
 	return (0);	
 }
 

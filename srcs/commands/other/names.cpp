@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:14:15 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/10 21:40:02 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 22:26:02 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	names_reply(fdList &allFds, channelData &chan, int fd, std::string user)
 		else
 			msg += "+" + chan.userList[i]->nickname + " ";
 	}
-	msg += "\n";
+	msg += "\r\n";
 	std::cout << "name msg= " << msg;
 	cmd_reply(allFds, fd, msg);
 }
@@ -43,7 +43,7 @@ void	NAMES(std::string buffer, fdList &allFds, int userNbr)
 	
 	if (!allFds.userData[userNbr].registered) 
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "451 " + allFds.userData[userNbr].nickname + " NAMES :You have not registered\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "451 " + allFds.userData[userNbr].nickname + " NAMES :You have not registered\r\n");
 		return ;
 	}
 	split(buffer, ' ', splitBuff);

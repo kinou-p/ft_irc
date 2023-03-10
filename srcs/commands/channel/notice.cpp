@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 21:24:55 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 05:18:13 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 22:09:53 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void send_notice_msg(fdList &allFds, std::string msg, std::string dest, int user
 	int pos;
 	std::string fullMsg;
 
-	fullMsg = ":" + allFds.userData[userNbr].nickname + "!" + allFds.userData[userNbr].userName + "@172.17.0.1 " + msg + "\n";
+	fullMsg = ":" + allFds.userData[userNbr].nickname + "!" + allFds.userData[userNbr].userName + "@172.17.0.1 " + msg + "\r\n";
 	if (dest[0] == '&' || dest[0] == '#')
 	{	
 		if (is_joined(allFds, dest, userNbr) == -1)

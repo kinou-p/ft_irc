@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:46:41 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 01:18:14 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 22:14:58 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void ft_putstr_fd(int fd, std::string str)
 {
 	// write(fd, str.c_str(), str.size());
 	// write(fd, "\n", 1);
-	str += "\n";
+	str += "\r\n";
 	send(fd, str.c_str(), str.size(), 0);
 }
 

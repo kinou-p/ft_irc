@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 00:16:27 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/10 21:04:49 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 22:16:50 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	PONG(std::string buffer, fdList &allFds, int userNbr)
 	std::string msg;
 	std::vector<std::string> splitBuff;
 	split(buffer, ' ', splitBuff);
-	msg = ":irc.local PONG irc.local :irc.local";
+	msg = ":irc.local PONG irc.local :irc.local\r\n";
 	// ":irc.local PONG irc.local :irc.local"
 	send(allFds.userData[userNbr].fd, msg.c_str(), msg.size(), 0);
 	// if (splitBuff.size() < 2)
@@ -51,7 +51,7 @@ void	PING(std::string buffer, fdList &allFds, int userNbr)
 	std::string msg;
 	std::vector<std::string> splitBuff;
 	split(buffer, ' ', splitBuff);
-	msg = ":irc.local PONG irc.local :" + splitBuff[1] + "\n";
+	msg = ":irc.local PONG irc.local :" + splitBuff[1] + "\r\n";
 	//msg = "PONG irc.local " + splitBuff[1];
 	send(allFds.userData[userNbr].fd, msg.c_str(), msg.size(), 0);
 	//std::cout << "pong send\n";

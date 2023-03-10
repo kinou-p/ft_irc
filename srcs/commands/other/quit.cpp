@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:10:26 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 05:18:42 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 22:16:59 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	send_quit_msg(fdList &allFds, int userNbr, std::string msg)
 	// if (msg.empty())
 	// 	fullMsg = ":" + allFds.userData[userNbr].nickname + "!" + allFds.userData[userNbr].userName + "@" + allFds.userData[userNbr].ip + " QUIT :" + joined_chan.name + "\n";
 	// else 
-	fullMsg = ":" + allFds.userData[userNbr].nickname + "!" + allFds.userData[userNbr].userName + "@" + allFds.userData[userNbr].ip + " QUIT :" + msg + "\n";
+	fullMsg = ":" + allFds.userData[userNbr].nickname + "!" + allFds.userData[userNbr].userName + "@" + allFds.userData[userNbr].ip + " QUIT :" + msg + "\r\n";
 	for (size_t i = 0; i < allFds.userData[userNbr].joinedChan.size(); i++)
 	{
 		//allFds.userData[userNbr].joinedChan[i]->

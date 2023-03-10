@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:40:39 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/10 20:59:45 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 22:21:18 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void USER(std::string buffer, fdList &allFds, int userNbr)
 	if (allFds.userData[userNbr].registered == 1)
 	{
 // " + allFds.userData[userNbr].nickname + " 
-		cmd_error(allFds, allFds.userData[userNbr].fd, "462 " + allFds.userData[userNbr].nickname + " USER :You may not reregister\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "462 " + allFds.userData[userNbr].nickname + " USER :You may not reregister\r\n");
 		return ;
 	}
 	
@@ -36,7 +36,7 @@ void USER(std::string buffer, fdList &allFds, int userNbr)
 	split(buffer, ' ', splitBuff);
 	if (splitBuff.size() < 4)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "461 " + allFds.userData[userNbr].nickname + "USER :Not enough parameters\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "461 " + allFds.userData[userNbr].nickname + "USER :Not enough parameters\r\n");
 		//write(allFds.userData[userNbr].fd, "ERR_NEEDMOREPARAMS", 18);
 		return ;
 	}

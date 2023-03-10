@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:14:17 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/10 21:20:04 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 22:26:41 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	who_reply(fdList &allFds, clientData &user, int fd)
 	+ user.userName + " " 
 	+ user.hostName + " irc.local " 
 	+ user.nickname + " :0 " 
-	+ user.realName + "\n";
+	+ user.realName + "\r\n";
 	std::cout << "whoreply= " << msg << std::endl;
 	cmd_reply(allFds, fd, msg);
 }
@@ -47,7 +47,7 @@ void	WHO(std::string buffer, fdList &allFds, int userNbr)
 
 	if (!allFds.userData[userNbr].registered) 
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "451 " + allFds.userData[userNbr].nickname + " WHO :You have not registered\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "451 " + allFds.userData[userNbr].nickname + " WHO :You have not registered\r\n");
 		return ;
 	}
 	split(buffer, ' ', splitBuff);
@@ -65,7 +65,7 @@ void	WHO(std::string buffer, fdList &allFds, int userNbr)
 	}
 	if ((pos = find_channel(allFds, splitBuff[1])) == -1)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "401 " + allFds.userData[userNbr].nickname + " " + splitBuff[1] + " :No such channel\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "401 " + allFds.userData[userNbr].nickname + " " + splitBuff[1] + " :No such channel\r\n");
 		return ;
 	}
 	for (size_t i = 0; i < allFds.channelList[pos].userList.size(); i++)

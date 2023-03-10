@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:28:38 by apommier          #+#    #+#             */
-/*   Updated: 2023/02/15 15:41:43 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 22:20:28 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@ void	NICK(std::string buffer, fdList &allFds, int userNbr)
 	split(buffer, ' ', splitBuff);
 	if (splitBuff.size() < 2)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "431 * NICK :No nickname given\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "431 * NICK :No nickname given\r\n");
 		return ;
 	}
 	if (!not_contain_other(splitBuff[1], "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789`|^_-{}[]\\"))
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "432 * " + splitBuff[1] + " :Erroneous nickname\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "432 * " + splitBuff[1] + " :Erroneous nickname\r\n");
 		return ;
 	}
 	if (find_user(allFds, splitBuff[1]) != -1)
 	{
-		cmd_error(allFds, allFds.userData[userNbr].fd, "433 * " + splitBuff[1] + " :Nickname is already in use\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "433 * " + splitBuff[1] + " :Nickname is already in use\r\n");
 		return ;
 	}
 	//if nickname ok then (another user has it? )

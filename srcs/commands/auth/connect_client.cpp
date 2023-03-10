@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:30:11 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 05:01:54 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/10 22:19:44 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void print_registered_msg(fdList &allFds, int userNbr)
 	(void)userNbr;
 
 	std::string msg;
-	msg = ":irc.local 001 " + allFds.userData[userNbr].nickname + " : Welcome to the Internet Relay Network " + allFds.userData[userNbr].nickname + "!" + allFds.userData[userNbr].userName + "@" + allFds.userData[userNbr].hostName + "\n";
+	msg = ":irc.local 001 " + allFds.userData[userNbr].nickname + " : Welcome to the Internet Relay Network " + allFds.userData[userNbr].nickname + "!" + allFds.userData[userNbr].userName + "@" + allFds.userData[userNbr].hostName + "\r\n";
 	send(allFds.userData[userNbr].fd, msg.c_str(), msg.size(), 0);
-	msg = ":irc.local 002 " + allFds.userData[userNbr].nickname + " : Your host is irc.local" + ", running version InspIRCd-3\n"; //+ allFds.userData[userNbr].nickname + "!" + allFds.userData[userNbr].userName + "@" + allFds.userData[userNbr].hostName;
+	msg = ":irc.local 002 " + allFds.userData[userNbr].nickname + " : Your host is irc.local" + ", running version InspIRCd-3\r\n"; //+ allFds.userData[userNbr].nickname + "!" + allFds.userData[userNbr].userName + "@" + allFds.userData[userNbr].hostName;
 	send(allFds.userData[userNbr].fd, msg.c_str(), msg.size(), 0);
-	msg = ":irc.local 003 " + allFds.userData[userNbr].nickname + " : This server was created " + allFds.creation_date + "\n";//<date>;
+	msg = ":irc.local 003 " + allFds.userData[userNbr].nickname + " : This server was created " + allFds.creation_date + "\r\n";//<date>;
 	send(allFds.userData[userNbr].fd, msg.c_str(), msg.size(), 0);
-	msg = ":irc.local 004 " + allFds.userData[userNbr].nickname + "irc.local " + "InspIRCd-3 " + "iosw " + "biklmnopstv\n";
+	msg = ":irc.local 004 " + allFds.userData[userNbr].nickname + "irc.local " + "InspIRCd-3 " + "iosw " + "biklmnopstv\r\n";
 	//<servername> <version> <available user modes> <available channel modes
 	send(allFds.userData[userNbr].fd, msg.c_str(), msg.size(), 0);
 	
@@ -58,7 +58,7 @@ void connect_client(fdList &allFds, int userNbr)
 	if (allFds.userData[userNbr].password.empty() || allFds.userData[userNbr].password != allFds.password)
 	{
 		std::cout << "password= " << allFds.userData[userNbr].password << std::endl;
-		cmd_error(allFds, allFds.userData[userNbr].fd, "464 * :Password incorrect\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "464 * :Password incorrect\r\n");
 		return ;
 	}
    	//464    ERR_PASSWDMISMATCH
