@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:40:33 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/12 21:50:58 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/13 08:56:33 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,23 +94,23 @@ void join_or_create(std::string buffer, fdList &allFds, int userNbr)
 	else //chan doesn't exist yet
 	{
 		//std::cout << "new chan\n";
-		channelData new_chan;
+		channelData tmp_chan;
+		allFds.channelList.push_back(tmp_chan);
+		channelData &new_chan = allFds.channelList[allFds.channelList.size() - 1];
 		if (splitBuff[1][0] != '#' && splitBuff[1][0] != '&')
 			cmd_error(allFds, allFds.userData[userNbr].fd, "476 " + allFds.userData[userNbr].nickname + " " + splitBuff[1] + " :Bad Channel Mask\r\n");
-		new_chan.name = splitBuff[1];
 		//new_chan.nbrUser = 1;
+		
+		new_chan.name = splitBuff[1];
 		new_chan.opList.push_back(&allFds.userData[userNbr]);
 		new_chan.userList.push_back(&allFds.userData[userNbr]);
-		joined_chan = new_chan;
-		allFds.channelList.push_back(new_chan);
+		//new_chan.List.push_back(&allFds.userData[userNbr]);
 		allFds.userData[userNbr].joinedChan.push_back(&allFds.channelList.back());//add chan in user data
+		joined_chan = allFds.channelList[allFds.channelList.size() - 1];
 	}
-	// if (chanNbr == -1)
-	// {
-	// 	chanNbr = 
-	// 	find_channel(allFds, splitBuff[1])
-	// }
 
+
+	// :kinou3!kinou@172.17.0.1 JOIN :#test //done!
 	std::string fullMsg;
 	fullMsg = ":" + allFds.userData[userNbr].nickname + "!" + allFds.userData[userNbr].userName + "@" + allFds.userData[userNbr].ip + " JOIN :" + joined_chan.name + "\r\n";
 	for (size_t i = 0; i < joined_chan.userList.size(); i++)
@@ -118,7 +118,10 @@ void join_or_create(std::string buffer, fdList &allFds, int userNbr)
 		send(joined_chan.userList[i]->fd, fullMsg.c_str(), fullMsg.size(), 0);
 		//std::cout << "loop here\n";
 	}
-
+	std::cout << "size uselist=" << joined_chan.userList.size() << std::endl;
+	names_reply(allFds, joined_chan, allFds.userData[userNbr].fd, userNbr);
+	// :irc.local 353 kinou3 = #test :@kinou3
+	// :irc.local 366 kinou3 #test :End of /NAMES list. 
 	if (chanNbr == -1)
 		chanNbr = find_channel(allFds, splitBuff[1]);
 	if (!allFds.channelList[chanNbr].topic.empty())

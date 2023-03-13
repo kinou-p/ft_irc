@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:46:41 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/13 02:33:08 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/13 08:32:00 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,17 @@ int find_client_list(std::vector<clientData *> &list, clientData *client)
 	{
 		if (list[i] == client)
 			return (i);
+	}
+	return (-1);
+}
+
+int print_client_list(std::vector<clientData *> &list)
+{
+	int size = list.size();
+	std::cout << "=PRINT LIST=\n";
+	for (int i = 0; i < size; i++)
+	{
+		std::cout << i << "= " << list[i]->nickname << std::endl;
 	}
 	return (-1);
 }

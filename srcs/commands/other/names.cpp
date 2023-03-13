@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:14:15 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/13 06:12:36 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/13 10:24:43 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,25 @@ void	names_reply(fdList &allFds, channelData &chan, int fd, int userNbr)
 {
 	//:irc.local 353 kinou3 = #test :@kinou3 
 	std::string msg;
+	print_client_list(chan.opList);
+	print_client_list(chan.verboseList);
 	msg = "353 " + allFds.userData[userNbr].nickname + " = " + chan.name + " :";
 	for (size_t i = 0; i < chan.userList.size(); i++)
 	{
 		if (chan.userList[i]->mode.i && !is_in_same(allFds, userNbr, find_user(allFds, chan.userList[i]->nickname) && !allFds.userData[userNbr].op)/*user secret et pas meme chan*/)
 			;
-		else if (find_client_list(chan.opList, chan.userList[i]) || allFds.userData[userNbr].op)//(chan.userList[i]->mode.o)//ischanop
+		else if (find_client_list(chan.opList, chan.userList[i]) != -1 || allFds.userData[userNbr].op)//(chan.userList[i]->mode.o)//ischanop
+		{
+			std::cout << "he is op!!!\n";
 			msg += "@" + chan.userList[i]->nickname + " ";
-		else if (find_client_list(chan.verboseList, chan.userList[i]))//(chan.userList[i]->mode.v)//verbose
-			msg += "=" + chan.userList[i]->nickname + " ";
-		else
+		}
+		else if (find_client_list(chan.verboseList, chan.userList[i]) != -1)//(chan.userList[i]->mode.v)//verbose
+		{
+			std::cout << "he is verbose???\n";
 			msg += "+" + chan.userList[i]->nickname + " ";
+		}
+		else
+			msg += /*"=" +*/ chan.userList[i]->nickname + " ";
 	}
 	msg += "\r\n";
 	std::cout << "name msg= " << msg;

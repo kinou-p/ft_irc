@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:27:37 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/13 02:32:41 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/13 09:50:10 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,7 @@ void	print_registered_msg(fdList &allFds, int userNbr);
 /* *******************************CMD UTILS********************************** */
 /* ************************************************************************** */
 
+void	names_reply(fdList &allFds, channelData &chan, int fd, int userNbr);
 void	split(std::string const &str, const char delim, std::vector<std::string> &out);
 void	split_but_keep(std::string const &str, const char delim, std::vector<std::string> &out); //same as split but keep one delimeter
 
@@ -242,9 +243,12 @@ void	parse_commands(std::string buffer, fdList &allFds, int userNbr);
 /* ************************************************************************** */
 
 //bool	str_to_int(int &i, const std::string s);
+int			print_client_list(std::vector<clientData *> &list);
 void		ban_reply(channelData &chan, clientData &user);
 void		chan_reply(channelData &chan, clientData &user);
 void		user_reply(clientData &user);
+void		chan_mode_reply(fdList &allFds, channelData &chan, int userNbr, std::string mode, int sign);
+void		user_mode_reply(fdList &allFds, clientData &user, int userNbr, std::string mode);
 int			search_and_erase(std::string &str, std::string toFind);
 bool		str_to_int(int &i, const std::string s);
 std::string	int_to_str(int i);
