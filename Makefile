@@ -6,7 +6,7 @@
 #    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/01 17:27:29 by apommier          #+#    #+#              #
-#    Updated: 2023/03/09 00:20:47 by apommier         ###   ########.fr        #
+#    Updated: 2023/03/13 02:21:45 by apommier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRCS := main.cpp\
 		commands/channel/privmsg.cpp\
 		commands/channel/notice.cpp\
 		commands/channel/part.cpp\
+		commands/channel/list.cpp\
 \
 		commands/other/quit.cpp\
 		commands/other/ping_pong.cpp\

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 17:27:37 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/10 21:04:49 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/13 02:32:41 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,8 +241,10 @@ void	parse_commands(std::string buffer, fdList &allFds, int userNbr);
 /* ******************************MODE UTILS********************************** */
 /* ************************************************************************** */
 
-void	ban_reply(channelData &chan, clientData &user);
-void	chan_reply(channelData &chan, clientData &user);
-void	user_reply(clientData &user);
-int		search_and_erase(std::string &str, std::string toFind);
-bool	str_to_int(int &i, const std::string s);
+//bool	str_to_int(int &i, const std::string s);
+void		ban_reply(channelData &chan, clientData &user);
+void		chan_reply(channelData &chan, clientData &user);
+void		user_reply(clientData &user);
+int			search_and_erase(std::string &str, std::string toFind);
+bool		str_to_int(int &i, const std::string s);
+std::string	int_to_str(int i);

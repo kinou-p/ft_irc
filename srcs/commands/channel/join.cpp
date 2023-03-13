@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:40:33 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/10 22:22:44 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/12 21:50:58 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void join_or_create(std::string buffer, fdList &allFds, int userNbr)
 	int invitedUser;
 	channelData joined_chan;
 	std::vector<std::string> splitBuff;
-	
+
 	//std::cout << "JOINORCREATE\n";
 	split(buffer, ' ', splitBuff);
 	chanNbr = find_channel(allFds, splitBuff[1]);
@@ -157,7 +157,7 @@ void join_loop(fdList &allFds, std::vector<std::string> splitBuff, int userNbr)
 		if (splitChan[i][0] != '#' && splitChan[i][0] != '&')
 		{
 			//error bad channel name
-			buffer = "476 " + allFds.userData[userNbr].nickname + " JOIN " + splitChan[i] + " ::Bad Channel Mask\r\n";
+			buffer = "476 " + allFds.userData[userNbr].nickname + " JOIN " + splitChan[i] + " :Bad Channel Mask\r\n";
 			cmd_error(allFds, allFds.userData[userNbr].fd, buffer);
 			//:Bad Channel Mask
 			//std::cout << "bad chan mask\n";

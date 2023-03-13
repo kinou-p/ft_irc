@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 22:26:27 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/09 04:59:05 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/11 20:36:50 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ void new_connection(fdList &allFds)
 	//int newUserFd;
 	//allFds.userFdList.push_back(newUserFd);
 	newFd = accept(allFds.serverFd, (struct sockaddr *)&addr, (socklen_t*)&addrLen);
+	//protect accept
+
+
+
 	//allFds.userFdList[allFds.nbrUser] = newFd;
 	allFds.userFdList.push_back(newFd);
 	//std::cout << "newConnection | old user fd = " << newFd << std::endl;

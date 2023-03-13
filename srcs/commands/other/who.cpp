@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:14:17 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/10 22:26:41 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/13 04:57:33 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	WHO(std::string buffer, fdList &allFds, int userNbr)
 	{
 		for (int i = 0; i < allFds.nbrUser; i++)
 		{
-			if (!allFds.userData[i].mode.i || is_in_same(allFds, userNbr, i))
+			if (!allFds.userData[i].mode.i || is_in_same(allFds, userNbr, i) || allFds.userData[userNbr].op)
 			{
 				who_reply(allFds, allFds.userData[i], allFds.userData[userNbr].fd);
 				//print who
@@ -73,7 +73,7 @@ void	WHO(std::string buffer, fdList &allFds, int userNbr)
 		who_reply(allFds, *allFds.channelList[pos].userList[i], allFds.userData[userNbr].fd);
 	}
 	//"<nick> :End of WHOIS list"
-	cmd_reply(allFds, allFds.userData[userNbr].fd, allFds.userData[userNbr].nickname + " :End of WHOIS list\n");
+	cmd_reply(allFds, allFds.userData[userNbr].fd, allFds.userData[userNbr].nickname + " :End of WHO list\n");
 		//std::cout << 
 	return ;
 }

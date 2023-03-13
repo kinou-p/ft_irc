@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:46:41 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/10 22:14:58 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/13 02:33:08 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,13 @@ int find_client_list(std::vector<clientData *> &list, clientData *client)
 			return (i);
 	}
 	return (-1);
+}
+
+std::string	int_to_str(int i)
+{
+	std::string s;
+	std::stringstream out;
+	out << i;
+	s = out.str();
+	return (s);
 }

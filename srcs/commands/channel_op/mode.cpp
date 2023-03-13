@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:30 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/10 21:50:12 by sadjigui         ###   ########.fr       */
+/*   Updated: 2023/03/13 06:47:29 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,17 +146,17 @@ void do_chan_opt(fdList &allFds, int userNbr, std::vector<std::string> opt, int 
 		{
 			case 'o': chan_opt_o(allFds, userNbr, opt, chanNbr, sign); //std::cout << "launching option: " << opt[2][i] << std::endl;
 				break ;
-			case 'p': allFds.channelList[chanNbr].mode.p = (sign = true) ? true : false;
+			case 'p': allFds.channelList[chanNbr].mode.p = (sign == true) ? true : false;
 				break ;
-			case 's': allFds.channelList[chanNbr].mode.s = (sign = true) ? true : false;
+			case 's': allFds.channelList[chanNbr].mode.s = (sign == true) ? true : false;
 				break ;
-			case 'i': allFds.channelList[chanNbr].mode.i = (sign = true) ? true : false;
+			case 'i': allFds.channelList[chanNbr].mode.i = (sign == true) ? true : false;
 				break ;
-			case 't': allFds.channelList[chanNbr].mode.t = (sign = true) ? true : false;
+			case 't': allFds.channelList[chanNbr].mode.t = (sign == true) ? true : false;
 				break ;
-			case 'n': allFds.channelList[chanNbr].mode.n = (sign = true) ? true : false;
+			case 'n': allFds.channelList[chanNbr].mode.n = (sign == true) ? true : false;
 				break ;
-			case 'm': allFds.channelList[chanNbr].mode.m = (sign = true) ? true : false;
+			case 'm': allFds.channelList[chanNbr].mode.m = (sign == true) ? true : false;
 				break ;
 			case 'l':
 				if (sign == true)
@@ -193,31 +193,35 @@ void	do_user_opt(fdList &allFds, int userNbr, std::vector<std::string> opt, int 
 		return ;
 	}
 	if (opt[2][0] == '-')
+	{
+		std::cout << "sign = false\n";
 		sign = false;
+	}
 	for (int i = 1; opt[2][i]; i++)
 	{
 		switch(opt[2][i])
 		{
-			case 'i': allFds.userData[new_target].mode.i = (sign = true) ? true : false;
+			case 'i': allFds.userData[new_target].mode.i = (sign == true) ? true : false;
 				break ;
-			case 's': allFds.userData[new_target].mode.s = (sign = true) ? true : false;
+			case 's': allFds.userData[new_target].mode.s = (sign == true) ? true : false;
 				break ;
-			case 'w': allFds.userData[new_target].mode.w = (sign = true) ? true : false;
+			case 'w': allFds.userData[new_target].mode.w = (sign == true) ? true : false;
 				break ;
 			case 'o':
 				if (sign == true)
 					return ;
-				if (allFds.userData[userNbr].mode.o == false) 
-				{
-					cmd_error(allFds, allFds.userData[userNbr].fd, "482 *" + opt[1] + " :You're not channel operator\n");
-					return ;
-				}
-				allFds.userData[new_target].mode.o = (sign = true) ? true : false;
+				// if (allFds.userData[userNbr].mode.o == false) 
+				// {
+				// 	cmd_error(allFds, allFds.userData[userNbr].fd, "482 *" + opt[1] + " :You're not channel operator\n");
+				// 	return ;
+				// }
+				allFds.userData[new_target].mode.o = (sign == true) ? true : false;
 				break ;
 			default: std::cout << "Default" << std::endl;
 				break ;
 		}
 	}
+	std::cout << "mode w== " << allFds.userData[new_target].mode.w << std::endl;
 	return;
 }
 
@@ -227,7 +231,7 @@ void	MODE(std::string buffer, fdList &allFds, int userNbr)
 	std::vector<std::string> splitBuff;
 	int pos;
 	split(buffer, ' ', splitBuff);
-	if (splitBuff.size() < 3) 
+	if (splitBuff.size() < 2)
 	{
 		cmd_error(allFds, allFds.userData[userNbr].fd, "461 *" + splitBuff[0] + " :Not enough parameters\n");
 		return ;
@@ -243,15 +247,17 @@ void	MODE(std::string buffer, fdList &allFds, int userNbr)
 		//verify_option(allFds, str, i); //needed?
 
 		// std::cout << "splitbuff[2] = " << splitBuff[2] << std::endl;
-		
-		search_and_erase(splitBuff[2], "opsitnmlbvk");
-		// std::cout << "splitbuff[2] after = " << splitBuff[2] << std::endl;
-		if ((splitBuff[2].size() < 2) || (splitBuff[2][0] != '-' && splitBuff[2][0] != '+'))
+		if (splitBuff.size() > 2)
 		{
-			std::cout << "Bad params" << std::endl;
-			return ;
+			search_and_erase(splitBuff[2], "opsitnmlbvk");
+			// std::cout << "splitbuff[2] after = " << splitBuff[2] << std::endl;
+			if ((splitBuff[2].size() < 2) || (splitBuff[2][0] != '-' && splitBuff[2][0] != '+'))
+			{
+				std::cout << "Bad params" << std::endl;
+				return ;
+			}
+			do_chan_opt(allFds, userNbr, splitBuff, pos);
 		}
-		do_chan_opt(allFds, userNbr, splitBuff, pos);
 		chan_reply(allFds.channelList[pos], allFds.userData[userNbr]);
 		//do_option one by one here (do_chan_opt)?
 		return ;
@@ -260,18 +266,21 @@ void	MODE(std::string buffer, fdList &allFds, int userNbr)
 	else if ((pos = find_user(allFds, splitBuff[1]))  == -1)
 	{
 		std::cout << "user doesn't exist" << std::endl;
-		cmd_error(allFds, allFds.userData[userNbr].fd, "401 *" + splitBuff[1] + " :No such nick/channel\n");
+		cmd_error(allFds, allFds.userData[userNbr].fd, "401 *" + splitBuff[1] + " :No such nick\n");
 		return ;
 	}
 	else
 	{
-		search_and_erase(splitBuff[2], "iswo");
-		if ((splitBuff[2].size() < 2) && (splitBuff[2][0] != '-' || splitBuff[2][0] != '+'))
+		if (splitBuff.size() > 2)
 		{
-			cmd_error(allFds, allFds.userData[userNbr].fd, "461 *" + splitBuff[0] + " :Not enough parameters\n");
-			return ;
+			search_and_erase(splitBuff[2], "iswo");
+			if ((splitBuff[2].size() < 2) && (splitBuff[2][0] != '-' || splitBuff[2][0] != '+'))
+			{
+				cmd_error(allFds, allFds.userData[userNbr].fd, "461 *" + splitBuff[0] + " :Not enough parameters\n");
+				return ;
+			}
+			do_user_opt(allFds, userNbr, splitBuff, pos);
 		}
-		do_user_opt(allFds, userNbr, splitBuff, pos);
 		user_reply(allFds.userData[userNbr]);
 	}
 	//do_option one by one here (do_user_opt)?

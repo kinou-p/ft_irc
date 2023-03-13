@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:21:57 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/10 22:21:38 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/13 01:12:07 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,9 @@ int find_user(fdList &allFds, std::string userName)//return direct user fd
 int is_in_same(fdList &allFds, int userNbr, int userNbr2)
 {
 	size_t size;
+	
+	if (userNbr < 0 || userNbr2 < 0)
+		return (0);
 	if (allFds.userData[userNbr].joinedChan.size() <= allFds.userData[userNbr2].joinedChan.size())
 		size = allFds.userData[userNbr].joinedChan.size();
 	else

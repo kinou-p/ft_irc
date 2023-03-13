@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:04:47 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/10 22:14:14 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/13 06:06:11 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	OPER(std::string buffer, fdList &allFds, int userNbr)
 	// 	return ;
 	// }
 	allFds.userData[userNbr].op = 1;
-	allFds.userData[userNbr].mode.s = 1;
+	allFds.userData[userNbr].mode.o = 1;
 	msg = "381 " + allFds.userData[userNbr].nickname + " " + allFds.userData[userNbr].nickname + " :You are now an IRC operator\r\n";
 	send(allFds.userData[userNbr].fd, msg.c_str(), msg.size(), 0);
 }

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 00:13:32 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/10 22:03:03 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/13 06:21:17 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,23 @@ void chan_reply(channelData &chan, clientData &user)
 	//return (reply);
 }
 
+void user_mode_reply(fdList &allFds, clientData &user, int userNbr, std::string mode)
+{
+	//userNbr = asking client
+	//client = changed mode client
+	std::string reply = ":" + allFds.userData[userNbr].nickname + "!" + allFds.userData[userNbr].userName
+		+ "@" + allFds.userData[userNbr].ip + " MODE " + user.nickname + " :+" + mode;
+	//void user_reply(clientData &user)
+}
+
 void user_reply(clientData &user)
 {
 	//:irc.server.com 221 ClientName +ix
 
 	//std::string reply;
-	std::string reply = " +";
-	std::string reply_begin = ":irc.local 221 " + user.nickname + " +";
+	//std::string reply = " +";
+	//:kinou1!kinou@127.0.0.1 MODE kinou1 :+i
+	std::string reply = ":irc.local 221 " + user.nickname + " +";
 	if (user.mode.i)
 		reply += 'i';
 	if (user.mode.s)
@@ -76,7 +86,9 @@ void user_reply(clientData &user)
 	if (user.mode.o)
 		reply += 'o';
 	reply += "\r\n";
+	std::cout << reply;
 	send(user.fd, reply.c_str(), reply.size(), 0);	
+	//cmd_reply(allFds, user.fd, reply);
 }
 
 int search_and_erase(std::string &str, std::string toFind)
