@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:46:41 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/13 08:32:00 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:44:11 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,6 @@ void ft_error(std::string str)
 {
 	std::cerr << str << std::endl;
 	throw std::exception();
-	// if (errno)
-	// {
-	// 	std::cerr << "errno: " << strerror(errno) << std::endl;
-	// 	throw std::exception();
-	// 	//exit(errno);
-	// }
-	//exit(1);
 }
 
 void close_fd(int fd)
@@ -33,29 +26,21 @@ void close_fd(int fd)
 
 void ft_putstr_fd(int fd, std::string str)
 {
-	// write(fd, str.c_str(), str.size());
-	// write(fd, "\n", 1);
 	str += "\r\n";
 	send(fd, str.c_str(), str.size(), 0);
 }
 
 void cmd_error(fdList &allFds, int fd, std::string error)
 {
-	(void)allFds; //to delete
+	(void) allFds;
 	error = ":irc.local " + error;
-	//write(fd, ":irc.local ", 11);
-	//write(fd, error.c_str(), error.size());
 	send(fd, error.c_str(), error.size(), 0);
 }
 
 void cmd_reply(fdList &allFds, int fd, std::string error)
 {
-	
-	(void)allFds; //to delete
+	(void) allFds;
 	error = ":irc.local " + error;
-	//std::cout << cmd_reply= --- << error << "---";
-	//write(fd, ":irc.local ", 11);
-	//write(fd, error.c_str(), error.size());
 	send(fd, error.c_str(), error.size(), 0);
 }
 

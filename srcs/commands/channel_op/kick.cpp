@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:32 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/10 22:12:00 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:32:52 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,22 +70,12 @@ void	KICK(std::string buffer, fdList &allFds, int userNbr)
 	}
 	kickMsg = allFds.userData[userPos].nickname + " have been kicked by " + allFds.userData[userNbr].nickname + "\r\n";
 	PART("PART " + splitBuff[1] + " has been kicked by " + allFds.userData[userNbr].nickname, allFds, userPos);
-	//del_user_in_chan(&allFds.userData[userPos], &allFds.channelList[chanPos]);
-	//del_chan_in_user(&allFds.userData[userPos], &allFds.channelList[chanPos]);
 	std::cout << "kick msg---" << msg << "---" << std::endl;
 	send(allFds.userData[userPos].fd, msg.c_str(), msg.size(), 0);
-	//send_msg(allFds, msg, splitBuff[1], userNbr);
 	for (size_t i = 0; i < allFds.channelList[chanPos].userList.size(); i++)
 	{
 		if (allFds.channelList[chanPos].userList[i]->mode.s)
 			send(allFds.channelList[chanPos].userList[i]->fd, kickMsg.c_str(), kickMsg.size(), 0);
 	}
-	//cmd_reply(allFds, allFds.userData[userPos].fd, msg);
-	
-	// else if (!allFds.userData[userNbr].op)
-	// {
-	// 	cmd_error(allFds, allFds.userData[userNbr].fd, "482 " + allFds.userData[userNbr].nickname + " " + splitBuff[1] + " :You're not channel operator\n");
-	// 	return ;
-	// }
 	return ;
 }

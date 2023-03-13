@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:56 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/10 22:24:11 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:32:44 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,6 @@ void	INVITE(std::string buffer, fdList &allFds, int userNbr)
 		cmd_error(allFds, allFds.userData[userNbr].fd, "443 " + allFds.userData[userNbr].nickname + " " + splitBuff[1] + " " + splitBuff[2] + " :is already on channel\r\n");
 		return ;
 	}
-	// if (is_joined(allFds, splitBuff[2], invitedNbr) != -1)
-	// {
-	// 	cmd_error(allFds, allFds.userData[userNbr].fd, "443 " + allFds.userData[userNbr].nickname + " " + splitBuff[1] + " " + splitBuff[2] + " :is already on channel\n");
-	// 	return ;
-	// }
 	if ((chanNbr = find_channel(allFds, splitBuff[2])) != -1)
 	{
 		chan = allFds.channelList[chanNbr];
@@ -72,8 +67,6 @@ void	INVITE(std::string buffer, fdList &allFds, int userNbr)
 		return ;
 	}
 	std::cout << "invite him !!!!" << splitBuff[1] << " to " <<  splitBuff[2] << std::endl;
-	//RPL_INVITING
-	//RPL_AWAY
 	chan.invitedList.push_back(&allFds.userData[invitedNbr]);//set authorization to join
 	msg = "341 " + allFds.userData[userNbr].nickname + " " + chan.name + " " + splitBuff[1] + "\r\n";
 	cmd_reply(allFds, allFds.userData[userNbr].fd, msg);

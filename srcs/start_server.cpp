@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:44:20 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/11 20:07:23 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:43:06 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,16 @@
 
 void initialize(char **av)
 {
-	//int allFds.serverFd;
-	//int epollFd;
-	//int newSockFd = 0;
 	int opt = 1;
 	struct sockaddr_in addr;
-	//int addrLen = sizeof(addr);
 	fdList allFds;
 
-	//allFds.userData.reserve(MAX_EVENTS);
-	//allFds.channelList.reserve(MAX_CHAN);
 	allFds.nbrUser = 0;
 	allFds.password = av[2];
 	std::cout << "pass= " << av[2] << std::endl;
-	//allFds.nbrUser = 0;
 	allFds.serverFd = socket(AF_INET, SOCK_STREAM, 0);
 	if (allFds.serverFd == -1)
 		ft_error("socket() error");
-	// if (setsockopt(allFds.serverFd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt)))
-	// 	ft_error("setsockopt() error");
 	if (setsockopt(allFds.serverFd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)))
 		ft_error("setsockopt() error");
 
@@ -53,23 +44,10 @@ void initialize(char **av)
 	if (listen(allFds.serverFd, 10) == -1)
 		ft_error("listen() error");
 		
-	// newSockFd = accept(allFds.serverFd, (struct sockaddr *)&addr, (socklen_t*)&addrLen);
-	// if (newSockFd == -1)
-	// 	ft_error("accept() error");
-	
-	// char buffer[1024];
-	// int nbrRead;
-	// while (strncmp("/quit", buffer, 5))
-	// {
-	// 	nbrRead = read()
-	// }
 	time_t timer;
 	time(&timer);
 	allFds.creation_date = ctime(&timer);
 	allFds.epollFd = epoll_start();
-	//allFds.userData
 	epoll_add(allFds.epollFd, allFds.serverFd);
 	start_loop(allFds);
-	
-	//send(newSockFd, "hello", 5, 0);
 }

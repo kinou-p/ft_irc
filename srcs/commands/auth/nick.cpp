@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:28:38 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/10 22:20:28 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:28:37 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,9 @@ void	NICK(std::string buffer, fdList &allFds, int userNbr)
 		cmd_error(allFds, allFds.userData[userNbr].fd, "433 * " + splitBuff[1] + " :Nickname is already in use\r\n");
 		return ;
 	}
-	//if nickname ok then (another user has it? )
-	//ERR_NONICKNAMEGIVEN
 	allFds.userData[userNbr].nickname = splitBuff[1];
-	if (!allFds.userData[userNbr].registered && !allFds.userData[userNbr].userName.empty() /*&& !allFds.userData[userNbr].password.empty()*/)
-	{
+	if (!allFds.userData[userNbr].registered && !allFds.userData[userNbr].userName.empty())
 		connect_client(allFds, userNbr);
-		// allFds.userData[userNbr].registered = 1;
-		// print_registered_msg(allFds, userNbr);
-	}
 	
 	return ;
 }

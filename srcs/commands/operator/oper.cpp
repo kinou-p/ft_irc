@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:04:47 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/13 06:06:11 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:36:20 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	OPER(std::string buffer, fdList &allFds, int userNbr)
 		cmd_error(allFds, allFds.userData[userNbr].fd, "461 " + allFds.userData[userNbr].nickname + " OPER :Not enough parameters\r\n");
 		return ;
 	}
-	//:irc.local 491 kinou2 
 	if (splitBuff[1] != OP_NAME)
 	{
 		cmd_error(allFds, allFds.userData[userNbr].fd, "491 " + allFds.userData[userNbr].nickname + " :Invalid oper credentials\r\n");
@@ -39,12 +38,6 @@ void	OPER(std::string buffer, fdList &allFds, int userNbr)
 		cmd_error(allFds, allFds.userData[userNbr].fd, "464 " + allFds.userData[userNbr].nickname + " :Password incorrect\r\n");
 		return ;
 	}
-	// pos = find_user(allFds, splitBuff[1]);
-	// if (pos != -1)
-	// {
-	// 	cmd_error(allFds, allFds.userData[userNbr].fd, "401 " + allFds.userData[userNbr].nickname + " SQUIT " + splitBuff[1] + " :No such nick/channel\n");
-	// 	return ;
-	// }
 	allFds.userData[userNbr].op = 1;
 	allFds.userData[userNbr].mode.o = 1;
 	msg = "381 " + allFds.userData[userNbr].nickname + " " + allFds.userData[userNbr].nickname + " :You are now an IRC operator\r\n";

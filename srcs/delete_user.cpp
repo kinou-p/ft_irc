@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 20:38:50 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/10 21:15:00 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:39:49 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,8 @@
 
 void del_user_in_chan(clientData *user, channelData *chan)
 {
-	// size_t i;
 	int pos;
-	// for (i = 0; user != chan->userList[i]; i++)
-	// 	;
-	// chan->userList.erase(chan->userList.begin() + i);
-
+	
 	if ((pos = find_client_list(chan->userList, user)) != -1)
 		chan->userList.erase(chan->userList.begin() + pos);
 
@@ -34,8 +30,6 @@ void del_user_in_chan(clientData *user, channelData *chan)
 		
 	if ((pos = find_client_list(chan->opList, user)) != -1)
 		chan->opList.erase(chan->opList.begin() + pos);
-
-	//chan->nbrUser--;
 }
 
 void del_chan_in_user(clientData *user, channelData *chan)
@@ -44,7 +38,6 @@ void del_chan_in_user(clientData *user, channelData *chan)
 	for (i = 0; chan != user->joinedChan[i]; i++)
 		;
 	user->joinedChan.erase(user->joinedChan.begin() + i);
-	//user->nbrUser--;
 }
 
 void delete_user(fdList &allFds, int userNbr)
@@ -52,10 +45,7 @@ void delete_user(fdList &allFds, int userNbr)
 	std::cout << "Delete user nbr " << userNbr << std::endl;
 	
 	for (size_t i = 0; i < allFds.channelList.size(); i++)//all joined chan
-	{
 		del_user_in_chan(&allFds.userData[userNbr], &allFds.channelList[i]);
-		//allFds.userData[userNbr].joinedChan[i].erase(find_user_in_chan(allFds.userData[userNbr].joinedChan[i])/*find user in chan*/)
-	}
 	close(allFds.userData[userNbr].fd);
 	
 	allFds.userData.erase(allFds.userData.begin() + userNbr);

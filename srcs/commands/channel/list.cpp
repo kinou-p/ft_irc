@@ -6,31 +6,20 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 00:50:51 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/13 02:39:00 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:31:44 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/ft_irc.hpp"
-
-// msg = "321 " + allFds.userData[userNbr].nickname + " " + allfds.channelList[i].name;
-// msg = "322 " + allFds.userData[userNbr].nickname + " :End of LIST\r\n";
-// msg = "323 " + allFds.userData[userNbr].nickname + " :End of LIST\r\n"; //done
 
 void	list_reply(fdList &allFds, channelData &chan, int fd, int userNbr)
 {
 	//:irc.server.com 321 MonPseudo :Channel :Users Name          //start
 	//:irc.server.com 322 MonPseudo #channel 10 :Channel Topic    //list
 	//:irc.server.com 323 MonPseudo :End of LIST                  //end
-	
 	std::string msg;
-	// msg = "321 " + allFds.userData[userNbr].nickname + ":ChannelName UserNbr :Topic\r\n";
-	// cmd_reply(allFds, fd, msg);
-	//str_to_int(int &i, const std::string s);
 	msg = "322 " + allFds.userData[userNbr].nickname + " :" + chan.name + " " + int_to_str(chan.userList.size()) + " :" + chan.topic + "\r\n";//"ChannelName UserNbr :Topic\r\n";
 	cmd_reply(allFds, fd, msg);
-	
-	// msg = "323 " + allFds.userData[userNbr].nickname + " :End of LIST\r\n";
-	// cmd_reply(allFds, fd, msg);
 }
 
 void	list_loop(fdList &allFds, std::vector<std::string> splitBuff, int userNbr)
@@ -66,14 +55,12 @@ void	LIST(std::string buffer, fdList &allFds, int userNbr)
 	cmd_reply(allFds, allFds.userData[userNbr].fd, msg);
 	if (splitBuff.size() == 1 || splitBuff[1] == "0")
 	{
-		//rpl start
 		for (size_t i = 0; i < allFds.channelList.size(); i++)
 		{
 			if ((!allFds.channelList[i].mode.p && !allFds.channelList[i].mode.s) 
 					|| is_joined(allFds, allFds.channelList[i].name, userNbr) || allFds.userData[userNbr].op)
 				list_reply(allFds, allFds.channelList[i], allFds.userData[userNbr].fd, userNbr);
 		}
-		//rpl end
 		return ;
 	}
 	else

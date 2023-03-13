@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 00:13:32 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/13 10:23:05 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:36:06 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,11 @@ void chan_reply(channelData &chan, clientData &user)
 
 void chan_mode_reply(fdList &allFds, channelData &chan, int userNbr, std::string mode, int sign)
 {
-	//userNbr = asking client
-	//client = changed mode client
-
-	//:kinou3!kinou@172.17.0.1 MODE #test +o :kinou1 
-	//:kinou3!kinou@172.17.0.1 MODE #test :+p 
-	//kinou3 = baseop
-	//kinou1 = newOP
-	
-
-	std::string reply = ":" + allFds.userData[userNbr].nickname + "!" + allFds.userData[userNbr].userName
+	std::string reply;
+	std::string base_reply = ":" + allFds.userData[userNbr].nickname + "!" + allFds.userData[userNbr].userName
 		+ "@" + allFds.userData[userNbr].ip + " MODE " + chan.name;// + " :+" + mode + "\r\n";
-	//if (sign)
-	//	reply += " +";
-	//else
-	//	reply += " -";
-	if (sign)
+
+	if (sign && contain_any(mode, "olbvk"))
 	{
 		reply += " +";
 		if (mode == "o")
@@ -93,16 +82,20 @@ void chan_mode_reply(fdList &allFds, channelData &chan, int userNbr, std::string
 		else if (mode == "k")
 			reply += mode + " :" + chan.password;
 	}
-	else if (mode == "o")
-		reply += " -" + mode + " :" + chan.verboseList.back()->nickname;
-	else if (mode == "b")
-		reply += " -" + mode + " :" + chan.verboseList.back()->nickname;
-	else if (mode == "v")
-		reply += " -" + mode + " :" + chan.verboseList.back()->nickname;
+	else if (contain_any(mode, "obv"))
+	{
+		if (mode == "o")
+			reply += " -" + mode + " :" + chan.verboseList.back()->nickname;
+		else if (mode == "b")
+			reply += " -" + mode + " :" + chan.verboseList.back()->nickname;
+		else if (mode == "v")
+			reply += " -" + mode + " :" + chan.verboseList.back()->nickname;
+	}
 	else if (sign)
-		reply += " :+" + mode;
+			reply += " :+" + mode;
 	else
 		reply += " :-" + mode;
+	reply = base_reply + reply;
 	reply += "\r\n";
 	std::cout << "reply=" << reply << std::endl;
 	for (size_t i = 0; i < chan.userList.size(); i++)
@@ -110,27 +103,17 @@ void chan_mode_reply(fdList &allFds, channelData &chan, int userNbr, std::string
 		std::cout << "i=" << i << std::endl;
 		send(chan.userList[i]->fd, reply.c_str(), reply.size(), 0);
 	}
-	//send(allFds.userData[userNbr].fd, reply.c_str(), reply.size(), 0);
-	//void user_reply(clientData &user)
 }
 
 void user_mode_reply(fdList &allFds, clientData &user, int userNbr, std::string mode)
 {
-	//userNbr = asking client
-	//client = changed mode client
 	std::string reply = ":" + allFds.userData[userNbr].nickname + "!" + allFds.userData[userNbr].userName
 		+ "@" + allFds.userData[userNbr].ip + " MODE " + user.nickname + " :+" + mode + "\r\n";
 	send(allFds.userData[userNbr].fd, reply.c_str(), reply.size(), 0);
-	//void user_reply(clientData &user)
 }
 
 void user_reply(clientData &user)
 {
-	//:irc.server.com 221 ClientName +ix
-
-	//std::string reply;
-	//std::string reply = " +";
-	//:kinou1!kinou@127.0.0.1 MODE kinou1 :+i
 	std::string reply = ":irc.local 221 " + user.nickname + " +";
 	if (user.mode.i)
 		reply += 'i';
@@ -143,12 +126,10 @@ void user_reply(clientData &user)
 	reply += "\r\n";
 	std::cout << reply;
 	send(user.fd, reply.c_str(), reply.size(), 0);	
-	//cmd_reply(allFds, user.fd, reply);
 }
 
 int search_and_erase(std::string &str, std::string toFind)
 {
-	// std::vector<string>::iterator i = str.begin;
 	int i = 1; //1 instead of 0 to skip +/-
 	while (str[i] != 0)
 	{

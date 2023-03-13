@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:14:17 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/13 04:57:33 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:38:26 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,9 @@
 //void	who_reply(fdList &allFds, int userNbr, int fd)
 void	who_reply(fdList &allFds, clientData &user, int fd)
 {
-	// std::string msg;
-	// //:<server> 352 <channel> <username> <hostname> <server> <nick> H :0 <realname>
-	// //if (chan.size())
-	// msg = "352 " /*+ chan + " " */
-	// + allFds.userData[userNbr].userName + " " 
-	// + allFds.userData[userNbr].hostName + " irc.local " 
-	// +  allFds.userData[userNbr].nickname + " :0 " 
-	// + allFds.userData[userNbr].realName + "\n";
-
-	// cmd_reply(allFds, fd, msg);
-
-
 	std::string msg;
-	//:<server> 352 <channel> <username> <hostname> <server> <nick> H :0 <realname>
-	//if (chan.size())
-	msg = "352 " /*+ chan + " " */
+	
+	msg = "352 "
 	+ user.userName + " " 
 	+ user.hostName + " irc.local " 
 	+ user.nickname + " :0 " 
@@ -56,10 +43,7 @@ void	WHO(std::string buffer, fdList &allFds, int userNbr)
 		for (int i = 0; i < allFds.nbrUser; i++)
 		{
 			if (!allFds.userData[i].mode.i || is_in_same(allFds, userNbr, i) || allFds.userData[userNbr].op)
-			{
 				who_reply(allFds, allFds.userData[i], allFds.userData[userNbr].fd);
-				//print who
-			}
 		}
 		return ;
 	}
@@ -69,11 +53,7 @@ void	WHO(std::string buffer, fdList &allFds, int userNbr)
 		return ;
 	}
 	for (size_t i = 0; i < allFds.channelList[pos].userList.size(); i++)
-	{
 		who_reply(allFds, *allFds.channelList[pos].userList[i], allFds.userData[userNbr].fd);
-	}
-	//"<nick> :End of WHOIS list"
 	cmd_reply(allFds, allFds.userData[userNbr].fd, allFds.userData[userNbr].nickname + " :End of WHO list\n");
-		//std::cout << 
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:52 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/10 22:25:05 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:35:41 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	TOPIC(std::string buffer, fdList &allFds, int userNbr)
 	int chanNbr;
 	std::vector<std::string> splitBuff;
 	
-	std::cout << "topic im here1\n";//RPL_NOTOPIC //RPL_TOPIC
 	if (!allFds.userData[userNbr].registered) 
 	{
 		cmd_error(allFds, allFds.userData[userNbr].fd, "451 " + allFds.userData[userNbr].nickname + " TOPIC :You have not registered\r\n");
@@ -44,12 +43,6 @@ void	TOPIC(std::string buffer, fdList &allFds, int userNbr)
 			return ;
 		}
 	}
-	// else if (!allFds.userData[userNbr].op && !allFds.userData[userNbr].op)
-	// {
-	// 	cmd_error(allFds, allFds.userData[userNbr].fd, "482 " + allFds.userData[userNbr].nickname + " " + splitBuff[1] + " :You're not channel operator\n");
-	// 	return ;
-	// }
-	std::cout << "topic im here2\n";//RPL_NOTOPIC //RPL_TOPIC
 	if (splitBuff.size() < 3)
 	{
 		if (!allFds.channelList[chanNbr].topic.empty())
@@ -57,14 +50,12 @@ void	TOPIC(std::string buffer, fdList &allFds, int userNbr)
 		else
 			cmd_error(allFds, allFds.userData[userNbr].fd, "331 TOPIC " + splitBuff[1] + " :No topic is set\r\n");
 		return;
-		//std::cout << "PRINT TOPIC here\n";//RPL_NOTOPIC //RPL_TOPIC
 	}
 	else
 	{
 		allFds.channelList[chanNbr].topic = buffer.substr(6 + splitBuff[1].size() + 2, std::string::npos);
-		//std::cout << "topic= " << allFds.channelList[chanNbr].topic << std::endl;
-		cmd_reply(allFds, allFds.userData[userNbr].fd, "332 TOPIC " + splitBuff[1] + " :" + allFds.channelList[chanNbr].topic + "\r\n");
-		//std::cout << "PRINT TOPIC here topic set\n";//RPL_NOTOPIC //RPL_TOPIC
+		for (size_t i = 0; i < allFds.channelList[chanNbr].userList.size(); i++)
+			cmd_reply(allFds, allFds.channelList[chanNbr].userList[i]->fd, "332 TOPIC " + splitBuff[1] + " :" + allFds.channelList[chanNbr].topic + "\r\n");
 	}
 	return ;
 }

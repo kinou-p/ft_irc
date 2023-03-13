@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:34:57 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/10 22:14:02 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:36:13 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	KILL(std::string buffer, fdList &allFds, int userNbr)
 	msg = "connection killed by " + allFds.userData[userNbr].nickname + " " + buffer.substr(buffer.find_first_of(':'), std::string::npos);
 	fullMsg = ":" + allFds.userData[userNbr].nickname + "!" + allFds.userData[userNbr].userName + "@172.17.0.1 " + msg + "\r\n";
 	send(allFds.userData[pos].fd, fullMsg.c_str(), fullMsg.size(), 0);
-	//send_notice_msg(allFds, allFds.userData[userNbr].fd, userNbr)
 	delete_user(allFds, pos);
 	return ;
 }

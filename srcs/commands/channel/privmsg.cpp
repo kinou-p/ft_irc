@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 08:53:03 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/10 22:11:34 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:32:35 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void PRIVMSG(std::string buffer, fdList &allFds, int userNbr)
 		cmd_error(allFds, allFds.userData[userNbr].fd, "451 " + allFds.userData[userNbr].nickname + " PRIVMSG :You have not registered\r\n");
 		return ;
 	}
-	//std::cout << "privmsg bufer= --" << buffer << std::endl;
 	split(buffer, ' ', splitBuff);
 	if (splitBuff.size() < 2)
 	{
@@ -42,7 +41,6 @@ void PRIVMSG(std::string buffer, fdList &allFds, int userNbr)
 		cmd_error(allFds, allFds.userData[userNbr].fd, "412 " + allFds.userData[userNbr].nickname + " PRIVMSG :No text to send\r\n");
 		return ;
 	}
-	//std::cout << "privmsg =" << msg << std::endl;
 	std::vector<std::string> dest;
 	split(splitBuff[1], ',', dest);
 	for (size_t i = 0; i < dest.size(); i++)
@@ -68,10 +66,6 @@ void send_msg(fdList &allFds, std::string msg, std::string dest, int userNbr)
 			cmd_error(allFds, allFds.userData[userNbr].fd, "442 " + allFds.userData[userNbr].nickname + " PRIVMSG " + dest + " :You're not on that channel\r\n");
 			return ;
 		}
-		// if (find_client_list(allFds.channelList[pos].verboseList, &allFds.userData[userNbr]) != -1)
-		// {
-		// 	allFds.channelList[pos].verboseList.erase();
-		// }
 		if (allFds.channelList[pos].mode.m && !allFds.userData[userNbr].op 
 			&& !is_chan_op(allFds, &allFds.channelList[pos], userNbr) 
 			&& find_client_list(allFds.channelList[pos].verboseList, &allFds.userData[userNbr]) == -1)
@@ -80,20 +74,13 @@ void send_msg(fdList &allFds, std::string msg, std::string dest, int userNbr)
 			return ;
 		}
 		for (size_t i = 0; i < allFds.channelList[pos].userList.size(); i++)
-		{
-			//std::cout << "send nickname " << allFds.channelList[pos].userList[i]->nickname << std::endl;
-			
+		{			
 			if (&allFds.userData[userNbr] != allFds.channelList[pos].userList[i] && allFds.channelList[pos].userList[i]->mode.s)
-			{
-				//std::cout << "send msg to user nbr" << i << std::endl;
 				send(allFds.channelList[pos].userList[i]->fd, fullMsg.c_str(), fullMsg.size(), 0);
-			}
-			//std::cout << "loop here\n";
 		}
 		return ;
 	}
-	pos = find_user(allFds, dest); //return direct user fd
-	//std::cout << "pos of user = " << pos << std::endl;
+	pos = find_user(allFds, dest);
 	if (pos == -1)
 	{
 		cmd_error(allFds, allFds.userData[userNbr].fd, "401 " + allFds.userData[userNbr].nickname + " PRIVMSG " + dest + " :No such nick\r\n");
@@ -101,6 +88,4 @@ void send_msg(fdList &allFds, std::string msg, std::string dest, int userNbr)
 	}
 	if (allFds.userData[pos].mode.s)
 		send(allFds.userData[pos].fd, fullMsg.c_str(), fullMsg.size(), 0);
-	//std::cout << "msg send\n";
-	//std::cout << "msg = " << fullMsg << std::endl;
 }
