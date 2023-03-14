@@ -6,35 +6,11 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:40:33 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/13 16:30:39 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/14 02:13:25 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/ft_irc.hpp"
-
-
-// Commande: JOIN
-// Paramètres: <canal>{,<canal>} [<clé>{,<clé>}]
-//		1459
-//    ERR_NEEDMOREPARAMS +             ERR_BANNEDFROMCHAN
-//    ERR_INVITEONLYCHAN +             ERR_BADCHANNELKEY 
-//    ERR_CHANNELISFULL x              ERR_BADCHANMASK ? +
-//    ERR_NOSUCHCHANNEL x              ERR_TOOMANYCHANNELS x
-//    RPL_TOPIC
-
-		//		2812
-        //    ERR_NEEDMOREPARAMS              ERR_BANNEDFROMCHAN
-        //    ERR_INVITEONLYCHAN              ERR_BADCHANNELKEY
-        //    ERR_CHANNELISFULL               ERR_BADCHANMASK
-        //    ERR_NOSUCHCHANNEL               ERR_TOOMANYCHANNELS
-        //    ERR_TOOMANYTARGETS              ERR_UNAVAILRESOURCE
-        //    RPL_TOPIC
-
-void leave_all(fdList &allFds, int userNbr)
-{
-	(void)allFds;
-	(void)userNbr;
-}
 
 int chan_check(fdList &allFds, int userNbr, int chanNbr, std::vector<std::string> splitBuff)
 {
@@ -125,11 +101,6 @@ void join_loop(fdList &allFds, std::vector<std::string> splitBuff, int userNbr)
 	
 	split(splitBuff[1], ',', splitChan);
 	split(splitBuff[1], ',', splitPwd);
-	if (splitBuff[1] == "0")
-	{
-		leave_all(allFds, userNbr);
-		return ;
-	}
 	for (size_t i = 0; i < splitChan.size(); i++)
 	{
 		if (splitChan[i][0] != '#' && splitChan[i][0] != '&')

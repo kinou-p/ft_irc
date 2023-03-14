@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 22:04:11 by apommier          #+#    #+#             */
-/*   Updated: 2023/03/13 02:33:34 by apommier         ###   ########.fr       */
+/*   Updated: 2023/03/14 02:11:01 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,16 @@
 
 void	SERVER(std::string buffer, fdList &allFds, int userNbr)
 {
+	std::cout << "command not supported\n";
 	(void)buffer; 
 	(void)allFds;
 	(void)userNbr;
 	return ;
 }
 
-// void	OPER(std::string buffer, fdList &allFds, int userNbr)
-// {
-// 	(void)buffer; 
-// 	(void)allFds;
-// 	(void)userNbr;
-// 	return ;
-// }
-
-
-
-
-
-
-// void	LIST(std::string buffer, fdList &allFds, int userNbr)
-// {
-// 	(void)buffer; 
-// 	(void)allFds;
-// 	(void)userNbr;
-// 	return ;
-// }
-
-
-
-
-
 void	VERSION(std::string buffer, fdList &allFds, int userNbr)
 {
+	std::cout << "command not supported\n";
 	(void)buffer; 
 	(void)allFds;
 	(void)userNbr;
@@ -55,6 +32,7 @@ void	VERSION(std::string buffer, fdList &allFds, int userNbr)
 
 void	STATS(std::string buffer, fdList &allFds, int userNbr)
 {
+	std::cout << "command not supported\n";
 	(void)buffer; 
 	(void)allFds;
 	(void)userNbr;
@@ -63,6 +41,7 @@ void	STATS(std::string buffer, fdList &allFds, int userNbr)
 
 void	LINKS(std::string buffer, fdList &allFds, int userNbr)
 {
+	std::cout << "command not supported\n";
 	(void)buffer; 
 	(void)allFds;
 	(void)userNbr;
@@ -71,6 +50,7 @@ void	LINKS(std::string buffer, fdList &allFds, int userNbr)
 
 void	TIME(std::string buffer, fdList &allFds, int userNbr)
 {
+	std::cout << "command not supported\n";
 	(void)buffer; 
 	(void)allFds;
 	(void)userNbr;
@@ -79,6 +59,7 @@ void	TIME(std::string buffer, fdList &allFds, int userNbr)
 
 void	CONNECT(std::string buffer, fdList &allFds, int userNbr)
 {
+	std::cout << "command not supported\n";
 	(void)buffer; 
 	(void)allFds;
 	(void)userNbr;
@@ -87,6 +68,7 @@ void	CONNECT(std::string buffer, fdList &allFds, int userNbr)
 
 void	TRACE(std::string buffer, fdList &allFds, int userNbr)
 {
+	std::cout << "command not supported\n";
 	(void)buffer; 
 	(void)allFds;
 	(void)userNbr;
@@ -95,6 +77,7 @@ void	TRACE(std::string buffer, fdList &allFds, int userNbr)
 
 void	ADMIN(std::string buffer, fdList &allFds, int userNbr)
 {
+	std::cout << "command not supported\n";
 	(void)buffer; 
 	(void)allFds;
 	(void)userNbr;
@@ -103,32 +86,16 @@ void	ADMIN(std::string buffer, fdList &allFds, int userNbr)
 
 void	INFO(std::string buffer, fdList &allFds, int userNbr)
 {
+	std::cout << "command not supported\n";
 	(void)buffer; 
 	(void)allFds;
 	(void)userNbr;
 	return ;
 }
 
-// void	PRIVMSG(std::string buffer, fdList &allFds, int userNbr)
-// {
-// 	(void)buffer; 
-// 	(void)allFds;
-// 	(void)userNbr;
-// 	return ;
-// }
-
-// void	NOTICE(std::string buffer, fdList &allFds, int userNbr)
-// {
-// 	(void)buffer; 
-// 	(void)allFds;
-// 	(void)userNbr;
-// 	return ;
-// }
-
-
-
 void	WHOIS(std::string buffer, fdList &allFds, int userNbr)
 {
+	std::cout << "command not supported\n";
 	(void)buffer; 
 	(void)allFds;
 	(void)userNbr;
@@ -137,26 +104,16 @@ void	WHOIS(std::string buffer, fdList &allFds, int userNbr)
 
 void	WHOWAS(std::string buffer, fdList &allFds, int userNbr)
 {
+	std::cout << "command not supported\n";
 	(void)buffer; 
 	(void)allFds;
 	(void)userNbr;
 	return ;
 }
 
-
-
-// void	PING(std::string buffer, fdList &allFds, int userNbr)
-// {
-// 	(void)buffer; 
-// 	(void)allFds;
-// 	(void)userNbr;
-// 	return ;
-// }
-
-
-
 void	ERROR(std::string buffer, fdList &allFds, int userNbr)
 {
+	std::cout << "command not supported\n";
 	(void)buffer; 
 	(void)allFds;
 	(void)userNbr;
@@ -165,6 +122,7 @@ void	ERROR(std::string buffer, fdList &allFds, int userNbr)
 
 void	AWAY(std::string buffer, fdList &allFds, int userNbr)
 {
+	std::cout << "command not supported\n";
 	(void)buffer; 
 	(void)allFds;
 	(void)userNbr;
@@ -173,6 +131,7 @@ void	AWAY(std::string buffer, fdList &allFds, int userNbr)
 
 void	REHASH(std::string buffer, fdList &allFds, int userNbr)
 {
+	std::cout << "command not supported\n";
 	(void)buffer; 
 	(void)allFds;
 	(void)userNbr;
@@ -181,6 +140,7 @@ void	REHASH(std::string buffer, fdList &allFds, int userNbr)
 
 void	RESTART(std::string buffer, fdList &allFds, int userNbr)
 {
+	std::cout << "command not supported\n";
 	(void)buffer; 
 	(void)allFds;
 	(void)userNbr;
@@ -189,6 +149,7 @@ void	RESTART(std::string buffer, fdList &allFds, int userNbr)
 
 void	SUMMON(std::string buffer, fdList &allFds, int userNbr)
 {
+	std::cout << "command not supported\n";
 	(void)buffer; 
 	(void)allFds;
 	(void)userNbr;
@@ -197,6 +158,7 @@ void	SUMMON(std::string buffer, fdList &allFds, int userNbr)
 
 void	OPERWALL(std::string buffer, fdList &allFds, int userNbr)
 {
+	std::cout << "command not supported\n";
 	(void)buffer; 
 	(void)allFds;
 	(void)userNbr;
@@ -205,6 +167,7 @@ void	OPERWALL(std::string buffer, fdList &allFds, int userNbr)
 
 void	USERHOST(std::string buffer, fdList &allFds, int userNbr)
 {
+	std::cout << "command not supported\n";
 	(void)buffer; 
 	(void)allFds;
 	(void)userNbr;
@@ -213,6 +176,7 @@ void	USERHOST(std::string buffer, fdList &allFds, int userNbr)
 
 void	ISON(std::string buffer, fdList &allFds, int userNbr)
 {
+	std::cout << "command not supported\n";
 	(void)buffer; 
 	(void)allFds;
 	(void)userNbr;
